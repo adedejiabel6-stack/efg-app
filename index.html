@@ -1,392 +1,478 @@
-   <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EFG Team System</title>
+<title>EFG Command Center</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:sans-serif}
 body{background:#0f172a;color:white;min-height:100vh}
 .header{text-align:center;padding:20px 16px 10px}
 .badge{background:rgba(255,255,255,0.1);border-radius:20px;padding:4px 14px;font-size:12px;color:#cbd5e1;display:inline-block;margin-bottom:8px}
 h1{font-size:22px;font-weight:800;margin-bottom:4px}
-.subtitle{color:#94a3b8;font-size:13px}
-.stats{display:flex;justify-content:center;gap:10px;margin-top:14px;flex-wrap:wrap}
-.stat{background:rgba(255,255,255,0.08);border-radius:12px;padding:8px 16px;text-align:center}
-.stat-val{font-size:20px;font-weight:800}
+.subtitle{color:#94a3b8;font-size:12px}
+.stats{display:flex;justify-content:center;gap:8px;margin-top:14px;flex-wrap:wrap}
+.stat{background:rgba(255,255,255,0.08);border-radius:12px;padding:8px 14px;text-align:center}
+.stat-val{font-size:18px;font-weight:800}
 .stat-label{font-size:10px;color:#94a3b8}
-.tabs{display:flex;justify-content:center;gap:6px;padding:14px 16px;flex-wrap:wrap}
-.tab{padding:8px 16px;border-radius:20px;border:none;cursor:pointer;font-weight:600;font-size:12px;background:rgba(255,255,255,0.1);color:#cbd5e1}
+.tabs{display:flex;justify-content:center;gap:5px;padding:14px 16px;flex-wrap:wrap}
+.tab{padding:7px 13px;border-radius:20px;border:none;cursor:pointer;font-weight:600;font-size:11px;background:rgba(255,255,255,0.1);color:#cbd5e1}
 .tab.active{background:white;color:#0f172a}
-.content{max-width:600px;margin:0 auto;padding:0 16px 60px}
+.content{max-width:640px;margin:0 auto;padding:0 16px 60px}
 .card{background:rgba(255,255,255,0.07);border-radius:14px;padding:16px;margin-bottom:12px}
 .card-title{font-size:13px;font-weight:700;margin-bottom:12px;color:#e2e8f0}
-input,select{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);border-radius:10px;padding:8px 12px;color:white;font-size:13px;outline:none;width:100%}
+.section-title{font-size:15px;font-weight:800;color:#e2e8f0;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,0.1)}
+input,select,textarea{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);border-radius:10px;padding:8px 12px;color:white;font-size:13px;outline:none;width:100%}
+textarea{resize:vertical;min-height:80px}
 select option{background:#1e293b}
 .btn{border:none;border-radius:10px;padding:9px 16px;font-weight:700;font-size:13px;cursor:pointer;color:white}
 .btn-green{background:#10b981}
 .btn-blue{background:#3b82f6}
+.btn-red{background:#ef4444}
 .btn-gray{background:rgba(255,255,255,0.1);color:#cbd5e1}
-.row{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
-.lead-item{background:rgba(255,255,255,0.07);border-radius:12px;padding:12px;margin-bottom:8px}
-.lead-name{font-weight:700;font-size:14px}
-.lead-meta{font-size:11px;color:#64748b;margin-top:2px}
-.status-btns{display:flex;gap:5px;margin-top:10px;flex-wrap:wrap}
-.status-btn{padding:5px 11px;border-radius:8px;border:2px solid transparent;cursor:pointer;font-size:11px;font-weight:700;background:rgba(255,255,255,0.08);color:#94a3b8;transition:all 0.2s}
-.status-btn:hover{opacity:0.85}
-.status-btn.active-New{background:#3b82f6!important;color:white!important;border-color:#93c5fd!important;box-shadow:0 0 8px rgba(59,130,246,0.6)!important}
-.status-btn.active-Contacted{background:#f59e0b!important;color:white!important;border-color:#fcd34d!important;box-shadow:0 0 8px rgba(245,158,11,0.6)!important}
-.status-btn.active-Interested{background:#10b981!important;color:white!important;border-color:#6ee7b7!important;box-shadow:0 0 8px rgba(16,185,129,0.6)!important}
-.status-btn.active-Follow-Up{background:#8b5cf6!important;color:white!important;border-color:#c4b5fd!important;box-shadow:0 0 8px rgba(139,92,246,0.6)!important}
-.status-btn.active-Closed{background:#34d399!important;color:#0f172a!important;border-color:#a7f3d0!important;box-shadow:0 0 8px rgba(52,211,153,0.6)!important}
-.status-btn.active-Not-Interested{background:#ef4444!important;color:white!important;border-color:#fca5a5!important;box-shadow:0 0 8px rgba(239,68,68,0.6)!important}
-.platform-tabs{display:flex;gap:8px;margin-bottom:14px}
-.platform-tab{flex:1;padding:8px;border-radius:12px;border:none;cursor:pointer;font-weight:600;font-size:12px;background:rgba(255,255,255,0.1);color:#cbd5e1}
-.platform-tab.active{background:white;color:#0f172a}
-.post-card{background:rgba(255,255,255,0.07);border-radius:14px;padding:14px;margin-bottom:10px}
-.post-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
-.post-title{font-weight:700;font-size:13px}
-.post-text{font-size:12px;color:#94a3b8;line-height:1.7;white-space:pre-line}
-.copy-btn{background:rgba(255,255,255,0.1);border:none;border-radius:8px;padding:5px 12px;color:white;font-size:11px;font-weight:600;cursor:pointer}
-.copy-btn.copied{background:#10b981}
-.activity-item{background:rgba(255,255,255,0.07);border-radius:14px;padding:14px;margin-bottom:8px}
-.activity-done{background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.3)}
-.activity-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
-.activity-info{display:flex;align-items:center;gap:8px}
-.activity-label{font-size:13px;font-weight:600}
-.activity-goal{font-size:10px;color:#64748b}
-.counter{display:flex;align-items:center;gap:8px}
-.counter-btn{width:28px;height:28px;border-radius:8px;border:none;color:white;font-weight:700;font-size:16px;cursor:pointer}
-.counter-val{font-weight:800;font-size:16px;min-width:20px;text-align:center}
-.progress-bar{background:rgba(255,255,255,0.1);border-radius:5px;height:6px;overflow:hidden;margin-top:4px}
-.progress-fill{height:100%;border-radius:5px;transition:width 0.3s}
-.score-card{border-radius:16px;padding:16px;text-align:center;margin-bottom:14px}
-.score-val{font-size:44px;font-weight:900;margin:4px 0}
-.tip-box{background:rgba(59,130,246,0.12);border:1px solid rgba(59,130,246,0.25);border-radius:14px;padding:14px;margin-top:14px}
-.tip-title{font-size:12px;font-weight:700;color:#60a5fa;margin-bottom:8px}
-.tip-item{font-size:12px;color:#94a3b8;margin:4px 0}
+.btn-yellow{background:#f59e0b}
+.row{display:flex;gap:8px;flex-wrap:wrap}
 .hidden{display:none}
-.empty{text-align:center;padding:2rem;color:#475569}
-.status-dot{width:6px;height:6px;border-radius:50%;display:inline-block;margin-right:4px}
-.status-summary{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px}
-.status-chip{background:rgba(255,255,255,0.06);border-radius:8px;padding:3px 8px;font-size:11px;display:flex;align-items:center;gap:4px}
+.agent-card{background:rgba(255,255,255,0.07);border-radius:14px;padding:14px;margin-bottom:10px}
+.agent-name{font-weight:800;font-size:15px}
+.agent-meta{font-size:11px;color:#64748b;margin-top:2px}
+.perf-bar{background:rgba(255,255,255,0.1);border-radius:5px;height:8px;overflow:hidden;margin:8px 0}
+.perf-fill{height:100%;border-radius:5px;transition:width 0.3s}
+.badge-green{background:rgba(16,185,129,0.2);color:#34d399;border-radius:8px;padding:3px 10px;font-size:11px;font-weight:700}
+.badge-yellow{background:rgba(245,158,11,0.2);color:#fbbf24;border-radius:8px;padding:3px 10px;font-size:11px;font-weight:700}
+.badge-red{background:rgba(239,68,68,0.2);color:#f87171;border-radius:8px;padding:3px 10px;font-size:11px;font-weight:700}
+.metric-row{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.metric{background:rgba(255,255,255,0.05);border-radius:10px;padding:8px 12px;text-align:center;flex:1;min-width:60px}
+.metric-val{font-size:18px;font-weight:800}
+.metric-label{font-size:10px;color:#94a3b8}
+.template-card{background:rgba(255,255,255,0.07);border-radius:14px;padding:14px;margin-bottom:10px}
+.template-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.template-title{font-weight:700;font-size:13px;color:#e2e8f0}
+.template-text{font-size:12px;color:#94a3b8;line-height:1.7;white-space:pre-line}
+.copy-btn{background:rgba(255,255,255,0.1);border:none;border-radius:8px;padding:5px 12px;color:white;font-size:11px;font-weight:600;cursor:pointer;white-space:nowrap}
+.copy-btn.copied{background:#10b981}
+.strategy-card{background:rgba(255,255,255,0.07);border-radius:14px;padding:14px;margin-bottom:10px;border-left:3px solid #3b82f6}
+.strategy-title{font-weight:700;font-size:13px;color:#60a5fa;margin-bottom:8px}
+.strategy-item{font-size:12px;color:#cbd5e1;margin:5px 0;display:flex;gap:8px}
+.rank-badge{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;flex-shrink:0}
+.subtab-row{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap}
+.subtab{padding:6px 12px;border-radius:12px;border:none;cursor:pointer;font-weight:600;font-size:11px;background:rgba(255,255,255,0.08);color:#94a3b8}
+.subtab.active{background:rgba(59,130,246,0.3);color:#60a5fa;border:1px solid rgba(59,130,246,0.4)}
+.leaderboard-item{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.05);border-radius:12px;padding:12px;margin-bottom:8px}
+.tip-box{background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.2);border-radius:12px;padding:12px;margin-top:8px}
+.tip-title{font-size:12px;font-weight:700;color:#34d399;margin-bottom:6px}
+.tip-item{font-size:12px;color:#94a3b8;margin:3px 0}
 </style>
 </head>
 <body>
 <div class="header">
   <div class="badge">🏢 Exterior Financial Group</div>
-  <h1>EFG Team System</h1>
-  <p class="subtitle">7-Tier Tracker • Leads • Posts • Daily Goals</p>
+  <h1>Team Leader Command Center</h1>
+  <p class="subtitle">Dashboard • Scripts • Emails • Strategies • Coaching</p>
   <div class="stats">
-    <div class="stat"><div class="stat-val" style="color:#60a5fa" id="totalLeads">0</div><div class="stat-label">Total Leads</div></div>
-    <div class="stat"><div class="stat-val" style="color:#34d399" id="interestedCount">0</div><div class="stat-label">Interested</div></div>
-    <div class="stat"><div class="stat-val" style="color:#a78bfa" id="closedCount">0</div><div class="stat-label">Closed</div></div>
-    <div class="stat"><div class="stat-val" style="color:#f59e0b" id="dailyScore">0%</div><div class="stat-label">Daily Score</div></div>
+    <div class="stat"><div class="stat-val" style="color:#60a5fa" id="totalAgents">0</div><div class="stat-label">Agents</div></div>
+    <div class="stat"><div class="stat-val" style="color:#34d399" id="topPerformers">0</div><div class="stat-label">🟢 Strong</div></div>
+    <div class="stat"><div class="stat-val" style="color:#fbbf24" id="avgPerformers">0</div><div class="stat-label">🟡 Average</div></div>
+    <div class="stat"><div class="stat-val" style="color:#f87171" id="weakPerformers">0</div><div class="stat-label">🔴 Needs Help</div></div>
+    <div class="stat"><div class="stat-val" style="color:#a78bfa" id="totalTeamLeads">0</div><div class="stat-label">Team Leads</div></div>
   </div>
 </div>
+
 <div class="tabs">
-  <button class="tab active" onclick="showTab('leads',this)">🎯 Leads</button>
-  <button class="tab" onclick="showTab('posts',this)">📱 Posts</button>
+  <button class="tab active" onclick="showTab('dashboard',this)">📊 Dashboard</button>
   <button class="tab" onclick="showTab('scripts',this)">💬 Scripts</button>
-  <button class="tab" onclick="showTab('daily',this)">✅ Daily</button>
-  <button class="tab" onclick="showTab('tiers',this)">👥 7 Tiers</button>
+  <button class="tab" onclick="showTab('emails',this)">📧 Emails</button>
+  <button class="tab" onclick="showTab('strategies',this)">🎯 Strategies</button>
+  <button class="tab" onclick="showTab('coaching',this)">🏆 Coaching</button>
 </div>
+
 <div class="content">
-<div id="tab-leads">
+
+<!-- DASHBOARD -->
+<div id="tab-dashboard">
   <div class="card">
     <div style="display:flex;justify-content:space-between;align-items:center">
-      <div class="card-title" style="margin-bottom:0">Lead Pipeline</div>
-      <button class="btn btn-green" onclick="toggleAddLead()">+ Add Lead</button>
+      <div class="card-title" style="margin-bottom:0">➕ Add Agent</div>
+      <button class="btn btn-green" onclick="toggleForm()">+ Add</button>
     </div>
-    <div id="add-lead-form" class="hidden" style="margin-top:12px">
-      <input id="leadName" placeholder="Prospect name..." style="margin-bottom:8px">
-      <div class="row" style="margin-top:0">
-        <select id="leadPlatform" style="flex:1">
-          <option>Facebook</option><option>Instagram</option><option>TikTok</option>
-          <option>Referral</option><option>In Person</option><option>Other</option>
-        </select>
-        <select id="leadStatus" style="flex:1">
-          <option>New</option><option>Contacted</option><option>Interested</option>
-          <option>Follow Up</option><option>Closed</option><option>Not Interested</option>
-        </select>
+    <div id="agent-form" class="hidden" style="margin-top:12px">
+      <input id="agentName" placeholder="Agent name..." style="margin-bottom:8px">
+      <div class="row">
+        <input id="agentLeads" type="number" placeholder="Leads" style="flex:1;min-width:60px">
+        <input id="agentCalls" type="number" placeholder="Calls" style="flex:1;min-width:60px">
+        <input id="agentCloses" type="number" placeholder="Closes" style="flex:1;min-width:60px">
       </div>
-      <button class="btn btn-blue" style="width:100%;margin-top:8px" onclick="addLead()">Save Lead</button>
+      <div class="row" style="margin-top:8px">
+        <input id="agentPosts" type="number" placeholder="Posts" style="flex:1;min-width:60px">
+        <input id="agentDMs" type="number" placeholder="DMs sent" style="flex:1;min-width:60px">
+      </div>
+      <button class="btn btn-blue" style="width:100%;margin-top:8px" onclick="addAgent()">Save Agent</button>
     </div>
   </div>
-  <div class="status-summary" id="statusSummary"></div>
-  <div id="leadsList"><div class="empty"><p style="font-size:28px">🎯</p><p style="font-size:13px;margin-top:8px">No leads yet!</p></div></div>
+
+  <!-- LEADERBOARD -->
+  <div class="section-title">🏆 Performance Leaderboard</div>
+  <div id="leaderboard"><div style="text-align:center;color:#475569;padding:2rem;font-size:13px">No agents yet. Add your team members above!</div></div>
+
+  <!-- AGENT DETAILS -->
+  <div class="section-title" style="margin-top:16px">👥 Agent Details</div>
+  <div id="agentsList"><div style="text-align:center;color:#475569;padding:1rem;font-size:13px">No agents yet.</div></div>
 </div>
-<div id="tab-posts" class="hidden">
-  <div class="platform-tabs">
-    <button class="platform-tab active" onclick="setPlatform('facebook',this)">👍 Facebook</button>
-    <button class="platform-tab" onclick="setPlatform('instagram',this)">📸 Instagram</button>
-    <button class="platform-tab" onclick="setPlatform('tiktok',this)">🎵 TikTok</button>
+
+<!-- SCRIPTS -->
+<div id="tab-scripts" class="hidden">
+  <div class="subtab-row">
+    <button class="subtab active" onclick="showSubtab('scripts','cold',this)">❄️ Cold DM</button>
+    <button class="subtab" onclick="showSubtab('scripts','warm',this)">🔥 Warm</button>
+    <button class="subtab" onclick="showSubtab('scripts','followup',this)">🔄 Follow Up</button>
+    <button class="subtab" onclick="showSubtab('scripts','objection',this)">🛡️ Objections</button>
+    <button class="subtab" onclick="showSubtab('scripts','closing',this)">✅ Closing</button>
   </div>
-  <div id="postsContent"></div>
-  <div class="tip-box">
-    <div class="tip-title">💡 Best Times to Post</div>
-    <div class="tip-item">✓ 7–9am, 12–2pm, or 7–9pm for best reach</div>
-    <div class="tip-item">✓ Respond to every comment within 1 hour</div>
-    <div class="tip-item">✓ Post stories daily in addition to feed posts</div>
-    <div class="tip-item">✓ Go LIVE once a week to boost reach</div>
-    <div class="tip-item">✓ Use 3–5 relevant hashtags per post</div>
+  <div id="scripts-cold"><div id="scripts-cold-content"></div></div>
+  <div id="scripts-warm" class="hidden"><div id="scripts-warm-content"></div></div>
+  <div id="scripts-followup" class="hidden"><div id="scripts-followup-content"></div></div>
+  <div id="scripts-objection" class="hidden"><div id="scripts-objection-content"></div></div>
+  <div id="scripts-closing" class="hidden"><div id="scripts-closing-content"></div></div>
+</div>
+
+<!-- EMAILS -->
+<div id="tab-emails" class="hidden">
+  <div class="subtab-row">
+    <button class="subtab active" onclick="showSubtab('emails','precall',this)">📨 Pre-Call</button>
+    <button class="subtab" onclick="showSubtab('emails','postcall',this)">📩 Post-Call</button>
+    <button class="subtab" onclick="showSubtab('emails','welcome',this)">🎉 Welcome</button>
+    <button class="subtab" onclick="showSubtab('emails','followup',this)">🔄 Follow Up</button>
   </div>
+  <div id="emails-precall"><div id="emails-precall-content"></div></div>
+  <div id="emails-postcall" class="hidden"><div id="emails-postcall-content"></div></div>
+  <div id="emails-welcome" class="hidden"><div id="emails-welcome-content"></div></div>
+  <div id="emails-followup" class="hidden"><div id="emails-followup-content"></div></div>
 </div>
-<div id="tab-scripts" class="hidden"><div id="scriptsContent"></div></div>
-<div id="tab-daily" class="hidden">
-  <div class="score-card" id="scoreCard">
-    <div style="font-size:12px;opacity:0.85">Today's Activity Score</div>
-    <div class="score-val" id="scoreVal">0%</div>
-    <div id="scoreMsg" style="font-size:12px;opacity:0.8">🎯 Let's get moving!</div>
+
+<!-- STRATEGIES -->
+<div id="tab-strategies" class="hidden">
+  <div class="subtab-row">
+    <button class="subtab active" onclick="showSubtab('strategies','lead',this)">🎯 Lead Gen</button>
+    <button class="subtab" onclick="showSubtab('strategies','social',this)">📱 Social</button>
+    <button class="subtab" onclick="showSubtab('strategies','weak',this)">💪 Weak Agents</button>
+    <button class="subtab" onclick="showSubtab('strategies','daily',this)">📅 Daily Plan</button>
   </div>
-  <div id="activitiesList"></div>
-  <button class="btn btn-gray" style="width:100%;margin-top:8px" onclick="resetActivities()">🔄 Reset for New Day</button>
+  <div id="strategies-lead"><div id="strategies-lead-content"></div></div>
+  <div id="strategies-social" class="hidden"><div id="strategies-social-content"></div></div>
+  <div id="strategies-weak" class="hidden"><div id="strategies-weak-content"></div></div>
+  <div id="strategies-daily" class="hidden"><div id="strategies-daily-content"></div></div>
 </div>
-<div id="tab-tiers" class="hidden">
-  <div class="card">
-    <div class="card-title">➕ Add Team Member</div>
-    <input id="tierMemberName" placeholder="Enter name...">
-    <div class="row">
-      <select id="tierSelect" style="flex:1">
-        <option value="1">Tier 1 - Direct</option>
-        <option value="2">Tier 2</option><option value="3">Tier 3</option>
-        <option value="4">Tier 4</option><option value="5">Tier 5</option>
-        <option value="6">Tier 6</option><option value="7">Tier 7</option>
-      </select>
-      <button class="btn btn-green" onclick="addTierMember()">Add</button>
-    </div>
+
+<!-- COACHING -->
+<div id="tab-coaching" class="hidden">
+  <div class="subtab-row">
+    <button class="subtab active" onclick="showSubtab('coaching','gameplan',this)">🗓️ Game Plan</button>
+    <button class="subtab" onclick="showSubtab('coaching','motivation',this)">🔥 Motivation</button>
+    <button class="subtab" onclick="showSubtab('coaching','accountability',this)">✅ Accountability</button>
+    <button class="subtab" onclick="showSubtab('coaching','training',this)">📚 Training</button>
   </div>
-  <div id="tiersList"></div>
+  <div id="coaching-gameplan"><div id="coaching-gameplan-content"></div></div>
+  <div id="coaching-motivation" class="hidden"><div id="coaching-motivation-content"></div></div>
+  <div id="coaching-accountability" class="hidden"><div id="coaching-accountability-content"></div></div>
+  <div id="coaching-training" class="hidden"><div id="coaching-training-content"></div></div>
 </div>
+
 </div>
+
 <script>
-var leads=[];
-var activities={posts:0,dms:0,followups:0,calls:0,engage:0,training:0,referrals:0};
-var tiers={1:[],2:[],3:[],4:[],5:[],6:[],7:[]};
-var currentPlatform='facebook';
-var statusColors={New:'#3b82f6',Contacted:'#f59e0b',Interested:'#10b981','Follow Up':'#8b5cf6',Closed:'#34d399','Not Interested':'#ef4444'};
-var tierColors=['#7c3aed','#3b82f6','#06b6d4','#10b981','#eab308','#f97316','#f43f5e'];
-var posts={
-  facebook:[
-    {title:'Financial Freedom Story',text:'🔥 6 months ago I had no idea how to create extra income outside my 9-5. Today I\'m building something that\'s changing my family\'s future. If you\'re tired of living paycheck to paycheck, drop a 💰 below! #FinancialFreedom #EFG'},
-    {title:'Curiosity Post',text:'Honest question — if there was a way to build an extra $500-$2000/month working part time from your phone, would you want to know? Comment \'INFO\' below 👇 #ExteriorFinancialGroup'},
-    {title:'Team Building',text:'We\'re expanding our team at Exterior Financial Group! Looking for motivated people who want MORE time, money and freedom. DM me \'READY\' 💪'},
-    {title:'Value Post',text:'3 things nobody teaches about money:\n1️⃣ Your job won\'t make you wealthy\n2️⃣ Multiple income streams = security\n3️⃣ Right network changes everything\n\nLearned through EFG. Comment below 👇'}
+var agents=[];
+
+var scriptsData={
+  cold:[
+    {title:'Cold DM - Curiosity',text:'Hey [Name]! I came across your profile and something told me to reach out. I\'m building a team at Exterior Financial Group and I immediately thought of you. I\'m not sure if it\'s a fit but would you be open to a quick 15-min call this week? No pressure at all!'},
+    {title:'Cold DM - Compliment Hook',text:'Hey [Name]! Love what you post — you clearly have an entrepreneurial mindset. I\'m expanding my team at EFG and looking for driven people. Would you be open to a quick chat about something that could add serious income to what you\'re already doing?'},
+    {title:'Cold DM - Direct',text:'Hey [Name]! Quick question — are you open to exploring ways to earn additional income outside your current work? I\'m part of Exterior Financial Group and we\'re growing fast. Would love to connect for 15 mins if you\'re open!'},
+    {title:'Cold DM - Social Proof',text:'Hey [Name]! My team at Exterior Financial Group just hit a huge milestone and I\'m expanding. I\'m looking for 3 motivated people this month. Your profile stood out — would you be open to a quick call to see if this could be a fit for you?'}
   ],
-  instagram:[
-    {title:'Lifestyle Caption',text:'Building wealth from my phone 📱✨ Nobody said 9-5 was the only path. Double tap if you\'re ready to take control 💰 #FinancialFreedom #EFG'},
-    {title:'Before & After',text:'Before EFG: Stressed about bills.\nAfter EFG: Building passive income 💯\nDM me \'START\' 🚀 #ExteriorFinancialGroup'},
-    {title:'Question Hook',text:'What would you do with an extra $1,000 this month? 👇 I\'m building a team done with settling. DM me 💬 #FinancialGoals #EFG'}
+  warm:[
+    {title:'Warm Market - Friend',text:'Hey [Name]! Hope you\'re doing amazing! I\'ve been working on something really exciting and honestly you were one of the first people I thought of. It\'s a financial opportunity I\'m building with a small team. I think you\'d crush it. Would you be open to hearing more?'},
+    {title:'Warm Market - Family',text:'Hey [Name]! I know we don\'t always talk about money stuff but I\'ve been doing something that\'s genuinely changing my financial future and I\'d feel bad not sharing it with you. It\'s with Exterior Financial Group. Can I tell you about it over a quick call?'},
+    {title:'Warm Market - Colleague',text:'Hey [Name]! Random question — are you happy with your current income situation? I\'ve been building something on the side with EFG that\'s been incredible. I think it could work well around your schedule. Would you be open to a 15-min call?'}
   ],
-  tiktok:[
-    {title:'POV Caption',text:'POV: You stopped waiting for a raise and started building your own income 💸 Comment \'HOW\' to learn what I do! #FinancialFreedom #EFG'},
-    {title:'Story Time',text:'How I built a 7-tier income team with zero experience 🧵 Drop questions below! #MoneyTok #ExteriorFinancialGroup'},
-    {title:'Tips Video',text:'3 reasons people stay broke:\n#1 No multiple income streams\n#2 Wrong network\n#3 Fear of starting\nEFG fixed all 3. DM \'CHANGE\' 💪 #EFG'}
+  followup:[
+    {title:'Follow Up #1 - Soft',text:'Hey [Name]! Just checking in — I know life gets busy! I wanted to follow up on our last chat about the EFG opportunity. Our team has grown a lot since we spoke. If you\'re still open to it, would love to reconnect for just 10 minutes. What does your week look like?'},
+    {title:'Follow Up #2 - Urgency',text:'Hey [Name]! I don\'t want to bug you but I\'d feel terrible if I didn\'t follow up one more time. We have a really exciting momentum going on our team right now and I think the timing is perfect for you. Can we jump on a quick call this week?'},
+    {title:'Follow Up #3 - Final',text:'Hey [Name]! Last follow up from me — I respect your time! If the timing isn\'t right now, no worries at all. But if things change and you want to explore financial freedom, I\'m always here. Wishing you the best either way! 🙏'},
+    {title:'Follow Up - After No Show',text:'Hey [Name]! Looks like we missed each other on our call. No worries at all — I know things come up! Would love to reschedule when you have 15 mins. What\'s a good time for you this week?'}
+  ],
+  objection:[
+    {title:'No Time Objection',text:'I totally hear you — I was in the same boat! That\'s actually WHY I started this. It\'s designed to work around your schedule. Most of our top earners started with just 5-10 hours a week. Would it be worth 15 minutes just to see if the numbers make sense for you?'},
+    {title:'No Money Objection',text:'That\'s completely understandable! The good news is it costs very little to get started and most people make back their initial investment within the first month. Would you be open to just learning more so you can make an informed decision?'},
+    {title:'Not Interested Objection',text:'Totally respect that! Quick question before I go — do you know anyone who might be looking to build extra income? I take really good care of referrals and I\'d love to help someone you know. Anyone come to mind?'},
+    {title:'Already Tried MLM Objection',text:'I completely understand — most MLMs are not worth it. What makes EFG different is [explain difference]. But I get the hesitation! Would you be willing to just hear the details and make your own judgment? You might be surprised.'},
+    {title:'Need to Think About It',text:'Of course! That\'s actually a great sign — it means you\'re taking it seriously. What specific questions do you have that I can answer right now? I want to make sure you have everything you need to make the best decision for yourself.'}
+  ],
+  closing:[
+    {title:'Soft Close',text:'Based on everything we\'ve talked about, it really sounds like this could be a great fit for you. What would it take for you to feel comfortable getting started today?'},
+    {title:'Assumptive Close',text:'I can already see you doing really well with this. Let\'s get you started — I\'ll walk you through the next steps right now. It only takes about 10 minutes to get set up. Sound good?'},
+    {title:'Urgency Close',text:'I want to be upfront with you — our team is growing fast and I can only personally mentor a few people at a time. I\'d love for you to be one of them. Are you ready to take that step today?'},
+    {title:'Fear of Loss Close',text:'I\'d hate for you to look back in 6 months and wish you had started today. The people who got in early on our team are seeing incredible results. The best time to start is now. What do you say?'}
   ]
 };
-var scripts=[
-  {title:'Cold DM Script',text:'Hey [Name]! I came across your profile and thought of you for something exciting I\'m building at Exterior Financial Group. Would you be open to a quick 15-min call? No pressure!'},
-  {title:'Warm Market Script',text:'Hey [Name]! Been working on something exciting and thought of you because you\'ve always been driven. It\'s a financial opportunity — would you be open to hearing more?'},
-  {title:'Follow-Up Script',text:'Hey [Name], circling back from our chat! Our team has grown a lot. If you\'re still open, I\'d love to reconnect for just 10 minutes. What does your schedule look like?'},
-  {title:'Objection - No Time',text:'I totally get it! That\'s why I started — no time either. This works part time, 5-10 hrs/week. Worth 15 minutes just to see if it fits?'},
-  {title:'Objection - Not Interested',text:'No worries! Quick question — do you know anyone looking for extra income? I\'d appreciate referrals and would take great care of them!'}
-];
-var activityConfig=[
-  {id:'posts',label:'Post on social media',target:1,icon:'📱'},
-  {id:'dms',label:'Send new DMs to prospects',target:10,icon:'✉️'},
-  {id:'followups',label:'Follow up with leads',target:5,icon:'🔄'},
-  {id:'calls',label:'Jump on prospect calls',target:2,icon:'📞'},
-  {id:'engage',label:'Engage on others posts',target:15,icon:'👍'},
-  {id:'training',label:'Complete team training',target:1,icon:'📚'},
-  {id:'referrals',label:'Ask for referrals',target:3,icon:'🤝'}
-];
+
+var emailsData={
+  precall:[
+    {title:'Pre-Call Confirmation Email',subject:'Our Call Tomorrow - Excited to Connect! 🔥',text:'Hi [Name],\n\nJust wanted to confirm our call tomorrow at [TIME].\n\nI\'m really looking forward to connecting with you! In our call I\'ll be sharing:\n\n✅ What Exterior Financial Group is all about\n✅ How our team is building serious income\n✅ Whether this could be a fit for your goals\n\nThis will be a no-pressure conversation — just two people exploring possibilities.\n\nSee you tomorrow!\n\n[Your Name]\nExterior Financial Group'},
+    {title:'Pre-Call Info Email',subject:'Quick Info Before Our Call 📋',text:'Hi [Name],\n\nExcited for our call at [TIME]! Here\'s a quick overview before we connect:\n\n🏢 About EFG: We help people build financial freedom through a proven team system.\n\n💰 Income Potential: Our team members earn through [explain comp plan briefly]\n\n⏰ Time Commitment: Most start part time, 5-10 hours/week\n\n🚀 What Makes Us Different: [Your unique value prop]\n\nCome with questions — I love them!\n\nSee you soon,\n[Your Name]'},
+    {title:'Pre-Call Hype Email',subject:'Tomorrow is Going to Change Things! 🚀',text:'Hi [Name],\n\nI just want to say — I\'m genuinely excited for our call tomorrow at [TIME].\n\nThe people I\'ve had this exact conversation with who decided to take action have completely transformed their financial situation.\n\nI believe you have what it takes. Come ready to be open-minded and ask questions!\n\nSee you tomorrow,\n[Your Name]\nEFG Team Leader'}
+  ],
+  postcall:[
+    {title:'Post-Call - Interested Follow Up',subject:'Great Connecting Today - Next Steps 🎯',text:'Hi [Name],\n\nIt was so great talking with you today! I can already see your potential in this.\n\nAs promised, here are the next steps:\n\n1️⃣ Review the info I sent over\n2️⃣ Write down any questions you have\n3️⃣ Let\'s schedule our follow up call: [LINK/TIME]\n\nI\'m here if anything comes up before then. Don\'t hesitate to reach out!\n\nExcited for your journey,\n[Your Name]'},
+    {title:'Post-Call - Needs Time Follow Up',subject:'No Rush - I\'m Here When You\'re Ready',text:'Hi [Name],\n\nThanks so much for taking the time to connect today!\n\nI completely understand you need some time to think it over. That\'s the smart thing to do.\n\nA few things to consider as you think:\n✅ Where do you want to be financially in 12 months?\n✅ What would an extra $[X]/month mean for your family?\n✅ What\'s the cost of NOT trying?\n\nI\'ll follow up in a few days. In the meantime, feel free to reach out anytime!\n\n[Your Name]'},
+    {title:'Post-Call - Not Interested',subject:'Thanks for Your Time! 🙏',text:'Hi [Name],\n\nThank you so much for taking the time to connect today! I genuinely appreciate it.\n\nI completely respect your decision. If things ever change or the timing becomes right in the future, please don\'t hesitate to reach out.\n\nAlso — if you ever know anyone who might be looking for financial opportunities, I\'d love a referral!\n\nWishing you all the best,\n[Your Name]'},
+    {title:'Post-Call - Closed Deal! 🎉',subject:'Welcome to the EFG Family! 🎉🚀',text:'Hi [Name],\n\nWELCOME TO THE TEAM! I\'m so excited for your journey ahead!\n\nHere are your immediate next steps:\n\n1️⃣ Complete your onboarding: [LINK]\n2️⃣ Join our team group chat: [LINK]\n3️⃣ Schedule your first training call with me\n4️⃣ Start your warm market list (100 names)\n\nYou made a powerful decision today. I\'m going to do everything I can to help you succeed!\n\nLet\'s get it! 💪\n[Your Name]\nEFG Team Leader'}
+  ],
+  welcome:[
+    {title:'New Agent Welcome Email',subject:'You\'re In! Welcome to EFG 🎉',text:'Hi [Name],\n\nWelcome to Exterior Financial Group! You\'ve just made one of the best decisions of your life.\n\n🎯 YOUR FIRST WEEK ACTION PLAN:\n\nDay 1: Complete onboarding & join team chat\nDay 2: Write your warm market list (100 names)\nDay 3: Post your first piece of content\nDay 4: Send 10 DMs to your warm market\nDay 5: Get on a call with your first prospect\nDay 6: Follow up with everyone you contacted\nDay 7: Debrief call with me\n\n💡 Remember: The faster you move, the faster you earn!\n\nI\'m in your corner every step of the way.\n\n[Your Name]\nYour EFG Team Leader'},
+    {title:'Welcome - 30 Day Game Plan',subject:'Your 30-Day EFG Success Roadmap 🗺️',text:'Hi [Name],\n\nHere\'s your 30-day roadmap to your first win!\n\n📅 WEEK 1: Foundation\n- Complete all onboarding steps\n- Build your contact list\n- Post daily on social media\n- Send 10 DMs per day\n\n📅 WEEK 2: Momentum\n- Get 5+ calls booked\n- Practice scripts daily\n- Attend all team trainings\n\n📅 WEEK 3: Closing\n- Focus on closing your warm market\n- Ask for referrals from everyone\n- Your first close is coming!\n\n📅 WEEK 4: Duplication\n- Start training your first recruit\n- Celebrate your wins!\n- Set next month\'s goals\n\nYou\'ve got this! 🚀\n[Your Name]'}
+  ],
+  followup:[
+    {title:'7-Day Check In Email',subject:'One Week In - How Are You Doing? 💪',text:'Hi [Name],\n\nIt\'s been one week since you joined EFG — I wanted to check in!\n\nQuick questions:\n✅ How many people have you contacted?\n✅ How many calls have you booked?\n✅ What\'s been your biggest challenge?\n\nRemember — consistency is the key. Even 1 hour a day of focused activity adds up fast.\n\nReply to this email and let me know how it\'s going. I\'m here to help!\n\n[Your Name]'},
+    {title:'Inactive Agent Re-Engagement',subject:'I\'m Thinking About You 🙏',text:'Hi [Name],\n\nI noticed things have been quiet lately and I just wanted to reach out.\n\nI know life gets busy and sometimes this business takes a back seat. That\'s okay!\n\nBut I believe in you and I don\'t want to see you give up on your goals.\n\nCan we jump on a quick 15-min call this week? I want to understand what\'s going on and how I can better support you.\n\nYou didn\'t come this far to only come this far! 💪\n\n[Your Name]\nYour EFG Team Leader'}
+  ]
+};
+
+var strategiesData={
+  lead:[
+    {title:'🎯 Strategy 1: Warm Market Blitz',color:'#3b82f6',items:['Write down 100 names from your phone contacts','Categorize: Family, Friends, Coworkers, Old Classmates','Start with people who are entrepreneurial or money-motivated','Goal: Contact 10 warm market people per day','Track every conversation in your lead tracker']},
+    {title:'📱 Strategy 2: Social Media Attraction',color:'#10b981',items:['Post 1 piece of content daily about financial freedom','Share your journey — people buy into YOU first','Use curiosity hooks: "What if you could..." or "I used to..."','Respond to every comment within 1 hour','Stories + feed posts = maximum reach']},
+    {title:'🔍 Strategy 3: Targeted Prospecting',color:'#8b5cf6',items:['Search Facebook groups: "work from home", "side hustle", "financial freedom"','Connect with people who engage on financial content','Look for people posting about money struggles or goals','Send 20 targeted connection requests per day','Follow up within 24 hours of connecting']},
+    {title:'🤝 Strategy 4: Referral Machine',color:'#f59e0b',items:['Ask EVERY prospect: "Who do you know who might be interested?"','Even "not interested" people can refer','Offer to take great care of their referrals','Follow up specifically on referrals — they close faster','Goal: Get 3 referrals per week from your network']}
+  ],
+  social:[
+    {title:'📘 Facebook Strategy',color:'#3b82f6',items:['Post 1 time per day at 7am, 12pm or 7pm','Use Facebook Lives once a week — massive reach boost','Join 5 entrepreneurship/financial freedom groups','Engage on 10 posts per day before posting your own','Personal profile + business page = double reach']},
+    {title:'📸 Instagram Strategy',color:'#e11d48',items:['Post feed content 4-5x per week','Post stories EVERY single day — builds familiarity','Use 5-8 relevant hashtags per post','Reels get 3-5x more reach than regular posts','DM everyone who likes or comments your posts']},
+    {title:'🎵 TikTok Strategy',color:'#0ea5e9',items:['Post 1-3 TikToks per day for maximum growth','Hook viewers in the FIRST 3 seconds','Use trending sounds with financial freedom content','Reply to comments with video replies — boosts algorithm','One viral video can bring hundreds of leads overnight']}
+  ],
+  weak:[
+    {title:'🔴 For Agents With 0 Leads',color:'#ef4444',items:['Problem: Not taking consistent action','Solution: Daily 30-min prospecting sessions','Action: Send 10 DMs before doing anything else','Accountability: Screenshot DMs to leader daily','Mindset: "Every no is one step closer to a yes"','Support: Do a role play call with them this week']},
+    {title:'🟡 For Agents Generating Leads But Not Closing',color:'#f59e0b',items:['Problem: Weak sales skills or limiting beliefs','Solution: Script practice every morning for 15 mins','Action: Record yourself doing a pitch and review it','Accountability: Listen to their calls and give feedback','Mindset: "Closing is helping someone make a decision"','Support: Do a 3-way call with their next prospect']},
+    {title:'🟠 For Agents Who Start Strong Then Quit',color:'#f97316',items:['Problem: No long-term vision or got comfortable','Solution: Set bigger 90-day goals tied to emotions','Action: Create a vision board or dream list','Accountability: Weekly check-in calls — mandatory','Mindset: "Your team is watching how you respond to adversity"','Support: Connect them with a top earner as a mentor']},
+    {title:'💡 Universal Weak Agent Recovery Plan',color:'#8b5cf6',items:['Week 1: Daily check-ins + script practice','Week 2: Shadow a top agent on calls','Week 3: 3-way calls with leader on all prospects','Week 4: Independent with weekly accountability','Goal: Get them their first close within 30 days','Celebrate EVERY small win publicly']}
+  ],
+  daily:[
+    {title:'🌅 Morning Routine (7-9am)',color:'#f59e0b',items:['Review your goals and why you started (5 mins)','Post your first piece of social media content','Send 5 morning DMs to warm prospects','Read/listen to 10 mins of personal development','Visualize your goals for the day']},
+    {title:'☀️ Midday Actions (12-2pm)',color:'#10b981',items:['Follow up with all open conversations','Send 10 new DMs to cold prospects','Engage on 15 social media posts (like/comment)','Book any calls for the next 48 hours','Update your lead tracker with all activity']},
+    {title:'🌙 Evening Power Hour (7-9pm)',color:'#3b82f6',items:['Make your scheduled prospect calls','Post evening social media content','Send 5 final follow-up messages','Plan tomorrow\'s top 3 priorities','Celebrate what you accomplished today']}
+  ]
+};
+
+var coachingData={
+  gameplan:[
+    {title:'📅 Weekly Team Game Plan',color:'#3b82f6',items:['Monday: Set weekly goals + team motivation message','Tuesday: Training call - scripts & objections','Wednesday: Midweek check-in - who needs support?','Thursday: Role play & skill building session','Friday: Celebrate wins + set weekend challenge','Weekend: Post content + follow up on all leads']},
+    {title:'📊 Monthly Goals Framework',color:'#10b981',items:['Week 1: Focus on ACTIVITY (DMs, posts, content)','Week 2: Focus on CONVERSATIONS (calls booked)','Week 3: Focus on PRESENTATIONS (pitching)','Week 4: Focus on CLOSING (converting to team)','Track: Leads → Calls → Presentations → Closes','Conversion goal: 1 close per 20 serious conversations']}
+  ],
+  motivation:[
+    {title:'🔥 Daily Motivation Message Template',color:'#f59e0b',text:'Good morning TEAM! 🔥\n\nRemember WHY you started. Someone out there is waiting to hear YOUR story. Your financial freedom is one conversation away.\n\nToday\'s challenge: Send 15 DMs before noon. Let\'s go! 💪\n\n#EFGFamily #FinancialFreedom'},
+    {title:'💪 Agent Struggling Message',color:'#8b5cf6',text:'Hey [Name], I see you. I know it feels hard right now.\n\nEvery top earner on our team went through exactly what you\'re feeling. The ones who pushed through? They\'re the ones winning now.\n\nI believe in you. Let\'s jump on a quick call — I want to help you break through this. When are you free today?'},
+    {title:'🏆 Celebrating a Win Message',color:'#10b981',text:'🎉 HUGE shoutout to [Name] for [achievement]!\n\nThis is what happens when you stay consistent and believe in yourself. SO proud of you!\n\nThe rest of the team — this could be YOU next week. Let\'s go! 🚀\n\n#EFGWins #TeamWork'}
+  ],
+  accountability:[
+    {title:'✅ Daily Accountability Check-In',color:'#10b981',items:['Send team a morning check-in message every day','Ask: How many DMs did you send yesterday?','Ask: How many calls do you have booked today?','Ask: What is your #1 focus today?','Require: Screenshot of activity as proof','Celebrate: Anyone who hits daily goals publicly']},
+    {title:'📋 Weekly Performance Review',color:'#3b82f6',items:['Every Friday: Review each agent\'s numbers','Metrics to track: DMs sent, calls booked, closes','Compare to previous week — growing or declining?','Private message agents who are falling behind','Public recognition for agents hitting goals','Adjust strategies based on what\'s working']}
+  ],
+  training:[
+    {title:'📚 Week 1 Training Curriculum',color:'#8b5cf6',items:['Day 1: Company overview + compensation plan','Day 2: Warm market list building (100 names)','Day 3: Script mastery - cold DM & warm market','Day 4: Social media content creation','Day 5: Objection handling role play','Day 6: First calls with leader support','Day 7: Review + set week 2 goals']},
+    {title:'🎓 Ongoing Training Topics',color:'#f59e0b',items:['Weekly: Script practice and role play','Bi-weekly: Social media strategy update','Monthly: Top earner guest training','Monthly: Mindset and personal development','Quarterly: Goal setting and vision board session','Ongoing: 3-way calls for new agents']}
+  ]
+};
 
 function showTab(name,btn){
   document.querySelectorAll('[id^="tab-"]').forEach(function(el){el.classList.add('hidden')});
   document.getElementById('tab-'+name).classList.remove('hidden');
   document.querySelectorAll('.tab').forEach(function(el){el.classList.remove('active')});
   btn.classList.add('active');
-  if(name==='posts')renderPosts();
-  if(name==='scripts')renderScripts();
-  if(name==='daily')renderActivities();
-  if(name==='tiers')renderTiers();
+  if(name==='scripts')renderScripts('cold');
+  if(name==='emails')renderEmails('precall');
+  if(name==='strategies')renderStrategies('lead');
+  if(name==='coaching')renderCoaching('gameplan');
 }
 
-function toggleAddLead(){
-  var f=document.getElementById('add-lead-form');
-  f.classList.toggle('hidden');
-}
-
-function addLead(){
-  var name=document.getElementById('leadName').value.trim();
-  if(!name)return;
-  leads.push({id:Date.now(),name:name,platform:document.getElementById('leadPlatform').value,status:document.getElementById('leadStatus').value,date:new Date().toLocaleDateString()});
-  document.getElementById('leadName').value='';
-  document.getElementById('add-lead-form').classList.add('hidden');
-  renderLeads();updateStats();
-}
-
-function updateLeadStatus(id,status){
-  for(var i=0;i<leads.length;i++){
-    if(leads[i].id===id){leads[i].status=status;break;}
-  }
-  renderLeads();updateStats();
-}
-
-function removeLead(id){
-  leads=leads.filter(function(l){return l.id!==id});
-  renderLeads();updateStats();
-}
-
-function getActiveClass(status){
-  return 'active-'+status.replace(' ','-');
-}
-
-function renderLeads(){
-  var counts={};
-  leads.forEach(function(l){counts[l.status]=(counts[l.status]||0)+1});
-  var summary=document.getElementById('statusSummary');
-  summary.innerHTML=Object.entries(statusColors).map(function(e){
-    return '<div class="status-chip"><span class="status-dot" style="background:'+e[1]+'"></span><span style="color:#94a3b8">'+e[0]+': </span><span style="font-weight:700">'+(counts[e[0]]||0)+'</span></div>';
-  }).join('');
-  var list=document.getElementById('leadsList');
-  if(leads.length===0){
-    list.innerHTML='<div class="empty"><p style="font-size:28px">🎯</p><p style="font-size:13px;margin-top:8px">No leads yet. Add your first prospect!</p></div>';
-    return;
-  }
-  var html='';
-  for(var i=0;i<leads.length;i++){
-    var l=leads[i];
-    var btns='';
-    var statuses=['New','Contacted','Interested','Follow Up','Closed','Not Interested'];
-    for(var j=0;j<statuses.length;j++){
-      var s=statuses[j];
-      var isActive=l.status===s;
-      var activeClass=isActive?' '+getActiveClass(s):'';
-      btns+='<button class="status-btn'+activeClass+'" onclick="updateLeadStatus('+l.id+',\''+s+'\')">'+s+'</button>';
-    }
-    html+='<div class="lead-item" style="border-left:3px solid '+statusColors[l.status]+'">';
-    html+='<div style="display:flex;justify-content:space-between">';
-    html+='<div><div class="lead-name">'+l.name+'</div><div class="lead-meta">📍 '+l.platform+' · '+l.date+'</div></div>';
-    html+='<button onclick="removeLead('+l.id+')" style="background:none;border:none;color:#475569;cursor:pointer;font-size:16px">✕</button>';
-    html+='</div><div class="status-btns">'+btns+'</div></div>';
-  }
-  list.innerHTML=html;
-}
-
-function updateStats(){
-  document.getElementById('totalLeads').textContent=leads.length;
-  document.getElementById('interestedCount').textContent=leads.filter(function(l){return l.status==='Interested'}).length;
-  document.getElementById('closedCount').textContent=leads.filter(function(l){return l.status==='Closed'}).length;
-}
-
-function setPlatform(p,btn){
-  currentPlatform=p;
-  document.querySelectorAll('.platform-tab').forEach(function(el){el.classList.remove('active')});
+function showSubtab(section,name,btn){
+  var prefix=section+'-';
+  document.querySelectorAll('[id^="'+prefix+'"]').forEach(function(el){
+    if(el.id!==prefix+'content')el.classList.add('hidden');
+  });
+  document.getElementById(prefix+name).classList.remove('hidden');
+  var parent=btn.closest('.subtab-row')||btn.parentElement;
+  parent.querySelectorAll('.subtab').forEach(function(el){el.classList.remove('active')});
   btn.classList.add('active');
-  renderPosts();
+  if(section==='scripts')renderScripts(name);
+  if(section==='emails')renderEmails(name);
+  if(section==='strategies')renderStrategies(name);
+  if(section==='coaching')renderCoaching(name);
 }
 
-function escapeText(s){return s.replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/\n/g,'\\n')}
+function toggleForm(){
+  document.getElementById('agent-form').classList.toggle('hidden');
+}
 
-function renderPosts(){
-  var html='';
-  var p=posts[currentPlatform];
-  for(var i=0;i<p.length;i++){
-    html+='<div class="post-card"><div class="post-header"><div class="post-title">'+p[i].title+'</div>';
-    html+='<button class="copy-btn" id="pcopy'+i+'" onclick="copyText(\''+escapeText(p[i].text)+'\',\'pcopy'+i+'\')">📋 Copy</button></div>';
-    html+='<div class="post-text">'+p[i].text.replace(/\n/g,'<br>')+'</div></div>';
+function addAgent(){
+  var name=document.getElementById('agentName').value.trim();
+  if(!name)return;
+  var leads=parseInt(document.getElementById('agentLeads').value)||0;
+  var calls=parseInt(document.getElementById('agentCalls').value)||0;
+  var closes=parseInt(document.getElementById('agentCloses').value)||0;
+  var posts=parseInt(document.getElementById('agentPosts').value)||0;
+  var dms=parseInt(document.getElementById('agentDMs').value)||0;
+  agents.push({id:Date.now(),name:name,leads:leads,calls:calls,closes:closes,posts:posts,dms:dms});
+  document.getElementById('agentName').value='';
+  document.getElementById('agentLeads').value='';
+  document.getElementById('agentCalls').value='';
+  document.getElementById('agentCloses').value='';
+  document.getElementById('agentPosts').value='';
+  document.getElementById('agentDMs').value='';
+  document.getElementById('agent-form').classList.add('hidden');
+  renderDashboard();
+}
+
+function getScore(a){
+  var s=0;
+  s+=Math.min(a.leads/10,1)*25;
+  s+=Math.min(a.calls/5,1)*25;
+  s+=Math.min(a.closes/2,1)*30;
+  s+=Math.min(a.posts/7,1)*10;
+  s+=Math.min(a.dms/50,1)*10;
+  return Math.round(s);
+}
+
+function getLevel(score){
+  if(score>=70)return{label:'🟢 Strong',cls:'badge-green'};
+  if(score>=40)return{label:'🟡 Average',cls:'badge-yellow'};
+  return{label:'🔴 Needs Help',cls:'badge-red'};
+}
+
+function removeAgent(id){
+  agents=agents.filter(function(a){return a.id!==id});
+  renderDashboard();
+}
+
+function updateAgentMetric(id,field,delta){
+  for(var i=0;i<agents.length;i++){
+    if(agents[i].id===id){
+      agents[i][field]=Math.max(0,agents[i][field]+delta);
+      break;
+    }
   }
-  document.getElementById('postsContent').innerHTML=html;
+  renderDashboard();
 }
 
-function renderScripts(){
-  var html='';
-  for(var i=0;i<scripts.length;i++){
-    html+='<div class="post-card"><div class="post-header"><div class="post-title">'+scripts[i].title+'</div>';
-    html+='<button class="copy-btn" id="scopy'+i+'" onclick="copyText(\''+escapeText(scripts[i].text)+'\',\'scopy'+i+'\')">📋 Copy</button></div>';
-    html+='<div class="post-text">'+scripts[i].text+'</div></div>';
+function renderDashboard(){
+  var strong=0,avg=0,weak=0,totalLeads=0;
+  agents.forEach(function(a){
+    var s=getScore(a);
+    totalLeads+=a.leads;
+    if(s>=70)strong++;
+    else if(s>=40)avg++;
+    else weak++;
+  });
+  document.getElementById('totalAgents').textContent=agents.length;
+  document.getElementById('topPerformers').textContent=strong;
+  document.getElementById('avgPerformers').textContent=avg;
+  document.getElementById('weakPerformers').textContent=weak;
+  document.getElementById('totalTeamLeads').textContent=totalLeads;
+
+  var sorted=agents.slice().sort(function(a,b){return getScore(b)-getScore(a)});
+  var rankColors=['#f59e0b','#94a3b8','#cd7c2f','#64748b','#64748b'];
+  var rankEmojis=['🥇','🥈','🥉','4️⃣','5️⃣'];
+  var lbHtml='';
+  if(sorted.length===0){
+    lbHtml='<div style="text-align:center;color:#475569;padding:2rem;font-size:13px">No agents yet!</div>';
+  } else {
+    sorted.forEach(function(a,i){
+      var score=getScore(a);
+      var level=getLevel(score);
+      lbHtml+='<div class="leaderboard-item">';
+      lbHtml+='<div class="rank-badge" style="background:'+(rankColors[i]||'#334155')+'">'+(rankEmojis[i]||i+1)+'</div>';
+      lbHtml+='<div style="flex:1"><div style="font-weight:700;font-size:14px">'+a.name+'</div>';
+      lbHtml+='<div style="font-size:11px;color:#64748b">'+a.leads+' leads · '+a.calls+' calls · '+a.closes+' closes</div></div>';
+      lbHtml+='<div><span class="'+level.cls+'">'+score+'%</span></div></div>';
+    });
   }
-  document.getElementById('scriptsContent').innerHTML=html;
+  document.getElementById('leaderboard').innerHTML=lbHtml;
+
+  var agHtml='';
+  if(agents.length===0){
+    agHtml='<div style="text-align:center;color:#475569;padding:1rem;font-size:13px">No agents yet.</div>';
+  } else {
+    agents.forEach(function(a){
+      var score=getScore(a);
+      var level=getLevel(score);
+      var fillColor=score>=70?'#10b981':score>=40?'#f59e0b':'#ef4444';
+      agHtml+='<div class="agent-card">';
+      agHtml+='<div style="display:flex;justify-content:space-between;align-items:center">';
+      agHtml+='<div><div class="agent-name">'+a.name+'</div><div class="agent-meta">Performance Score: '+score+'%</div></div>';
+      agHtml+='<div style="display:flex;align-items:center;gap:8px"><span class="'+level.cls+'">'+level.label+'</span>';
+      agHtml+='<button onclick="removeAgent('+a.id+')" style="background:none;border:none;color:#475569;cursor:pointer;font-size:14px">✕</button></div></div>';
+      agHtml+='<div class="perf-bar"><div class="perf-fill" style="width:'+score+'%;background:'+fillColor+'"></div></div>';
+      agHtml+='<div class="metric-row">';
+      agHtml+=makeMetric(a,'leads','Leads','#60a5fa');
+      agHtml+=makeMetric(a,'calls','Calls','#34d399');
+      agHtml+=makeMetric(a,'closes','Closes','#a78bfa');
+      agHtml+=makeMetric(a,'posts','Posts','#f59e0b');
+      agHtml+=makeMetric(a,'dms','DMs','#f87171');
+      agHtml+='</div></div>';
+    });
+  }
+  document.getElementById('agentsList').innerHTML=agHtml;
 }
 
-function copyText(text,btnId){
+function makeMetric(a,field,label,color){
+  return '<div class="metric"><div class="metric-val" style="color:'+color+'">'+a[field]+'</div>'+
+    '<div class="metric-label">'+label+'</div>'+
+    '<div style="display:flex;gap:4px;justify-content:center;margin-top:4px">'+
+    '<button onclick="updateAgentMetric('+a.id+',\''+field+'\',-1)" style="background:rgba(255,255,255,0.1);border:none;border-radius:5px;width:22px;height:22px;color:white;cursor:pointer;font-size:12px">-</button>'+
+    '<button onclick="updateAgentMetric('+a.id+',\''+field+'\',1)" style="background:#3b82f6;border:none;border-radius:5px;width:22px;height:22px;color:white;cursor:pointer;font-size:12px">+</button>'+
+    '</div></div>';
+}
+
+function escT(s){return s.replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/\n/g,'\\n')}
+
+function renderTemplates(containerId,data){
+  var html='';
+  data.forEach(function(t,i){
+    var id=containerId+i;
+    html+='<div class="template-card">';
+    html+='<div class="template-header"><div class="template-title">'+t.title+'</div>';
+    var copyText=t.subject?'Subject: '+t.subject+'\n\n'+t.text:t.text;
+    html+='<button class="copy-btn" id="'+id+'" onclick="copyT(\''+escT(copyText)+'\',\''+id+'\')">📋 Copy</button></div>';
+    if(t.subject)html+='<div style="font-size:11px;color:#60a5fa;margin-bottom:6px">📧 '+t.subject+'</div>';
+    var displayText=t.text||t.items&&t.items.join('\n');
+    html+='<div class="template-text">'+(displayText||'').replace(/\n/g,'<br>')+'</div></div>';
+  });
+  document.getElementById(containerId).innerHTML=html;
+}
+
+function renderStrategiesSection(containerId,data){
+  var html='';
+  data.forEach(function(s){
+    html+='<div class="strategy-card" style="border-left-color:'+s.color+'">';
+    html+='<div class="strategy-title">'+s.title+'</div>';
+    if(s.text){html+='<div class="template-text">'+s.text.replace(/\n/g,'<br>')+'</div>';}
+    else if(s.items){s.items.forEach(function(item){html+='<div class="strategy-item"><span>✓</span><span>'+item+'</span></div>';});}
+    html+='</div>';
+  });
+  document.getElementById(containerId).innerHTML=html;
+}
+
+function renderScripts(sub){renderTemplates('scripts-'+sub+'-content',scriptsData[sub]||[]);}
+function renderEmails(sub){renderTemplates('emails-'+sub+'-content',emailsData[sub]||[]);}
+function renderStrategies(sub){renderStrategiesSection('strategies-'+sub+'-content',strategiesData[sub]||[]);}
+function renderCoaching(sub){renderStrategiesSection('coaching-'+sub+'-content',coachingData[sub]||[]);}
+
+function copyT(text,btnId){
   text=text.replace(/\\n/g,'\n');
   navigator.clipboard.writeText(text).catch(function(){});
   var btn=document.getElementById(btnId);
-  if(btn){btn.textContent='✅ Copied!';btn.classList.add('copied');setTimeout(function(){btn.textContent='📋 Copy';btn.classList.remove('copied')},2000)}
+  if(btn){btn.textContent='✅ Copied!';btn.classList.add('copied');setTimeout(function(){btn.textContent='📋 Copy';btn.classList.remove('copied')},2000);}
 }
 
-function renderActivities(){
-  var total=0;
-  activityConfig.forEach(function(a){total+=Math.min(activities[a.id]/a.target,1)});
-  var score=Math.round((total/activityConfig.length)*100);
-  document.getElementById('scoreVal').textContent=score+'%';
-  document.getElementById('dailyScore').textContent=score+'%';
-  document.getElementById('scoreMsg').textContent=score>=80?'🔥 Crushing it!':score>=50?'💪 Push harder!':'🎯 Let\'s go!';
-  document.getElementById('scoreCard').style.background=score>=80?'linear-gradient(to right,#059669,#0891b2)':score>=50?'linear-gradient(to right,#d97706,#b45309)':'linear-gradient(to right,#dc2626,#9f1239)';
-  var html='';
-  for(var i=0;i<activityConfig.length;i++){
-    var a=activityConfig[i];
-    var cur=activities[a.id],isDone=cur>=a.target;
-    var pct=Math.min((cur/a.target)*100,100);
-    html+='<div class="activity-item'+(isDone?' activity-done':'')+'"><div class="activity-header">';
-    html+='<div class="activity-info"><span style="font-size:16px">'+a.icon+'</span>';
-    html+='<div><div class="activity-label" style="color:'+(isDone?'#34d399':'#e2e8f0')+'">'+a.label+'</div>';
-    html+='<div class="activity-goal">Goal: '+a.target+(isDone?' ✅':'')+'</div></div></div>';
-    html+='<div class="counter"><button class="counter-btn" style="background:rgba(255,255,255,0.1)" onclick="updateActivity(\''+a.id+'\',-1)">-</button>';
-    html+='<span class="counter-val">'+cur+'</span>';
-    html+='<button class="counter-btn" style="background:'+(isDone?'#10b981':'#3b82f6')+'" onclick="updateActivity(\''+a.id+'\',1)">+</button></div></div>';
-    html+='<div class="progress-bar"><div class="progress-fill" style="width:'+pct+'%;background:'+(isDone?'#10b981':'#3b82f6')+'"></div></div></div>';
-  }
-  document.getElementById('activitiesList').innerHTML=html;
-}
-
-function updateActivity(id,delta){
-  activities[id]=Math.max(0,activities[id]+delta);
-  renderActivities();
-}
-
-function resetActivities(){
-  Object.keys(activities).forEach(function(k){activities[k]=0});
-  renderActivities();
-}
-
-function addTierMember(){
-  var name=document.getElementById('tierMemberName').value.trim();
-  var tier=parseInt(document.getElementById('tierSelect').value);
-  if(!name)return;
-  tiers[tier].push({name:name,date:new Date().toLocaleDateString()});
-  document.getElementById('tierMemberName').value='';
-  renderTiers();
-}
-
-function removeTierMember(tier,idx){
-  tiers[tier].splice(idx,1);
-  renderTiers();
-}
-
-function renderTiers(){
-  var html='';
-  for(var i=1;i<=7;i++){
-    var color=tierColors[i-1];
-    var members=tiers[i];
-    var memberHtml=members.length===0?'<div style="color:#64748b;font-size:12px;text-align:center;padding:8px">No members yet</div>':'';
-    for(var j=0;j<members.length;j++){
-      memberHtml+='<div style="display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,0.05);border-radius:10px;padding:8px 12px;margin-bottom:6px">';
-      memberHtml+='<div><div style="font-weight:600;font-size:13px">'+members[j].name+'</div><div style="font-size:10px;color:#64748b">Added '+members[j].date+'</div></div>';
-      memberHtml+='<button onclick="removeTierMember('+i+','+j+')" style="background:none;border:none;color:#f87171;cursor:pointer;font-size:12px">Remove</button></div>';
-    }
-    html+='<div style="border-radius:14px;overflow:hidden;margin-bottom:10px">';
-    html+='<div style="background:'+color+';padding:12px 16px;display:flex;justify-content:space-between;align-items:center">';
-    html+='<span style="font-weight:700;font-size:15px">Tier '+i+(i===1?' — Direct':'')+'</span>';
-    html+='<span style="background:rgba(255,255,255,0.2);border-radius:10px;padding:3px 12px;font-size:13px;font-weight:700">'+members.length+' members</span></div>';
-    html+='<div style="background:rgba(15,23,42,0.7);padding:12px">'+memberHtml+'</div></div>';
-  }
-  document.getElementById('tiersList').innerHTML=html;
-}
-
-renderLeads();renderPosts();
+renderDashboard();
 </script>
 </body>
-</html> 
+</html>
