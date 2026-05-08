@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+   <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -32,7 +32,14 @@ select option{background:#1e293b}
 .lead-name{font-weight:700;font-size:14px}
 .lead-meta{font-size:11px;color:#64748b;margin-top:2px}
 .status-btns{display:flex;gap:5px;margin-top:10px;flex-wrap:wrap}
-.status-btn{padding:3px 9px;border-radius:7px;border:none;cursor:pointer;font-size:10px;font-weight:600;background:rgba(255,255,255,0.08);color:#94a3b8}
+.status-btn{padding:5px 11px;border-radius:8px;border:2px solid transparent;cursor:pointer;font-size:11px;font-weight:700;background:rgba(255,255,255,0.08);color:#94a3b8;transition:all 0.2s}
+.status-btn:hover{opacity:0.85}
+.status-btn.active-New{background:#3b82f6!important;color:white!important;border-color:#93c5fd!important;box-shadow:0 0 8px rgba(59,130,246,0.6)!important}
+.status-btn.active-Contacted{background:#f59e0b!important;color:white!important;border-color:#fcd34d!important;box-shadow:0 0 8px rgba(245,158,11,0.6)!important}
+.status-btn.active-Interested{background:#10b981!important;color:white!important;border-color:#6ee7b7!important;box-shadow:0 0 8px rgba(16,185,129,0.6)!important}
+.status-btn.active-Follow-Up{background:#8b5cf6!important;color:white!important;border-color:#c4b5fd!important;box-shadow:0 0 8px rgba(139,92,246,0.6)!important}
+.status-btn.active-Closed{background:#34d399!important;color:#0f172a!important;border-color:#a7f3d0!important;box-shadow:0 0 8px rgba(52,211,153,0.6)!important}
+.status-btn.active-Not-Interested{background:#ef4444!important;color:white!important;border-color:#fca5a5!important;box-shadow:0 0 8px rgba(239,68,68,0.6)!important}
 .platform-tabs{display:flex;gap:8px;margin-bottom:14px}
 .platform-tab{flex:1;padding:8px;border-radius:12px;border:none;cursor:pointer;font-weight:600;font-size:12px;background:rgba(255,255,255,0.1);color:#cbd5e1}
 .platform-tab.active{background:white;color:#0f172a}
@@ -55,21 +62,17 @@ select option{background:#1e293b}
 .progress-fill{height:100%;border-radius:5px;transition:width 0.3s}
 .score-card{border-radius:16px;padding:16px;text-align:center;margin-bottom:14px}
 .score-val{font-size:44px;font-weight:900;margin:4px 0}
-.score-label{font-size:12px;opacity:0.85}
-.score-msg{font-size:12px;opacity:0.8;margin-top:4px}
 .tip-box{background:rgba(59,130,246,0.12);border:1px solid rgba(59,130,246,0.25);border-radius:14px;padding:14px;margin-top:14px}
 .tip-title{font-size:12px;font-weight:700;color:#60a5fa;margin-bottom:8px}
 .tip-item{font-size:12px;color:#94a3b8;margin:4px 0}
 .hidden{display:none}
 .empty{text-align:center;padding:2rem;color:#475569}
-.empty-icon{font-size:28px}
 .status-dot{width:6px;height:6px;border-radius:50%;display:inline-block;margin-right:4px}
 .status-summary{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px}
 .status-chip{background:rgba(255,255,255,0.06);border-radius:8px;padding:3px 8px;font-size:11px;display:flex;align-items:center;gap:4px}
 </style>
 </head>
 <body>
-
 <div class="header">
   <div class="badge">🏢 Exterior Financial Group</div>
   <h1>EFG Team System</h1>
@@ -81,18 +84,14 @@ select option{background:#1e293b}
     <div class="stat"><div class="stat-val" style="color:#f59e0b" id="dailyScore">0%</div><div class="stat-label">Daily Score</div></div>
   </div>
 </div>
-
 <div class="tabs">
-  <button class="tab active" onclick="showTab('leads')">🎯 Leads</button>
-  <button class="tab" onclick="showTab('posts')">📱 Posts</button>
-  <button class="tab" onclick="showTab('scripts')">💬 Scripts</button>
-  <button class="tab" onclick="showTab('daily')">✅ Daily</button>
-  <button class="tab" onclick="showTab('tiers')">👥 7 Tiers</button>
+  <button class="tab active" onclick="showTab('leads',this)">🎯 Leads</button>
+  <button class="tab" onclick="showTab('posts',this)">📱 Posts</button>
+  <button class="tab" onclick="showTab('scripts',this)">💬 Scripts</button>
+  <button class="tab" onclick="showTab('daily',this)">✅ Daily</button>
+  <button class="tab" onclick="showTab('tiers',this)">👥 7 Tiers</button>
 </div>
-
 <div class="content">
-
-<!-- LEADS TAB -->
 <div id="tab-leads">
   <div class="card">
     <div style="display:flex;justify-content:space-between;align-items:center">
@@ -115,10 +114,8 @@ select option{background:#1e293b}
     </div>
   </div>
   <div class="status-summary" id="statusSummary"></div>
-  <div id="leadsList"><div class="empty"><div class="empty-icon">🎯</div><p style="font-size:13px;margin-top:8px">No leads yet. Add your first prospect!</p></div></div>
+  <div id="leadsList"><div class="empty"><p style="font-size:28px">🎯</p><p style="font-size:13px;margin-top:8px">No leads yet!</p></div></div>
 </div>
-
-<!-- POSTS TAB -->
 <div id="tab-posts" class="hidden">
   <div class="platform-tabs">
     <button class="platform-tab active" onclick="setPlatform('facebook',this)">👍 Facebook</button>
@@ -135,24 +132,16 @@ select option{background:#1e293b}
     <div class="tip-item">✓ Use 3–5 relevant hashtags per post</div>
   </div>
 </div>
-
-<!-- SCRIPTS TAB -->
-<div id="tab-scripts" class="hidden">
-  <div id="scriptsContent"></div>
-</div>
-
-<!-- DAILY TAB -->
+<div id="tab-scripts" class="hidden"><div id="scriptsContent"></div></div>
 <div id="tab-daily" class="hidden">
   <div class="score-card" id="scoreCard">
-    <div class="score-label">Today's Activity Score</div>
+    <div style="font-size:12px;opacity:0.85">Today's Activity Score</div>
     <div class="score-val" id="scoreVal">0%</div>
-    <div class="score-msg" id="scoreMsg">🎯 Let's get moving!</div>
+    <div id="scoreMsg" style="font-size:12px;opacity:0.8">🎯 Let's get moving!</div>
   </div>
   <div id="activitiesList"></div>
   <button class="btn btn-gray" style="width:100%;margin-top:8px" onclick="resetActivities()">🔄 Reset for New Day</button>
 </div>
-
-<!-- TIERS TAB -->
 <div id="tab-tiers" class="hidden">
   <div class="card">
     <div class="card-title">➕ Add Team Member</div>
@@ -169,89 +158,90 @@ select option{background:#1e293b}
   </div>
   <div id="tiersList"></div>
 </div>
-
 </div>
-
 <script>
-// DATA
-var leads = [];
-var activities = {posts:0,dms:0,followups:0,calls:0,engage:0,training:0,referrals:0};
-var tiers = {1:[],2:[],3:[],4:[],5:[],6:[],7:[]};
-var currentPlatform = 'facebook';
-
-var statusColors = {New:'#3b82f6',Contacted:'#f59e0b',Interested:'#10b981','Follow Up':'#8b5cf6',Closed:'#34d399','Not Interested':'#ef4444'};
-var tierColors = ['#7c3aed','#3b82f6','#06b6d4','#10b981','#eab308','#f97316','#f43f5e'];
-
-var posts = {
+var leads=[];
+var activities={posts:0,dms:0,followups:0,calls:0,engage:0,training:0,referrals:0};
+var tiers={1:[],2:[],3:[],4:[],5:[],6:[],7:[]};
+var currentPlatform='facebook';
+var statusColors={New:'#3b82f6',Contacted:'#f59e0b',Interested:'#10b981','Follow Up':'#8b5cf6',Closed:'#34d399','Not Interested':'#ef4444'};
+var tierColors=['#7c3aed','#3b82f6','#06b6d4','#10b981','#eab308','#f97316','#f43f5e'];
+var posts={
   facebook:[
-    {title:'Financial Freedom Story',text:'🔥 6 months ago I had no idea how to create extra income outside my 9-5. Today I\'m building something that\'s changing my family\'s future. If you\'re tired of living paycheck to paycheck, drop a 💰 below and I\'ll share what\'s been working for me. #FinancialFreedom #EFG'},
-    {title:'Curiosity Post',text:'Honest question — if there was a way to build an extra $500-$2000/month working part time from your phone, would you want to know? I\'m looking for 3 serious people this week. Comment \'INFO\' below 👇 #ExteriorFinancialGroup'},
-    {title:'Team Building',text:'We\'re expanding our team at Exterior Financial Group and I\'m personally looking for motivated people who want MORE. More time. More money. More freedom. DM me \'READY\' and let\'s talk! 💪'},
-    {title:'Value Post',text:'3 things nobody teaches you about money:\n1️⃣ Your job will never make you wealthy\n2️⃣ Multiple income streams = security\n3️⃣ The right network changes everything\n\nI learned all 3 through EFG. Comment below 👇'}
+    {title:'Financial Freedom Story',text:'🔥 6 months ago I had no idea how to create extra income outside my 9-5. Today I\'m building something that\'s changing my family\'s future. If you\'re tired of living paycheck to paycheck, drop a 💰 below! #FinancialFreedom #EFG'},
+    {title:'Curiosity Post',text:'Honest question — if there was a way to build an extra $500-$2000/month working part time from your phone, would you want to know? Comment \'INFO\' below 👇 #ExteriorFinancialGroup'},
+    {title:'Team Building',text:'We\'re expanding our team at Exterior Financial Group! Looking for motivated people who want MORE time, money and freedom. DM me \'READY\' 💪'},
+    {title:'Value Post',text:'3 things nobody teaches about money:\n1️⃣ Your job won\'t make you wealthy\n2️⃣ Multiple income streams = security\n3️⃣ Right network changes everything\n\nLearned through EFG. Comment below 👇'}
   ],
   instagram:[
-    {title:'Lifestyle Caption',text:'Building wealth from my phone 📱✨ Nobody said the 9-5 was the only path. Double tap if you\'re ready to take control 💰 #FinancialFreedom #EFG #WealthBuilding'},
-    {title:'Before & After',text:'Before EFG: Stressed about bills, no extra income.\n\nAfter EFG: Building my own team, creating passive income 💯\n\nDM me \'START\' if you\'re ready 🚀 #ExteriorFinancialGroup'},
-    {title:'Question Hook',text:'What would you do with an extra $1,000 this month? 👇\n\nI\'m building a team of people who are done settling. Send me a DM. Let\'s talk 💬 #FinancialGoals #EFG'}
+    {title:'Lifestyle Caption',text:'Building wealth from my phone 📱✨ Nobody said 9-5 was the only path. Double tap if you\'re ready to take control 💰 #FinancialFreedom #EFG'},
+    {title:'Before & After',text:'Before EFG: Stressed about bills.\nAfter EFG: Building passive income 💯\nDM me \'START\' 🚀 #ExteriorFinancialGroup'},
+    {title:'Question Hook',text:'What would you do with an extra $1,000 this month? 👇 I\'m building a team done with settling. DM me 💬 #FinancialGoals #EFG'}
   ],
   tiktok:[
-    {title:'POV Caption',text:'POV: You stopped waiting for a raise and started building your own income 💸 Comment \'HOW\' and I\'ll explain what I do at Exterior Financial Group! #FinancialFreedom #EFG'},
-    {title:'Story Time',text:'Story time: How I started building a 7-tier income team with zero experience 🧵 Drop your questions below! #MoneyTok #ExteriorFinancialGroup #TeamBuilding'},
-    {title:'Tips Video',text:'3 reasons most people stay broke:\n#1 No multiple income streams\n#2 Wrong network\n#3 Fear of starting\n\nEFG fixed all 3. DM me \'CHANGE\' if you\'re ready. #EFG'}
+    {title:'POV Caption',text:'POV: You stopped waiting for a raise and started building your own income 💸 Comment \'HOW\' to learn what I do! #FinancialFreedom #EFG'},
+    {title:'Story Time',text:'How I built a 7-tier income team with zero experience 🧵 Drop questions below! #MoneyTok #ExteriorFinancialGroup'},
+    {title:'Tips Video',text:'3 reasons people stay broke:\n#1 No multiple income streams\n#2 Wrong network\n#3 Fear of starting\nEFG fixed all 3. DM \'CHANGE\' 💪 #EFG'}
   ]
 };
-
-var scripts = [
-  {title:'Cold DM Script',text:'Hey [Name]! I came across your profile and I love your energy. I\'m part of a financial team that\'s growing fast and immediately thought of you. Would you be open to a quick 15-min call this week? No pressure at all!'},
-  {title:'Warm Market Script',text:'Hey [Name]! Hope you\'re doing well! I\'ve been working on something exciting and thought of you because you\'ve always been driven. It\'s a financial opportunity I\'m building with a small team. Would you be open to hearing more?'},
-  {title:'Follow-Up Script',text:'Hey [Name], just circling back from our last chat! I know life gets busy. Our team has grown a lot since we spoke. If you\'re still open, I\'d love to reconnect — even just 10 minutes. What does your schedule look like?'},
-  {title:'Objection - No Time',text:'I totally understand! That\'s actually why I got started — I had no time either. This works around your schedule, even part time. Most of our team started with just 5-10 hours a week. Worth 15 minutes just to see?'},
-  {title:'Objection - Not Interested',text:'No worries at all! Quick question — do you know anyone who might be looking for extra income? I\'d really appreciate any referrals and would take great care of them!'}
+var scripts=[
+  {title:'Cold DM Script',text:'Hey [Name]! I came across your profile and thought of you for something exciting I\'m building at Exterior Financial Group. Would you be open to a quick 15-min call? No pressure!'},
+  {title:'Warm Market Script',text:'Hey [Name]! Been working on something exciting and thought of you because you\'ve always been driven. It\'s a financial opportunity — would you be open to hearing more?'},
+  {title:'Follow-Up Script',text:'Hey [Name], circling back from our chat! Our team has grown a lot. If you\'re still open, I\'d love to reconnect for just 10 minutes. What does your schedule look like?'},
+  {title:'Objection - No Time',text:'I totally get it! That\'s why I started — no time either. This works part time, 5-10 hrs/week. Worth 15 minutes just to see if it fits?'},
+  {title:'Objection - Not Interested',text:'No worries! Quick question — do you know anyone looking for extra income? I\'d appreciate referrals and would take great care of them!'}
 ];
-
-var activityConfig = [
+var activityConfig=[
   {id:'posts',label:'Post on social media',target:1,icon:'📱'},
   {id:'dms',label:'Send new DMs to prospects',target:10,icon:'✉️'},
-  {id:'followups',label:'Follow up with existing leads',target:5,icon:'🔄'},
+  {id:'followups',label:'Follow up with leads',target:5,icon:'🔄'},
   {id:'calls',label:'Jump on prospect calls',target:2,icon:'📞'},
   {id:'engage',label:'Engage on others posts',target:15,icon:'👍'},
   {id:'training',label:'Complete team training',target:1,icon:'📚'},
   {id:'referrals',label:'Ask for referrals',target:3,icon:'🤝'}
 ];
 
-// TABS
-function showTab(name){
+function showTab(name,btn){
   document.querySelectorAll('[id^="tab-"]').forEach(function(el){el.classList.add('hidden')});
   document.getElementById('tab-'+name).classList.remove('hidden');
   document.querySelectorAll('.tab').forEach(function(el){el.classList.remove('active')});
-  event.target.classList.add('active');
-  if(name==='posts') renderPosts();
-  if(name==='scripts') renderScripts();
-  if(name==='daily') renderActivities();
-  if(name==='tiers') renderTiers();
+  btn.classList.add('active');
+  if(name==='posts')renderPosts();
+  if(name==='scripts')renderScripts();
+  if(name==='daily')renderActivities();
+  if(name==='tiers')renderTiers();
 }
 
-// LEADS
 function toggleAddLead(){
   var f=document.getElementById('add-lead-form');
   f.classList.toggle('hidden');
 }
+
 function addLead(){
   var name=document.getElementById('leadName').value.trim();
-  if(!name) return;
+  if(!name)return;
   leads.push({id:Date.now(),name:name,platform:document.getElementById('leadPlatform').value,status:document.getElementById('leadStatus').value,date:new Date().toLocaleDateString()});
   document.getElementById('leadName').value='';
   document.getElementById('add-lead-form').classList.add('hidden');
-  renderLeads(); updateStats();
+  renderLeads();updateStats();
 }
+
 function updateLeadStatus(id,status){
-  leads=leads.map(function(l){return l.id===id?Object.assign({},l,{status:status}):l});
-  renderLeads(); updateStats();
+  for(var i=0;i<leads.length;i++){
+    if(leads[i].id===id){leads[i].status=status;break;}
+  }
+  renderLeads();updateStats();
 }
+
 function removeLead(id){
   leads=leads.filter(function(l){return l.id!==id});
-  renderLeads(); updateStats();
+  renderLeads();updateStats();
 }
+
+function getActiveClass(status){
+  return 'active-'+status.replace(' ','-');
+}
+
 function renderLeads(){
   var counts={};
   leads.forEach(function(l){counts[l.status]=(counts[l.status]||0)+1});
@@ -260,33 +250,66 @@ function renderLeads(){
     return '<div class="status-chip"><span class="status-dot" style="background:'+e[1]+'"></span><span style="color:#94a3b8">'+e[0]+': </span><span style="font-weight:700">'+(counts[e[0]]||0)+'</span></div>';
   }).join('');
   var list=document.getElementById('leadsList');
-  if(leads.length===0){list.innerHTML='<div class="empty"><div class="empty-icon">🎯</div><p style="font-size:13px;margin-top:8px">No leads yet. Add your first prospect!</p></div>';return;}
-  list.innerHTML=leads.map(function(l){
-    var btns=Object.keys(statusColors).map(function(s){
-      return '<button class="status-btn" style="'+(l.status===s?'background:'+statusColors[s]+';color:white':'')+'" onclick="updateLeadStatus('+l.id+',\''+s+'\')">'+s+'</button>';
-    }).join('');
-    return '<div class="lead-item" style="border-left:3px solid '+statusColors[l.status]+'"><div style="display:flex;justify-content:space-between"><div><div class="lead-name">'+l.name+'</div><div class="lead-meta">📍 '+l.platform+' · '+l.date+'</div></div><button onclick="removeLead('+l.id+')" style="background:none;border:none;color:#475569;cursor:pointer;font-size:14px">✕</button></div><div class="status-btns">'+btns+'</div></div>';
-  }).join('');
+  if(leads.length===0){
+    list.innerHTML='<div class="empty"><p style="font-size:28px">🎯</p><p style="font-size:13px;margin-top:8px">No leads yet. Add your first prospect!</p></div>';
+    return;
+  }
+  var html='';
+  for(var i=0;i<leads.length;i++){
+    var l=leads[i];
+    var btns='';
+    var statuses=['New','Contacted','Interested','Follow Up','Closed','Not Interested'];
+    for(var j=0;j<statuses.length;j++){
+      var s=statuses[j];
+      var isActive=l.status===s;
+      var activeClass=isActive?' '+getActiveClass(s):'';
+      btns+='<button class="status-btn'+activeClass+'" onclick="updateLeadStatus('+l.id+',\''+s+'\')">'+s+'</button>';
+    }
+    html+='<div class="lead-item" style="border-left:3px solid '+statusColors[l.status]+'">';
+    html+='<div style="display:flex;justify-content:space-between">';
+    html+='<div><div class="lead-name">'+l.name+'</div><div class="lead-meta">📍 '+l.platform+' · '+l.date+'</div></div>';
+    html+='<button onclick="removeLead('+l.id+')" style="background:none;border:none;color:#475569;cursor:pointer;font-size:16px">✕</button>';
+    html+='</div><div class="status-btns">'+btns+'</div></div>';
+  }
+  list.innerHTML=html;
 }
+
 function updateStats(){
   document.getElementById('totalLeads').textContent=leads.length;
   document.getElementById('interestedCount').textContent=leads.filter(function(l){return l.status==='Interested'}).length;
   document.getElementById('closedCount').textContent=leads.filter(function(l){return l.status==='Closed'}).length;
 }
 
-// POSTS
 function setPlatform(p,btn){
   currentPlatform=p;
   document.querySelectorAll('.platform-tab').forEach(function(el){el.classList.remove('active')});
   btn.classList.add('active');
   renderPosts();
 }
+
+function escapeText(s){return s.replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/\n/g,'\\n')}
+
 function renderPosts(){
-  document.getElementById('postsContent').innerHTML=posts[currentPlatform].map(function(p,i){
-    return '<div class="post-card"><div class="post-header"><div class="post-title">'+p.title+'</div><button class="copy-btn" id="pcopy'+i+'" onclick="copyText(\''+escapeForAttr(p.text)+'\',\'pcopy'+i+'\')">📋 Copy</button></div><div class="post-text">'+p.text+'</div></div>';
-  }).join('');
+  var html='';
+  var p=posts[currentPlatform];
+  for(var i=0;i<p.length;i++){
+    html+='<div class="post-card"><div class="post-header"><div class="post-title">'+p[i].title+'</div>';
+    html+='<button class="copy-btn" id="pcopy'+i+'" onclick="copyText(\''+escapeText(p[i].text)+'\',\'pcopy'+i+'\')">📋 Copy</button></div>';
+    html+='<div class="post-text">'+p[i].text.replace(/\n/g,'<br>')+'</div></div>';
+  }
+  document.getElementById('postsContent').innerHTML=html;
 }
-function escapeForAttr(s){return s.replace(/'/g,"&#39;").replace(/\n/g,'\\n')}
+
+function renderScripts(){
+  var html='';
+  for(var i=0;i<scripts.length;i++){
+    html+='<div class="post-card"><div class="post-header"><div class="post-title">'+scripts[i].title+'</div>';
+    html+='<button class="copy-btn" id="scopy'+i+'" onclick="copyText(\''+escapeText(scripts[i].text)+'\',\'scopy'+i+'\')">📋 Copy</button></div>';
+    html+='<div class="post-text">'+scripts[i].text+'</div></div>';
+  }
+  document.getElementById('scriptsContent').innerHTML=html;
+}
+
 function copyText(text,btnId){
   text=text.replace(/\\n/g,'\n');
   navigator.clipboard.writeText(text).catch(function(){});
@@ -294,69 +317,76 @@ function copyText(text,btnId){
   if(btn){btn.textContent='✅ Copied!';btn.classList.add('copied');setTimeout(function(){btn.textContent='📋 Copy';btn.classList.remove('copied')},2000)}
 }
 
-// SCRIPTS
-function renderScripts(){
-  document.getElementById('scriptsContent').innerHTML=scripts.map(function(s,i){
-    return '<div class="post-card"><div class="post-header"><div class="post-title">'+s.title+'</div><button class="copy-btn" id="scopy'+i+'" onclick="copyText(\''+escapeForAttr(s.text)+'\',\'scopy'+i+'\')">📋 Copy</button></div><div class="post-text">'+s.text+'</div></div>';
-  }).join('');
-}
-
-// DAILY
 function renderActivities(){
-  var total=0,done=0;
-  activityConfig.forEach(function(a){
-    var pct=Math.min(activities[a.id]/a.target,1);
-    total+=pct; if(pct>=1) done++;
-  });
+  var total=0;
+  activityConfig.forEach(function(a){total+=Math.min(activities[a.id]/a.target,1)});
   var score=Math.round((total/activityConfig.length)*100);
   document.getElementById('scoreVal').textContent=score+'%';
   document.getElementById('dailyScore').textContent=score+'%';
-  var msg=score>=80?'🔥 Crushing it!':score>=50?'💪 Good — push harder!':'🎯 Let\'s get moving!';
-  document.getElementById('scoreMsg').textContent=msg;
-  var bg=score>=80?'linear-gradient(to right,#059669,#0891b2)':score>=50?'linear-gradient(to right,#d97706,#b45309)':'linear-gradient(to right,#dc2626,#9f1239)';
-  document.getElementById('scoreCard').style.background=bg;
-  document.getElementById('activitiesList').innerHTML=activityConfig.map(function(a){
+  document.getElementById('scoreMsg').textContent=score>=80?'🔥 Crushing it!':score>=50?'💪 Push harder!':'🎯 Let\'s go!';
+  document.getElementById('scoreCard').style.background=score>=80?'linear-gradient(to right,#059669,#0891b2)':score>=50?'linear-gradient(to right,#d97706,#b45309)':'linear-gradient(to right,#dc2626,#9f1239)';
+  var html='';
+  for(var i=0;i<activityConfig.length;i++){
+    var a=activityConfig[i];
     var cur=activities[a.id],isDone=cur>=a.target;
     var pct=Math.min((cur/a.target)*100,100);
-    return '<div class="activity-item'+(isDone?' activity-done':'')+'"><div class="activity-header"><div class="activity-info"><span style="font-size:16px">'+a.icon+'</span><div><div class="activity-label" style="color:'+(isDone?'#34d399':'#e2e8f0')+'">'+a.label+'</div><div class="activity-goal">Goal: '+a.target+(isDone?' ✅':' ')+'</div></div></div><div class="counter"><button class="counter-btn" style="background:rgba(255,255,255,0.1)" onclick="updateActivity(\''+a.id+'\', -1)">-</button><span class="counter-val">'+cur+'</span><button class="counter-btn" style="background:'+(isDone?'#10b981':'#3b82f6')+'" onclick="updateActivity(\''+a.id+'\', 1)">+</button></div></div><div class="progress-bar"><div class="progress-fill" style="width:'+pct+'%;background:'+(isDone?'#10b981':'#3b82f6')+'"></div></div></div>';
-  }).join('');
+    html+='<div class="activity-item'+(isDone?' activity-done':'')+'"><div class="activity-header">';
+    html+='<div class="activity-info"><span style="font-size:16px">'+a.icon+'</span>';
+    html+='<div><div class="activity-label" style="color:'+(isDone?'#34d399':'#e2e8f0')+'">'+a.label+'</div>';
+    html+='<div class="activity-goal">Goal: '+a.target+(isDone?' ✅':'')+'</div></div></div>';
+    html+='<div class="counter"><button class="counter-btn" style="background:rgba(255,255,255,0.1)" onclick="updateActivity(\''+a.id+'\',-1)">-</button>';
+    html+='<span class="counter-val">'+cur+'</span>';
+    html+='<button class="counter-btn" style="background:'+(isDone?'#10b981':'#3b82f6')+'" onclick="updateActivity(\''+a.id+'\',1)">+</button></div></div>';
+    html+='<div class="progress-bar"><div class="progress-fill" style="width:'+pct+'%;background:'+(isDone?'#10b981':'#3b82f6')+'"></div></div></div>';
+  }
+  document.getElementById('activitiesList').innerHTML=html;
 }
+
 function updateActivity(id,delta){
   activities[id]=Math.max(0,activities[id]+delta);
   renderActivities();
 }
+
 function resetActivities(){
   Object.keys(activities).forEach(function(k){activities[k]=0});
   renderActivities();
 }
 
-// TIERS
 function addTierMember(){
   var name=document.getElementById('tierMemberName').value.trim();
   var tier=parseInt(document.getElementById('tierSelect').value);
-  if(!name) return;
+  if(!name)return;
   tiers[tier].push({name:name,date:new Date().toLocaleDateString()});
   document.getElementById('tierMemberName').value='';
   renderTiers();
 }
+
 function removeTierMember(tier,idx){
   tiers[tier].splice(idx,1);
   renderTiers();
 }
+
 function renderTiers(){
-  var total=0;
-  for(var t=1;t<=7;t++) total+=tiers[t].length;
-  document.getElementById('tiersList').innerHTML='';
+  var html='';
   for(var i=1;i<=7;i++){
-    var members=tiers[i];
     var color=tierColors[i-1];
-    var memberHtml=members.length===0?'<div style="color:#64748b;font-size:12px;text-align:center;padding:8px">No members yet</div>':members.map(function(m,idx){return'<div style="display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,0.05);border-radius:10px;padding:8px 12px;margin-bottom:6px"><div><div style="font-weight:600;font-size:13px">'+m.name+'</div><div style="font-size:10px;color:#64748b">Added '+m.date+'</div></div><button onclick="removeTierMember('+i+','+idx+')" style="background:none;border:none;color:#f87171;cursor:pointer;font-size:12px">Remove</button></div>';}).join('');
-    document.getElementById('tiersList').innerHTML+='<div style="border-radius:14px;overflow:hidden;margin-bottom:10px"><div style="background:'+color+';padding:12px 16px;display:flex;justify-content:space-between;align-items:center"><span style="font-weight:700;font-size:15px">Tier '+i+(i===1?' — Direct':'')+'</span><span style="background:rgba(255,255,255,0.2);border-radius:10px;padding:3px 12px;font-size:13px;font-weight:700">'+members.length+' members</span></div><div style="background:rgba(15,23,42,0.7);padding:12px">'+memberHtml+'</div></div>';
+    var members=tiers[i];
+    var memberHtml=members.length===0?'<div style="color:#64748b;font-size:12px;text-align:center;padding:8px">No members yet</div>':'';
+    for(var j=0;j<members.length;j++){
+      memberHtml+='<div style="display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,0.05);border-radius:10px;padding:8px 12px;margin-bottom:6px">';
+      memberHtml+='<div><div style="font-weight:600;font-size:13px">'+members[j].name+'</div><div style="font-size:10px;color:#64748b">Added '+members[j].date+'</div></div>';
+      memberHtml+='<button onclick="removeTierMember('+i+','+j+')" style="background:none;border:none;color:#f87171;cursor:pointer;font-size:12px">Remove</button></div>';
+    }
+    html+='<div style="border-radius:14px;overflow:hidden;margin-bottom:10px">';
+    html+='<div style="background:'+color+';padding:12px 16px;display:flex;justify-content:space-between;align-items:center">';
+    html+='<span style="font-weight:700;font-size:15px">Tier '+i+(i===1?' — Direct':'')+'</span>';
+    html+='<span style="background:rgba(255,255,255,0.2);border-radius:10px;padding:3px 12px;font-size:13px;font-weight:700">'+members.length+' members</span></div>';
+    html+='<div style="background:rgba(15,23,42,0.7);padding:12px">'+memberHtml+'</div></div>';
   }
+  document.getElementById('tiersList').innerHTML=html;
 }
 
-// INIT
-renderLeads(); renderPosts();
+renderLeads();renderPosts();
 </script>
 </body>
-</html>
+</html> 
