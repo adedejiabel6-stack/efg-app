@@ -3,282 +3,413 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EFG Command Center</title>
+<title>InsureFlow CRM</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:sans-serif}
-body{background:#0f172a;color:white;min-height:100vh}
-.header{text-align:center;padding:20px 16px 10px}
-.badge{background:rgba(255,255,255,0.1);border-radius:20px;padding:4px 14px;font-size:12px;color:#cbd5e1;display:inline-block;margin-bottom:8px}
-h1{font-size:22px;font-weight:800;margin-bottom:4px}
-.subtitle{color:#94a3b8;font-size:12px}
-.stats{display:flex;justify-content:center;gap:8px;margin-top:14px;flex-wrap:wrap}
-.stat{background:rgba(255,255,255,0.08);border-radius:12px;padding:8px 14px;text-align:center}
+body{background:#0a0f1e;color:white;min-height:100vh}
+.topbar{background:linear-gradient(to right,#1e3a5f,#0f2744);padding:12px 16px;display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:18px;font-weight:800;color:white}
+.logo span{color:#38bdf8}
+.premium-badge{background:linear-gradient(to right,#f59e0b,#d97706);border-radius:20px;padding:4px 12px;font-size:11px;font-weight:700;cursor:pointer}
+.free-badge{background:rgba(255,255,255,0.1);border-radius:20px;padding:4px 12px;font-size:11px;color:#94a3b8}
+.header{text-align:center;padding:16px 16px 8px;background:linear-gradient(to bottom,#0f2744,#0a0f1e)}
+h1{font-size:20px;font-weight:800}
+.subtitle{color:#94a3b8;font-size:12px;margin-top:2px}
+.stats{display:flex;justify-content:center;gap:8px;margin-top:12px;flex-wrap:wrap}
+.stat{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:8px 14px;text-align:center}
 .stat-val{font-size:18px;font-weight:800}
-.stat-label{font-size:10px;color:#94a3b8}
-.tabs{display:flex;justify-content:center;gap:5px;padding:14px 16px;flex-wrap:wrap}
-.tab{padding:7px 13px;border-radius:20px;border:none;cursor:pointer;font-weight:600;font-size:11px;background:rgba(255,255,255,0.1);color:#cbd5e1}
-.tab.active{background:white;color:#0f172a}
-.content{max-width:640px;margin:0 auto;padding:0 16px 60px}
-.card{background:rgba(255,255,255,0.07);border-radius:14px;padding:16px;margin-bottom:12px}
+.stat-label{font-size:9px;color:#94a3b8;margin-top:1px}
+.tabs{display:flex;justify-content:center;gap:5px;padding:12px 16px;flex-wrap:wrap;background:#0a0f1e;position:sticky;top:0;z-index:10;border-bottom:1px solid rgba(255,255,255,0.05)}
+.tab{padding:7px 13px;border-radius:20px;border:none;cursor:pointer;font-weight:600;font-size:11px;background:rgba(255,255,255,0.08);color:#94a3b8;transition:all 0.2s}
+.tab.active{background:linear-gradient(to right,#0ea5e9,#0284c7);color:white}
+.content{max-width:640px;margin:0 auto;padding:12px 16px 80px}
+.card{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:16px;margin-bottom:12px}
 .card-title{font-size:13px;font-weight:700;margin-bottom:12px;color:#e2e8f0}
-.section-title{font-size:15px;font-weight:800;color:#e2e8f0;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,0.1)}
-input,select,textarea{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);border-radius:10px;padding:8px 12px;color:white;font-size:13px;outline:none;width:100%}
-textarea{resize:vertical;min-height:80px}
-select option{background:#1e293b}
-.btn{border:none;border-radius:10px;padding:9px 16px;font-weight:700;font-size:13px;cursor:pointer;color:white}
-.btn-green{background:#10b981}
-.btn-blue{background:#3b82f6}
+.section-title{font-size:14px;font-weight:800;color:#38bdf8;margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid rgba(56,189,248,0.2)}
+input,select,textarea{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:10px;padding:8px 12px;color:white;font-size:13px;outline:none;width:100%;transition:border 0.2s}
+input:focus,select:focus{border-color:#38bdf8}
+textarea{resize:vertical;min-height:70px}
+select option{background:#0f2744}
+.btn{border:none;border-radius:10px;padding:9px 16px;font-weight:700;font-size:12px;cursor:pointer;color:white;transition:all 0.2s}
+.btn-blue{background:linear-gradient(to right,#0ea5e9,#0284c7)}
+.btn-green{background:linear-gradient(to right,#10b981,#059669)}
+.btn-gold{background:linear-gradient(to right,#f59e0b,#d97706)}
 .btn-red{background:#ef4444}
-.btn-gray{background:rgba(255,255,255,0.1);color:#cbd5e1}
-.btn-yellow{background:#f59e0b}
+.btn-gray{background:rgba(255,255,255,0.08);color:#cbd5e1}
+.btn-sm{padding:5px 12px;font-size:11px}
 .row{display:flex;gap:8px;flex-wrap:wrap}
 .hidden{display:none}
-.agent-card{background:rgba(255,255,255,0.07);border-radius:14px;padding:14px;margin-bottom:10px}
-.agent-name{font-weight:800;font-size:15px}
-.agent-meta{font-size:11px;color:#64748b;margin-top:2px}
-.perf-bar{background:rgba(255,255,255,0.1);border-radius:5px;height:8px;overflow:hidden;margin:8px 0}
-.perf-fill{height:100%;border-radius:5px;transition:width 0.3s}
-.badge-green{background:rgba(16,185,129,0.2);color:#34d399;border-radius:8px;padding:3px 10px;font-size:11px;font-weight:700}
-.badge-yellow{background:rgba(245,158,11,0.2);color:#fbbf24;border-radius:8px;padding:3px 10px;font-size:11px;font-weight:700}
-.badge-red{background:rgba(239,68,68,0.2);color:#f87171;border-radius:8px;padding:3px 10px;font-size:11px;font-weight:700}
-.metric-row{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
-.metric{background:rgba(255,255,255,0.05);border-radius:10px;padding:8px 12px;text-align:center;flex:1;min-width:60px}
-.metric-val{font-size:18px;font-weight:800}
-.metric-label{font-size:10px;color:#94a3b8}
-.template-card{background:rgba(255,255,255,0.07);border-radius:14px;padding:14px;margin-bottom:10px}
-.template-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
-.template-title{font-weight:700;font-size:13px;color:#e2e8f0}
+.lock-overlay{position:relative}
+.lock-badge{background:linear-gradient(to right,#f59e0b,#d97706);border-radius:8px;padding:2px 8px;font-size:10px;font-weight:700;margin-left:6px}
+.premium-wall{background:linear-gradient(135deg,rgba(245,158,11,0.1),rgba(217,119,6,0.1));border:1px solid rgba(245,158,11,0.3);border-radius:14px;padding:20px;text-align:center;margin-bottom:12px}
+.premium-wall h3{font-size:15px;font-weight:800;color:#fbbf24;margin-bottom:8px}
+.premium-wall p{font-size:12px;color:#94a3b8;margin-bottom:14px}
+.prospect-card{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:14px;margin-bottom:10px;transition:all 0.2s}
+.prospect-card:hover{border-color:rgba(56,189,248,0.3)}
+.prospect-name{font-weight:800;font-size:14px}
+.prospect-meta{font-size:11px;color:#64748b;margin-top:2px}
+.stage-pills{display:flex;gap:4px;margin-top:10px;flex-wrap:wrap}
+.stage-pill{padding:4px 10px;border-radius:20px;border:1.5px solid transparent;cursor:pointer;font-size:10px;font-weight:700;background:rgba(255,255,255,0.06);color:#64748b;transition:all 0.2s}
+.stage-pill.active-Lead{background:#1e40af;color:#93c5fd;border-color:#3b82f6;box-shadow:0 0 8px rgba(59,130,246,0.4)}
+.stage-pill.active-Contacted{background:#854d0e;color:#fde68a;border-color:#f59e0b;box-shadow:0 0 8px rgba(245,158,11,0.4)}
+.stage-pill.active-Appointment{background:#065f46;color:#6ee7b7;border-color:#10b981;box-shadow:0 0 8px rgba(16,185,129,0.4)}
+.stage-pill.active-Presented{background:#4c1d95;color:#c4b5fd;border-color:#8b5cf6;box-shadow:0 0 8px rgba(139,92,246,0.4)}
+.stage-pill.active-Submitted{background:#0c4a6e;color:#7dd3fc;border-color:#0ea5e9;box-shadow:0 0 8px rgba(14,165,233,0.4)}
+.stage-pill.active-Issued{background:#14532d;color:#86efac;border-color:#22c55e;box-shadow:0 0 8px rgba(34,197,94,0.4)}
+.stage-pill.active-NotTaken{background:#7f1d1d;color:#fca5a5;border-color:#ef4444;box-shadow:0 0 8px rgba(239,68,68,0.4)}
+.metric-box{background:rgba(255,255,255,0.04);border-radius:10px;padding:10px;text-align:center;flex:1;min-width:55px}
+.metric-val{font-size:16px;font-weight:800}
+.metric-label{font-size:9px;color:#94a3b8}
+.template-card{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:14px;margin-bottom:10px}
+.template-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;gap:8px}
+.template-title{font-weight:700;font-size:13px;color:#e2e8f0;flex:1}
+.template-tag{font-size:10px;padding:2px 8px;border-radius:10px;font-weight:700;white-space:nowrap}
+.tag-free{background:rgba(16,185,129,0.2);color:#34d399}
+.tag-premium{background:rgba(245,158,11,0.2);color:#fbbf24}
 .template-text{font-size:12px;color:#94a3b8;line-height:1.7;white-space:pre-line}
-.copy-btn{background:rgba(255,255,255,0.1);border:none;border-radius:8px;padding:5px 12px;color:white;font-size:11px;font-weight:600;cursor:pointer;white-space:nowrap}
+.copy-btn{background:rgba(255,255,255,0.08);border:none;border-radius:8px;padding:5px 10px;color:white;font-size:10px;font-weight:600;cursor:pointer;white-space:nowrap}
 .copy-btn.copied{background:#10b981}
-.strategy-card{background:rgba(255,255,255,0.07);border-radius:14px;padding:14px;margin-bottom:10px;border-left:3px solid #3b82f6}
-.strategy-title{font-weight:700;font-size:13px;color:#60a5fa;margin-bottom:8px}
-.strategy-item{font-size:12px;color:#cbd5e1;margin:5px 0;display:flex;gap:8px}
-.rank-badge{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;flex-shrink:0}
-.subtab-row{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap}
-.subtab{padding:6px 12px;border-radius:12px;border:none;cursor:pointer;font-weight:600;font-size:11px;background:rgba(255,255,255,0.08);color:#94a3b8}
-.subtab.active{background:rgba(59,130,246,0.3);color:#60a5fa;border:1px solid rgba(59,130,246,0.4)}
-.leaderboard-item{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.05);border-radius:12px;padding:12px;margin-bottom:8px}
-.tip-box{background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.2);border-radius:12px;padding:12px;margin-top:8px}
-.tip-title{font-size:12px;font-weight:700;color:#34d399;margin-bottom:6px}
-.tip-item{font-size:12px;color:#94a3b8;margin:3px 0}
+.subtab-row{display:flex;gap:5px;margin-bottom:14px;flex-wrap:wrap}
+.subtab{padding:6px 11px;border-radius:12px;border:none;cursor:pointer;font-weight:600;font-size:11px;background:rgba(255,255,255,0.06);color:#64748b}
+.subtab.active{background:rgba(14,165,233,0.2);color:#38bdf8;border:1px solid rgba(14,165,233,0.3)}
+.strategy-card{background:rgba(255,255,255,0.05);border-left:3px solid #0ea5e9;border-radius:0 14px 14px 0;padding:14px;margin-bottom:10px}
+.strategy-title{font-weight:700;font-size:13px;color:#38bdf8;margin-bottom:8px}
+.strategy-item{font-size:12px;color:#cbd5e1;margin:4px 0;display:flex;gap:8px;align-items:flex-start}
+.agent-card{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:14px;margin-bottom:10px}
+.perf-bar{background:rgba(255,255,255,0.08);border-radius:5px;height:7px;overflow:hidden;margin:8px 0}
+.perf-fill{height:100%;border-radius:5px;transition:width 0.4s}
+.rank-num{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;flex-shrink:0}
+.leaderboard-row{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.04);border-radius:12px;padding:10px 12px;margin-bottom:6px}
+.pipeline-stage{background:rgba(255,255,255,0.04);border-radius:12px;padding:12px;margin-bottom:8px;border-left:3px solid}
+.comm-card{background:linear-gradient(135deg,rgba(16,185,129,0.1),rgba(5,150,105,0.1));border:1px solid rgba(16,185,129,0.2);border-radius:14px;padding:16px;margin-bottom:10px}
+.progress-ring{text-align:center;padding:16px}
+.big-num{font-size:36px;font-weight:900}
 </style>
 </head>
 <body>
+
+<div class="topbar">
+  <div class="logo">Insure<span>Flow</span> CRM</div>
+  <div style="display:flex;align-items:center;gap:8px">
+    <div class="free-badge" id="planBadge">FREE Plan</div>
+    <button class="btn btn-gold btn-sm" onclick="showUpgrade()">⭐ Upgrade</button>
+  </div>
+</div>
+
 <div class="header">
-  <div class="badge">🏢 Exterior Financial Group</div>
-  <h1>Team Leader Command Center</h1>
-  <p class="subtitle">Dashboard • Scripts • Emails • Strategies • Coaching</p>
+  <h1>🏥 Life Insurance Agent CRM</h1>
+  <p class="subtitle">Life Insurance • Final Expense • Pipeline • Scripts • Coaching</p>
   <div class="stats">
-    <div class="stat"><div class="stat-val" style="color:#60a5fa" id="totalAgents">0</div><div class="stat-label">Agents</div></div>
-    <div class="stat"><div class="stat-val" style="color:#34d399" id="topPerformers">0</div><div class="stat-label">🟢 Strong</div></div>
-    <div class="stat"><div class="stat-val" style="color:#fbbf24" id="avgPerformers">0</div><div class="stat-label">🟡 Average</div></div>
-    <div class="stat"><div class="stat-val" style="color:#f87171" id="weakPerformers">0</div><div class="stat-label">🔴 Needs Help</div></div>
-    <div class="stat"><div class="stat-val" style="color:#a78bfa" id="totalTeamLeads">0</div><div class="stat-label">Team Leads</div></div>
+    <div class="stat"><div class="stat-val" style="color:#38bdf8" id="statProspects">0</div><div class="stat-label">Prospects</div></div>
+    <div class="stat"><div class="stat-val" style="color:#34d399" id="statAppointments">0</div><div class="stat-label">Appointments</div></div>
+    <div class="stat"><div class="stat-val" style="color:#a78bfa" id="statIssued">0</div><div class="stat-label">Policies Issued</div></div>
+    <div class="stat"><div class="stat-val" style="color:#fbbf24" id="statPremium">$0</div><div class="stat-label">Est. Premium</div></div>
+    <div class="stat"><div class="stat-val" style="color:#f87171" id="statAgents">0</div><div class="stat-label">Agents</div></div>
   </div>
 </div>
 
 <div class="tabs">
-  <button class="tab active" onclick="showTab('dashboard',this)">📊 Dashboard</button>
+  <button class="tab active" onclick="showTab('pipeline',this)">📋 Pipeline</button>
   <button class="tab" onclick="showTab('scripts',this)">💬 Scripts</button>
   <button class="tab" onclick="showTab('emails',this)">📧 Emails</button>
-  <button class="tab" onclick="showTab('strategies',this)">🎯 Strategies</button>
-  <button class="tab" onclick="showTab('coaching',this)">🏆 Coaching</button>
+  <button class="tab" onclick="showTab('strategies',this)">🎯 Strategy</button>
+  <button class="tab" onclick="showTab('team',this)">👥 Team</button>
+  <button class="tab" onclick="showTab('commission',this)">💰 Commission</button>
 </div>
 
 <div class="content">
 
-<!-- DASHBOARD -->
-<div id="tab-dashboard">
+<!-- PIPELINE -->
+<div id="tab-pipeline">
   <div class="card">
     <div style="display:flex;justify-content:space-between;align-items:center">
-      <div class="card-title" style="margin-bottom:0">➕ Add Agent</div>
-      <button class="btn btn-green" onclick="toggleForm()">+ Add</button>
+      <div class="card-title" style="margin-bottom:0">➕ Add Prospect</div>
+      <button class="btn btn-blue btn-sm" onclick="toggleProspectForm()">+ Add</button>
     </div>
-    <div id="agent-form" class="hidden" style="margin-top:12px">
-      <input id="agentName" placeholder="Agent name..." style="margin-bottom:8px">
-      <div class="row">
-        <input id="agentLeads" type="number" placeholder="Leads" style="flex:1;min-width:60px">
-        <input id="agentCalls" type="number" placeholder="Calls" style="flex:1;min-width:60px">
-        <input id="agentCloses" type="number" placeholder="Closes" style="flex:1;min-width:60px">
+    <div id="prospect-form" class="hidden" style="margin-top:12px">
+      <div class="row" style="margin-bottom:8px">
+        <input id="pName" placeholder="Full name *" style="flex:2;min-width:120px">
+        <input id="pPhone" placeholder="Phone" style="flex:1;min-width:100px">
       </div>
-      <div class="row" style="margin-top:8px">
-        <input id="agentPosts" type="number" placeholder="Posts" style="flex:1;min-width:60px">
-        <input id="agentDMs" type="number" placeholder="DMs sent" style="flex:1;min-width:60px">
+      <div class="row" style="margin-bottom:8px">
+        <input id="pAge" type="number" placeholder="Age" style="flex:1;min-width:60px">
+        <select id="pType" style="flex:2">
+          <option>Life Insurance</option>
+          <option>Final Expense</option>
+          <option>Both</option>
+        </select>
+        <select id="pStage" style="flex:2">
+          <option>Lead</option>
+          <option>Contacted</option>
+          <option>Appointment</option>
+          <option>Presented</option>
+          <option>Submitted</option>
+          <option>Issued</option>
+          <option>NotTaken</option>
+        </select>
       </div>
-      <button class="btn btn-blue" style="width:100%;margin-top:8px" onclick="addAgent()">Save Agent</button>
+      <div class="row" style="margin-bottom:8px">
+        <input id="pPremium" type="number" placeholder="Est. Monthly Premium $" style="flex:1">
+        <input id="pSource" placeholder="Lead source" style="flex:1">
+      </div>
+      <textarea id="pNotes" placeholder="Notes..."></textarea>
+      <button class="btn btn-green" style="width:100%;margin-top:8px" onclick="addProspect()">Save Prospect</button>
     </div>
   </div>
 
-  <!-- LEADERBOARD -->
-  <div class="section-title">🏆 Performance Leaderboard</div>
-  <div id="leaderboard"><div style="text-align:center;color:#475569;padding:2rem;font-size:13px">No agents yet. Add your team members above!</div></div>
+  <div class="section-title">📊 Pipeline Overview</div>
+  <div id="pipelineOverview"></div>
 
-  <!-- AGENT DETAILS -->
-  <div class="section-title" style="margin-top:16px">👥 Agent Details</div>
-  <div id="agentsList"><div style="text-align:center;color:#475569;padding:1rem;font-size:13px">No agents yet.</div></div>
+  <div class="section-title" style="margin-top:16px">👤 All Prospects</div>
+  <div style="display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap">
+    <select id="filterStage" onchange="renderProspects()" style="flex:1;min-width:120px;font-size:11px;padding:6px 10px">
+      <option value="all">All Stages</option>
+      <option>Lead</option><option>Contacted</option><option>Appointment</option>
+      <option>Presented</option><option>Submitted</option><option>Issued</option><option>NotTaken</option>
+    </select>
+    <select id="filterType" onchange="renderProspects()" style="flex:1;min-width:120px;font-size:11px;padding:6px 10px">
+      <option value="all">All Types</option>
+      <option>Life Insurance</option><option>Final Expense</option><option>Both</option>
+    </select>
+  </div>
+  <div id="prospectsList"></div>
 </div>
 
 <!-- SCRIPTS -->
 <div id="tab-scripts" class="hidden">
   <div class="subtab-row">
-    <button class="subtab active" onclick="showSubtab('scripts','cold',this)">❄️ Cold DM</button>
-    <button class="subtab" onclick="showSubtab('scripts','warm',this)">🔥 Warm</button>
-    <button class="subtab" onclick="showSubtab('scripts','followup',this)">🔄 Follow Up</button>
-    <button class="subtab" onclick="showSubtab('scripts','objection',this)">🛡️ Objections</button>
-    <button class="subtab" onclick="showSubtab('scripts','closing',this)">✅ Closing</button>
+    <button class="subtab active" onclick="showSub('sc','cold',this)">❄️ Cold Call</button>
+    <button class="subtab" onclick="showSub('sc','fe',this)">💛 Final Exp</button>
+    <button class="subtab" onclick="showSub('sc','objection',this)">🛡️ Objections</button>
+    <button class="subtab" onclick="showSub('sc','closing',this)">✅ Closing</button>
+    <button class="subtab" onclick="showSub('sc','referral',this)">🤝 Referral</button>
   </div>
-  <div id="scripts-cold"><div id="scripts-cold-content"></div></div>
-  <div id="scripts-warm" class="hidden"><div id="scripts-warm-content"></div></div>
-  <div id="scripts-followup" class="hidden"><div id="scripts-followup-content"></div></div>
-  <div id="scripts-objection" class="hidden"><div id="scripts-objection-content"></div></div>
-  <div id="scripts-closing" class="hidden"><div id="scripts-closing-content"></div></div>
+  <div id="sc-cold"></div>
+  <div id="sc-fe" class="hidden"></div>
+  <div id="sc-objection" class="hidden"></div>
+  <div id="sc-closing" class="hidden"></div>
+  <div id="sc-referral" class="hidden"></div>
 </div>
 
 <!-- EMAILS -->
 <div id="tab-emails" class="hidden">
   <div class="subtab-row">
-    <button class="subtab active" onclick="showSubtab('emails','precall',this)">📨 Pre-Call</button>
-    <button class="subtab" onclick="showSubtab('emails','postcall',this)">📩 Post-Call</button>
-    <button class="subtab" onclick="showSubtab('emails','welcome',this)">🎉 Welcome</button>
-    <button class="subtab" onclick="showSubtab('emails','followup',this)">🔄 Follow Up</button>
+    <button class="subtab active" onclick="showSub('em','precall',this)">📨 Pre-Appt</button>
+    <button class="subtab" onclick="showSub('em','postcall',this)">📩 Post-Appt</button>
+    <button class="subtab" onclick="showSub('em','policy',this)">📜 Policy Del.</button>
+    <button class="subtab" onclick="showSub('em','referral',this)">🤝 Referral</button>
+    <button class="subtab" onclick="showSub('em','renewal',this)">🔄 Renewal</button>
   </div>
-  <div id="emails-precall"><div id="emails-precall-content"></div></div>
-  <div id="emails-postcall" class="hidden"><div id="emails-postcall-content"></div></div>
-  <div id="emails-welcome" class="hidden"><div id="emails-welcome-content"></div></div>
-  <div id="emails-followup" class="hidden"><div id="emails-followup-content"></div></div>
+  <div id="em-precall"></div>
+  <div id="em-postcall" class="hidden"></div>
+  <div id="em-policy" class="hidden"></div>
+  <div id="em-referral" class="hidden"></div>
+  <div id="em-renewal" class="hidden"></div>
 </div>
 
 <!-- STRATEGIES -->
 <div id="tab-strategies" class="hidden">
   <div class="subtab-row">
-    <button class="subtab active" onclick="showSubtab('strategies','lead',this)">🎯 Lead Gen</button>
-    <button class="subtab" onclick="showSubtab('strategies','social',this)">📱 Social</button>
-    <button class="subtab" onclick="showSubtab('strategies','weak',this)">💪 Weak Agents</button>
-    <button class="subtab" onclick="showSubtab('strategies','daily',this)">📅 Daily Plan</button>
+    <button class="subtab active" onclick="showSub('st','leadgen',this)">🎯 Lead Gen</button>
+    <button class="subtab" onclick="showSub('st','finalexp',this)">💛 Final Exp</button>
+    <button class="subtab" onclick="showSub('st','weak',this)">💪 Weak Agents</button>
+    <button class="subtab" onclick="showSub('st','daily',this)">📅 Daily Plan</button>
+    <button class="subtab" onclick="showSub('st','compliance',this)">✅ Compliance</button>
   </div>
-  <div id="strategies-lead"><div id="strategies-lead-content"></div></div>
-  <div id="strategies-social" class="hidden"><div id="strategies-social-content"></div></div>
-  <div id="strategies-weak" class="hidden"><div id="strategies-weak-content"></div></div>
-  <div id="strategies-daily" class="hidden"><div id="strategies-daily-content"></div></div>
+  <div id="st-leadgen"></div>
+  <div id="st-finalexp" class="hidden"></div>
+  <div id="st-weak" class="hidden"></div>
+  <div id="st-daily" class="hidden"></div>
+  <div id="st-compliance" class="hidden"></div>
 </div>
 
-<!-- COACHING -->
-<div id="tab-coaching" class="hidden">
-  <div class="subtab-row">
-    <button class="subtab active" onclick="showSubtab('coaching','gameplan',this)">🗓️ Game Plan</button>
-    <button class="subtab" onclick="showSubtab('coaching','motivation',this)">🔥 Motivation</button>
-    <button class="subtab" onclick="showSubtab('coaching','accountability',this)">✅ Accountability</button>
-    <button class="subtab" onclick="showSubtab('coaching','training',this)">📚 Training</button>
+<!-- TEAM -->
+<div id="tab-team" class="hidden">
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <div class="card-title" style="margin-bottom:0">➕ Add Agent</div>
+      <button class="btn btn-blue btn-sm" onclick="toggleAgentForm()">+ Add</button>
+    </div>
+    <div id="agent-form" class="hidden" style="margin-top:12px">
+      <div class="row" style="margin-bottom:8px">
+        <input id="aName" placeholder="Agent name *" style="flex:2">
+        <input id="aLeads" type="number" placeholder="Leads" style="flex:1;min-width:60px">
+      </div>
+      <div class="row" style="margin-bottom:8px">
+        <input id="aAppts" type="number" placeholder="Appointments" style="flex:1">
+        <input id="aIssued" type="number" placeholder="Policies Issued" style="flex:1">
+        <input id="aPremium" type="number" placeholder="Premium $" style="flex:1">
+      </div>
+      <button class="btn btn-green" style="width:100%;margin-top:4px" onclick="addAgent()">Save Agent</button>
+    </div>
   </div>
-  <div id="coaching-gameplan"><div id="coaching-gameplan-content"></div></div>
-  <div id="coaching-motivation" class="hidden"><div id="coaching-motivation-content"></div></div>
-  <div id="coaching-accountability" class="hidden"><div id="coaching-accountability-content"></div></div>
-  <div id="coaching-training" class="hidden"><div id="coaching-training-content"></div></div>
+  <div class="section-title">🏆 Agent Leaderboard</div>
+  <div id="agentLeaderboard"></div>
+  <div class="section-title" style="margin-top:16px">👥 Agent Details</div>
+  <div id="agentDetails"></div>
 </div>
 
+<!-- COMMISSION -->
+<div id="tab-commission" class="hidden">
+  <div class="comm-card">
+    <div style="text-align:center">
+      <div style="font-size:12px;color:#94a3b8;margin-bottom:4px">Total Estimated Annual Premium</div>
+      <div class="big-num" style="color:#34d399" id="commTotal">$0</div>
+      <div style="font-size:11px;color:#64748b;margin-top:4px">Based on issued policies in pipeline</div>
+    </div>
+    <div style="display:flex;gap:10px;margin-top:16px;flex-wrap:wrap">
+      <div class="metric-box"><div class="metric-val" style="color:#fbbf24" id="comm80">$0</div><div class="metric-label">80% Commission</div></div>
+      <div class="metric-box"><div class="metric-val" style="color:#a78bfa" id="comm90">$0</div><div class="metric-label">90% Commission</div></div>
+      <div class="metric-box"><div class="metric-val" style="color:#34d399" id="comm100">$0</div><div class="metric-label">100% Commission</div></div>
+      <div class="metric-box"><div class="metric-val" style="color:#f87171" id="commMonth">$0</div><div class="metric-label">Est. Monthly</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">💰 Commission Calculator</div>
+    <div class="row" style="margin-bottom:8px">
+      <input id="calcPremium" type="number" placeholder="Monthly Premium $" style="flex:1">
+      <input id="calcRate" type="number" placeholder="Commission %" value="85" style="flex:1">
+    </div>
+    <button class="btn btn-green" style="width:100%" onclick="calcCommission()">Calculate</button>
+    <div id="calcResult" style="margin-top:12px;text-align:center;display:none">
+      <div style="font-size:11px;color:#94a3b8">First Year Commission</div>
+      <div class="big-num" style="color:#34d399" id="calcAnnual">$0</div>
+      <div style="font-size:11px;color:#64748b" id="calcMonthly"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📊 Pipeline Value by Stage</div>
+    <div id="stageValues"></div>
+  </div>
+</div>
+
+</div>
+
+<!-- UPGRADE MODAL -->
+<div id="upgradeModal" class="hidden" style="position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:100;display:flex;align-items:center;justify-content:center;padding:20px">
+  <div style="background:#0f2744;border:1px solid rgba(245,158,11,0.3);border-radius:20px;padding:24px;max-width:400px;width:100%;text-align:center">
+    <div style="font-size:32px;margin-bottom:8px">⭐</div>
+    <h2 style="font-size:18px;font-weight:800;color:#fbbf24;margin-bottom:8px">Upgrade to Premium</h2>
+    <p style="font-size:12px;color:#94a3b8;margin-bottom:16px">Unlock the full power of InsureFlow CRM</p>
+    <div style="text-align:left;margin-bottom:16px">
+      <div style="font-size:12px;color:#cbd5e1;margin:5px 0">✅ Unlimited prospects & pipeline</div>
+      <div style="font-size:12px;color:#cbd5e1;margin:5px 0">✅ 20+ scripts for Life & Final Expense</div>
+      <div style="font-size:12px;color:#cbd5e1;margin:5px 0">✅ Complete email sequence library</div>
+      <div style="font-size:12px;color:#cbd5e1;margin:5px 0">✅ Advanced commission tracking</div>
+      <div style="font-size:12px;color:#cbd5e1;margin:5px 0">✅ Team leader dashboard</div>
+      <div style="font-size:12px;color:#cbd5e1;margin:5px 0">✅ Weak agent coaching tools</div>
+      <div style="font-size:12px;color:#cbd5e1;margin:5px 0">✅ Compliance checklist</div>
+      <div style="font-size:12px;color:#cbd5e1;margin:5px 0">✅ Priority support</div>
+    </div>
+    <div style="font-size:24px;font-weight:900;color:#fbbf24;margin-bottom:4px">$47<span style="font-size:14px;color:#94a3b8">/month</span></div>
+    <div style="font-size:11px;color:#64748b;margin-bottom:16px">or $397/year (save 30%)</div>
+    <button class="btn btn-gold" style="width:100%;padding:12px;font-size:14px;margin-bottom:8px">🚀 Start Premium Today</button>
+    <button onclick="closeUpgrade()" style="background:none;border:none;color:#64748b;font-size:12px;cursor:pointer">Maybe later</button>
+  </div>
 </div>
 
 <script>
+var prospects=[];
 var agents=[];
+var isPremium=false;
 
-var scriptsData={
+var stageColors={Lead:'#3b82f6',Contacted:'#f59e0b',Appointment:'#10b981',Presented:'#8b5cf6',Submitted:'#0ea5e9',Issued:'#22c55e',NotTaken:'#ef4444'};
+var stages=['Lead','Contacted','Appointment','Presented','Submitted','Issued','NotTaken'];
+
+var scriptsDB={
   cold:[
-    {title:'Cold DM - Curiosity',text:'Hey [Name]! I came across your profile and something told me to reach out. I\'m building a team at Exterior Financial Group and I immediately thought of you. I\'m not sure if it\'s a fit but would you be open to a quick 15-min call this week? No pressure at all!'},
-    {title:'Cold DM - Compliment Hook',text:'Hey [Name]! Love what you post — you clearly have an entrepreneurial mindset. I\'m expanding my team at EFG and looking for driven people. Would you be open to a quick chat about something that could add serious income to what you\'re already doing?'},
-    {title:'Cold DM - Direct',text:'Hey [Name]! Quick question — are you open to exploring ways to earn additional income outside your current work? I\'m part of Exterior Financial Group and we\'re growing fast. Would love to connect for 15 mins if you\'re open!'},
-    {title:'Cold DM - Social Proof',text:'Hey [Name]! My team at Exterior Financial Group just hit a huge milestone and I\'m expanding. I\'m looking for 3 motivated people this month. Your profile stood out — would you be open to a quick call to see if this could be a fit for you?'}
+    {title:'Life Insurance Cold Call Opener',free:true,text:'Hi, is this [Name]? Great! My name is [Your Name] and I\'m a licensed life insurance agent in your area. I\'m not calling to sell you anything today — I just wanted to see if you\'ve had a chance to review your family\'s life insurance coverage recently?\n\n[Wait for response]\n\nThe reason I ask is that most families I speak with are either underinsured or paying too much for what they have. I\'d love to set up a quick 15-20 minute appointment — no obligation — just to make sure your family is protected. Would [DAY] or [DAY] work better for you?'},
+    {title:'Life Insurance Warm Market Script',free:true,text:'Hey [Name], it\'s [Your Name]! How are you doing?\n\n[Chat briefly]\n\nHey, the reason I\'m calling — I recently got my life insurance license and I\'m helping families in the area make sure they\'re properly protected. I thought of you and [family] and wanted to offer you a complimentary policy review.\n\nIt takes about 20 minutes and there\'s absolutely no obligation. I just want to make sure you\'re taken care of. Does that sound okay?'},
+    {title:'Final Expense Door Knock Script',free:false,text:'Good [morning/afternoon]! My name is [Name] and I\'m following up on the information card you filled out recently about final expense coverage.\n\nI just have a few quick questions to see what options might be available for you. May I come in for just a moment?\n\n[Inside]\nThank you so much for your time. I just want to make sure that if something were to happen to you, your family wouldn\'t be left with the burden of funeral costs and final expenses. Does that make sense?'},
+    {title:'Medicare Supplement Introduction',free:false,text:'Hi [Name], this is [Your Name] calling. You recently turned 65 or are approaching Medicare eligibility, and I wanted to reach out about your Medicare supplement options.\n\nMany people don\'t realize that Original Medicare only covers about 80% of costs — leaving you responsible for the other 20%. I help seniors in our area find affordable plans that cover that gap.\n\nWould you have 15 minutes this week for me to show you your options?'}
   ],
-  warm:[
-    {title:'Warm Market - Friend',text:'Hey [Name]! Hope you\'re doing amazing! I\'ve been working on something really exciting and honestly you were one of the first people I thought of. It\'s a financial opportunity I\'m building with a small team. I think you\'d crush it. Would you be open to hearing more?'},
-    {title:'Warm Market - Family',text:'Hey [Name]! I know we don\'t always talk about money stuff but I\'ve been doing something that\'s genuinely changing my financial future and I\'d feel bad not sharing it with you. It\'s with Exterior Financial Group. Can I tell you about it over a quick call?'},
-    {title:'Warm Market - Colleague',text:'Hey [Name]! Random question — are you happy with your current income situation? I\'ve been building something on the side with EFG that\'s been incredible. I think it could work well around your schedule. Would you be open to a 15-min call?'}
-  ],
-  followup:[
-    {title:'Follow Up #1 - Soft',text:'Hey [Name]! Just checking in — I know life gets busy! I wanted to follow up on our last chat about the EFG opportunity. Our team has grown a lot since we spoke. If you\'re still open to it, would love to reconnect for just 10 minutes. What does your week look like?'},
-    {title:'Follow Up #2 - Urgency',text:'Hey [Name]! I don\'t want to bug you but I\'d feel terrible if I didn\'t follow up one more time. We have a really exciting momentum going on our team right now and I think the timing is perfect for you. Can we jump on a quick call this week?'},
-    {title:'Follow Up #3 - Final',text:'Hey [Name]! Last follow up from me — I respect your time! If the timing isn\'t right now, no worries at all. But if things change and you want to explore financial freedom, I\'m always here. Wishing you the best either way! 🙏'},
-    {title:'Follow Up - After No Show',text:'Hey [Name]! Looks like we missed each other on our call. No worries at all — I know things come up! Would love to reschedule when you have 15 mins. What\'s a good time for you this week?'}
+  fe:[
+    {title:'Final Expense Kitchen Table Script',free:true,text:'Mr/Mrs [Name], I appreciate you having me in your home today.\n\nI want to be straightforward with you — the reason I\'m here is to talk about something most people prefer not to think about, but that\'s really important for your family.\n\nWhen the time comes, a funeral today costs between $8,000 and $15,000. My job is to make sure that cost doesn\'t fall on your loved ones.\n\nI have plans specifically designed for people your age, starting as low as $20-$30 a month. Can I show you a couple of options?'},
+    {title:'Final Expense Objection - Already Have Coverage',free:true,text:'That\'s great that you have some coverage! Most people I work with have either group coverage through work, which ends when they retire, or a small policy that hasn\'t kept up with the rising cost of funerals.\n\nWould you mind if I just took a look at what you have? That way I can confirm you\'re fully covered and give you peace of mind. If everything\'s good, I\'ll tell you and be on my way. Fair enough?'},
+    {title:'Final Expense Presentation Script',free:false,text:'Let me show you exactly what I have for you today.\n\nBased on your age and health, I\'ve found [X] plans that would work for you:\n\nOption 1: [Plan A] - $[X]/month for $[X] coverage\nOption 2: [Plan B] - $[X]/month for $[X] coverage\nOption 3: [Plan C] - $[X]/month for $[X] coverage\n\nAll of these are guaranteed — once you\'re approved, they can never cancel your policy as long as you pay the premium.\n\nWhich of these feels most comfortable for you?'}
   ],
   objection:[
-    {title:'No Time Objection',text:'I totally hear you — I was in the same boat! That\'s actually WHY I started this. It\'s designed to work around your schedule. Most of our top earners started with just 5-10 hours a week. Would it be worth 15 minutes just to see if the numbers make sense for you?'},
-    {title:'No Money Objection',text:'That\'s completely understandable! The good news is it costs very little to get started and most people make back their initial investment within the first month. Would you be open to just learning more so you can make an informed decision?'},
-    {title:'Not Interested Objection',text:'Totally respect that! Quick question before I go — do you know anyone who might be looking to build extra income? I take really good care of referrals and I\'d love to help someone you know. Anyone come to mind?'},
-    {title:'Already Tried MLM Objection',text:'I completely understand — most MLMs are not worth it. What makes EFG different is [explain difference]. But I get the hesitation! Would you be willing to just hear the details and make your own judgment? You might be surprised.'},
-    {title:'Need to Think About It',text:'Of course! That\'s actually a great sign — it means you\'re taking it seriously. What specific questions do you have that I can answer right now? I want to make sure you have everything you need to make the best decision for yourself.'}
+    {title:'I Need to Think About It',free:true,text:'I completely understand — this is an important decision!\n\nCan I ask — is it the coverage amount, the monthly premium, or something else that you\'d like to think over?\n\n[Address specific concern]\n\nHere\'s what I\'d suggest: let\'s go ahead and get the application started today while your health information is fresh. You have a free look period of 30 days — if you change your mind for any reason, you get a full refund. Does that sound fair?'},
+    {title:'I Can\'t Afford It',free:true,text:'I hear you — and I want to find something that works within your budget.\n\nLet me ask you this: if something happened to you tomorrow, who would be responsible for your final expenses?\n\n[Listen]\n\nSo essentially the question isn\'t whether you can afford this — it\'s whether your family can afford NOT having it.\n\nI have plans starting as low as $15-$20 a month. Can we look at what fits your budget?'},
+    {title:'I Have Insurance Through Work',free:false,text:'That\'s great! Many people do.\n\nHere\'s something important to consider though — most employer group coverage is term insurance that ends when you leave the company, retire, or if the company changes their benefits.\n\nAlso, group coverage is usually only 1-2x your salary, which often isn\'t enough.\n\nWould it make sense to have a personal policy you own — one that\'s yours regardless of where you work? That way you\'re always covered.'},
+    {title:'I Want to Talk to My Spouse',free:false,text:'That\'s a great idea — family decisions should be made together!\n\nIs your spouse home right now? I\'d love to meet them and share the information with both of you at the same time.\n\n[If no]\n\nHow about this — when would be a good time when you\'re both available? I can come back or we can do a quick call together. That way everyone has the same information and you can make the best decision for your family.'},
+    {title:'I Don\'t Believe in Life Insurance',free:false,text:'I respect that perspective and you\'re not alone.\n\nLet me ask you something — do you believe in taking care of your family?\n\n[Yes]\n\nThen life insurance might be for you after all — because at its core, that\'s exactly what it is. It\'s not about you. It\'s about making sure the people who depend on you don\'t suffer financially if something happens.\n\nCan I share some information and let you decide for yourself?'}
   ],
   closing:[
-    {title:'Soft Close',text:'Based on everything we\'ve talked about, it really sounds like this could be a great fit for you. What would it take for you to feel comfortable getting started today?'},
-    {title:'Assumptive Close',text:'I can already see you doing really well with this. Let\'s get you started — I\'ll walk you through the next steps right now. It only takes about 10 minutes to get set up. Sound good?'},
-    {title:'Urgency Close',text:'I want to be upfront with you — our team is growing fast and I can only personally mentor a few people at a time. I\'d love for you to be one of them. Are you ready to take that step today?'},
-    {title:'Fear of Loss Close',text:'I\'d hate for you to look back in 6 months and wish you had started today. The people who got in early on our team are seeing incredible results. The best time to start is now. What do you say?'}
+    {title:'Assumptive Close',free:true,text:'Based on everything we\'ve discussed today, it looks like [Plan Name] at $[X]/month gives you and your family the best protection.\n\nLet\'s go ahead and get you started. I just need a few pieces of information to complete the application. What\'s your date of birth?'},
+    {title:'Choice Close',free:true,text:'So based on what you\'ve told me today, I have two options that would work perfectly for you:\n\nOption 1: $[X]/month for $[X,000] in coverage\nOption 2: $[X]/month for $[X,000] in coverage\n\nBoth are excellent options. Which one feels most comfortable for your budget?'},
+    {title:'Urgency Close - Health',free:false,text:'Mr/Mrs [Name], I want to be transparent with you about something.\n\nThe rates I\'ve quoted you today are based on your current health. Insurance is one of those things where the best time to get it is when you don\'t need it — because once your health changes, so do your options and rates.\n\nShall we go ahead and lock in these rates for you today while we can?'},
+    {title:'Summary Close',free:false,text:'Let me summarize what we\'ve covered today:\n\n✅ You want to make sure your family isn\'t burdened with final expenses\n✅ You\'re looking for something affordable at $[X]/month or less\n✅ You want guaranteed coverage that can\'t be cancelled\n\nThe [Plan Name] at $[X]/month gives you everything you\'re looking for.\n\nIs there any reason we shouldn\'t go ahead and get this protection in place for your family today?'}
+  ],
+  referral:[
+    {title:'Referral Request After Sale',free:true,text:'Mr/Mrs [Name], congratulations again on getting this important protection in place for your family!\n\nI have a quick favor to ask. My business grows primarily through referrals from happy clients like yourself.\n\nCould you think of 2-3 people — friends, family, coworkers — who might also benefit from a quick conversation about their coverage?\n\nI promise to take great care of anyone you refer to me.'},
+    {title:'Referral Request - Not Interested Prospect',free:true,text:'I completely respect your decision and I appreciate your time today.\n\nBefore I go — even though the timing isn\'t right for you, do you know anyone who might benefit from what I do? A friend, family member, or coworker who has a young family or might be thinking about retirement planning?\n\nI\'d love a warm introduction and I\'ll always take great care of your referrals.'},
+    {title:'Referral Follow Up Script',free:false,text:'Hi [Name], my name is [Your Name] — I\'m a colleague of [Referrer\'s Name] who gave me your information.\n\nThey thought you might benefit from a quick conversation about life insurance protection for your family. They spoke very highly of you!\n\nI promise this will be a no-pressure conversation — I just want to make sure you have the right information to protect your family. Would [DAY] or [DAY] work for a quick 20-minute chat?'}
   ]
 };
 
-var emailsData={
+var emailsDB={
   precall:[
-    {title:'Pre-Call Confirmation Email',subject:'Our Call Tomorrow - Excited to Connect! 🔥',text:'Hi [Name],\n\nJust wanted to confirm our call tomorrow at [TIME].\n\nI\'m really looking forward to connecting with you! In our call I\'ll be sharing:\n\n✅ What Exterior Financial Group is all about\n✅ How our team is building serious income\n✅ Whether this could be a fit for your goals\n\nThis will be a no-pressure conversation — just two people exploring possibilities.\n\nSee you tomorrow!\n\n[Your Name]\nExterior Financial Group'},
-    {title:'Pre-Call Info Email',subject:'Quick Info Before Our Call 📋',text:'Hi [Name],\n\nExcited for our call at [TIME]! Here\'s a quick overview before we connect:\n\n🏢 About EFG: We help people build financial freedom through a proven team system.\n\n💰 Income Potential: Our team members earn through [explain comp plan briefly]\n\n⏰ Time Commitment: Most start part time, 5-10 hours/week\n\n🚀 What Makes Us Different: [Your unique value prop]\n\nCome with questions — I love them!\n\nSee you soon,\n[Your Name]'},
-    {title:'Pre-Call Hype Email',subject:'Tomorrow is Going to Change Things! 🚀',text:'Hi [Name],\n\nI just want to say — I\'m genuinely excited for our call tomorrow at [TIME].\n\nThe people I\'ve had this exact conversation with who decided to take action have completely transformed their financial situation.\n\nI believe you have what it takes. Come ready to be open-minded and ask questions!\n\nSee you tomorrow,\n[Your Name]\nEFG Team Leader'}
+    {title:'Appointment Confirmation Email',free:true,subject:'Your Life Insurance Review - Confirmed ✅',text:'Hi [Name],\n\nI\'m looking forward to our appointment on [DATE] at [TIME]!\n\nTo make the most of our time together, please have the following ready if possible:\n\n📋 Any current life insurance policies\n📋 Recent health information\n📋 A list of your beneficiaries\n\nOur meeting will take approximately 20-30 minutes. I\'ll be reviewing your current coverage and showing you options that may better protect your family.\n\nSee you soon!\n[Your Name]\nLicensed Life Insurance Agent\n[Phone Number]'},
+    {title:'Pre-Appointment Info Email',free:true,subject:'What to Expect at Our Meeting 📋',text:'Hi [Name],\n\nI wanted to send over some information before we meet on [DATE] at [TIME].\n\nHere\'s what we\'ll cover:\n\n1️⃣ Review your current coverage (if any)\n2️⃣ Discuss your family\'s financial protection needs\n3️⃣ Present affordable options tailored to you\n4️⃣ Answer all your questions\n\nThere is absolutely NO obligation — my goal is simply to make sure your family is protected.\n\nIf you have any questions before we meet, feel free to call or text me at [PHONE].\n\nLooking forward to meeting you!\n[Your Name]'},
+    {title:'Final Expense Pre-Appointment',free:false,subject:'Our Meeting Tomorrow - Important Info',text:'Hi [Name],\n\nJust a reminder about our appointment tomorrow at [TIME].\n\nI\'ll be sharing some options for final expense coverage — plans specifically designed to make sure your family isn\'t left with funeral and burial costs.\n\nThe average funeral today costs between $8,000 - $15,000. The plans I\'ll be showing you start as low as $20-$30/month and provide guaranteed coverage.\n\nPlease make sure your spouse or a trusted family member can be present if possible — these decisions are best made together.\n\nSee you tomorrow!\n[Your Name]'}
   ],
   postcall:[
-    {title:'Post-Call - Interested Follow Up',subject:'Great Connecting Today - Next Steps 🎯',text:'Hi [Name],\n\nIt was so great talking with you today! I can already see your potential in this.\n\nAs promised, here are the next steps:\n\n1️⃣ Review the info I sent over\n2️⃣ Write down any questions you have\n3️⃣ Let\'s schedule our follow up call: [LINK/TIME]\n\nI\'m here if anything comes up before then. Don\'t hesitate to reach out!\n\nExcited for your journey,\n[Your Name]'},
-    {title:'Post-Call - Needs Time Follow Up',subject:'No Rush - I\'m Here When You\'re Ready',text:'Hi [Name],\n\nThanks so much for taking the time to connect today!\n\nI completely understand you need some time to think it over. That\'s the smart thing to do.\n\nA few things to consider as you think:\n✅ Where do you want to be financially in 12 months?\n✅ What would an extra $[X]/month mean for your family?\n✅ What\'s the cost of NOT trying?\n\nI\'ll follow up in a few days. In the meantime, feel free to reach out anytime!\n\n[Your Name]'},
-    {title:'Post-Call - Not Interested',subject:'Thanks for Your Time! 🙏',text:'Hi [Name],\n\nThank you so much for taking the time to connect today! I genuinely appreciate it.\n\nI completely respect your decision. If things ever change or the timing becomes right in the future, please don\'t hesitate to reach out.\n\nAlso — if you ever know anyone who might be looking for financial opportunities, I\'d love a referral!\n\nWishing you all the best,\n[Your Name]'},
-    {title:'Post-Call - Closed Deal! 🎉',subject:'Welcome to the EFG Family! 🎉🚀',text:'Hi [Name],\n\nWELCOME TO THE TEAM! I\'m so excited for your journey ahead!\n\nHere are your immediate next steps:\n\n1️⃣ Complete your onboarding: [LINK]\n2️⃣ Join our team group chat: [LINK]\n3️⃣ Schedule your first training call with me\n4️⃣ Start your warm market list (100 names)\n\nYou made a powerful decision today. I\'m going to do everything I can to help you succeed!\n\nLet\'s get it! 💪\n[Your Name]\nEFG Team Leader'}
+    {title:'Post-Appointment - Submitted Application',free:true,subject:'Great Meeting You Today! Next Steps 🎯',text:'Hi [Name],\n\nThank you so much for your time today! It was a pleasure meeting with you.\n\nAs a reminder, here\'s what happens next:\n\n📋 Your application has been submitted to [Carrier]\n⏱️ Underwriting typically takes [X] business days\n📞 I\'ll call you as soon as I hear back\n📜 Once approved, you\'ll receive your policy documents\n\nIn the meantime, please don\'t hesitate to reach out if you have any questions. I\'m always here to help!\n\nCongratulations on taking this important step for your family!\n[Your Name]'},
+    {title:'Post-Appointment - Needs Time to Decide',free:true,subject:'No Rush - Here\'s a Summary of What We Discussed',text:'Hi [Name],\n\nThank you for meeting with me today! I enjoyed our conversation.\n\nHere\'s a quick summary of what we discussed:\n\n📋 Coverage amount: $[X]\n💰 Monthly premium: $[X]/month\n🏢 Carrier: [Carrier Name]\n✅ Benefits: [Key benefits]\n\nI completely understand you want to take some time to think it over. That\'s the smart thing to do!\n\nI\'ll follow up with you on [DATE]. In the meantime, feel free to call me anytime at [PHONE] if questions come up.\n\nWishing you and your family all the best!\n[Your Name]'},
+    {title:'Post-Appointment - No Show Follow Up',free:false,subject:'Sorry We Missed Each Other!',text:'Hi [Name],\n\nI stopped by/called at our scheduled time but wasn\'t able to reach you. I completely understand — life gets busy!\n\nI\'d love to reschedule at your convenience. I have availability:\n\n📅 [Date/Time Option 1]\n📅 [Date/Time Option 2]\n📅 [Date/Time Option 3]\n\nAlternatively, feel free to call or text me at [PHONE] to find a time that works for you.\n\nI look forward to connecting soon!\n[Your Name]'}
   ],
-  welcome:[
-    {title:'New Agent Welcome Email',subject:'You\'re In! Welcome to EFG 🎉',text:'Hi [Name],\n\nWelcome to Exterior Financial Group! You\'ve just made one of the best decisions of your life.\n\n🎯 YOUR FIRST WEEK ACTION PLAN:\n\nDay 1: Complete onboarding & join team chat\nDay 2: Write your warm market list (100 names)\nDay 3: Post your first piece of content\nDay 4: Send 10 DMs to your warm market\nDay 5: Get on a call with your first prospect\nDay 6: Follow up with everyone you contacted\nDay 7: Debrief call with me\n\n💡 Remember: The faster you move, the faster you earn!\n\nI\'m in your corner every step of the way.\n\n[Your Name]\nYour EFG Team Leader'},
-    {title:'Welcome - 30 Day Game Plan',subject:'Your 30-Day EFG Success Roadmap 🗺️',text:'Hi [Name],\n\nHere\'s your 30-day roadmap to your first win!\n\n📅 WEEK 1: Foundation\n- Complete all onboarding steps\n- Build your contact list\n- Post daily on social media\n- Send 10 DMs per day\n\n📅 WEEK 2: Momentum\n- Get 5+ calls booked\n- Practice scripts daily\n- Attend all team trainings\n\n📅 WEEK 3: Closing\n- Focus on closing your warm market\n- Ask for referrals from everyone\n- Your first close is coming!\n\n📅 WEEK 4: Duplication\n- Start training your first recruit\n- Celebrate your wins!\n- Set next month\'s goals\n\nYou\'ve got this! 🚀\n[Your Name]'}
+  policy:[
+    {title:'Policy Delivery Email',free:true,subject:'Your Policy is Ready! 🎉 Important Documents Inside',text:'Hi [Name],\n\nCongratulations! Your life insurance policy has been issued and is now in force!\n\n📜 Policy Number: [POLICY #]\n🏢 Carrier: [CARRIER]\n💰 Monthly Premium: $[X]\n📅 Policy Date: [DATE]\n👤 Beneficiary: [NAME]\n\nImportant next steps:\n\n1️⃣ Review your policy documents carefully\n2️⃣ Store them in a safe place\n3️⃣ Make sure your beneficiary knows about this policy\n4️⃣ Set up automatic payments to ensure continuous coverage\n\nThank you for trusting me with this important decision. Please don\'t hesitate to reach out if you ever have questions!\n\n[Your Name]'},
+    {title:'Annual Policy Review Email',free:false,subject:'Time for Your Annual Policy Review 📋',text:'Hi [Name],\n\nI can\'t believe it\'s already been a year since we put your [policy type] coverage in place!\n\nI wanted to reach out for your annual policy review. Life changes — and it\'s important to make sure your coverage still matches your needs.\n\nSome things to consider:\n✅ Has your family situation changed? (Marriage, children, grandchildren)\n✅ Have your financial responsibilities changed?\n✅ Do you have any new health concerns?\n✅ Are your beneficiaries still current?\n\nI\'d love to schedule a quick 15-minute call or visit to make sure you\'re still fully protected.\n\nWhen works best for you?\n[Your Name]'}
   ],
-  followup:[
-    {title:'7-Day Check In Email',subject:'One Week In - How Are You Doing? 💪',text:'Hi [Name],\n\nIt\'s been one week since you joined EFG — I wanted to check in!\n\nQuick questions:\n✅ How many people have you contacted?\n✅ How many calls have you booked?\n✅ What\'s been your biggest challenge?\n\nRemember — consistency is the key. Even 1 hour a day of focused activity adds up fast.\n\nReply to this email and let me know how it\'s going. I\'m here to help!\n\n[Your Name]'},
-    {title:'Inactive Agent Re-Engagement',subject:'I\'m Thinking About You 🙏',text:'Hi [Name],\n\nI noticed things have been quiet lately and I just wanted to reach out.\n\nI know life gets busy and sometimes this business takes a back seat. That\'s okay!\n\nBut I believe in you and I don\'t want to see you give up on your goals.\n\nCan we jump on a quick 15-min call this week? I want to understand what\'s going on and how I can better support you.\n\nYou didn\'t come this far to only come this far! 💪\n\n[Your Name]\nYour EFG Team Leader'}
+  referral:[
+    {title:'Referral Thank You Email',free:true,subject:'Thank You for the Referral! 🙏',text:'Hi [Name],\n\nI just wanted to send a quick thank you for referring [REFERRAL NAME] to me!\n\nI truly appreciate your trust and confidence in my services. It means the world to me.\n\nRest assured, I will take excellent care of them and provide the same level of service I\'ve provided to you.\n\nIf you ever need anything — whether it\'s questions about your policy, additional coverage, or more referrals — please don\'t hesitate to reach out.\n\nThank you again!\n[Your Name]'},
+    {title:'Referral Request Email',free:false,subject:'A Quick Favor to Ask 🙏',text:'Hi [Name],\n\nI hope this finds you and your family doing well!\n\nI wanted to reach out because my business grows primarily through referrals from wonderful clients like yourself.\n\nIf you know anyone — a friend, family member, or coworker — who might benefit from a life insurance review, I would be so grateful for an introduction.\n\nAll I ask is that you forward this email to them, or simply share my contact information:\n📱 [Your Phone]\n📧 [Your Email]\n\nThank you so much for your continued trust and support!\n[Your Name]'}
+  ],
+  renewal:[
+    {title:'Premium Renewal Reminder',free:true,subject:'Important: Your Policy Premium is Due Soon',text:'Hi [Name],\n\nI wanted to reach out as a friendly reminder that your life insurance premium renewal is coming up.\n\n📋 Policy: [POLICY NUMBER]\n💰 Amount Due: $[X]\n📅 Due Date: [DATE]\n\nTo avoid any lapse in coverage, please make sure your payment is processed by the due date.\n\nIf you have any questions or if your payment method has changed, please contact me right away at [PHONE].\n\nThank you for keeping your family protected!\n[Your Name]'},
+    {title:'Lapsed Policy Re-Engagement',free:false,subject:'Your Coverage Has Lapsed - Let\'s Fix This',text:'Hi [Name],\n\nI noticed that your life insurance policy recently lapsed due to a missed payment.\n\nI\'m reaching out because I care about making sure your family stays protected.\n\nThe good news: in many cases, we can reinstate your policy without a new medical exam if we act quickly.\n\nPlease call me as soon as possible at [PHONE] so we can explore your options.\n\nDon\'t let your family go unprotected — let\'s get this resolved today!\n[Your Name]'}
   ]
 };
 
-var strategiesData={
-  lead:[
-    {title:'🎯 Strategy 1: Warm Market Blitz',color:'#3b82f6',items:['Write down 100 names from your phone contacts','Categorize: Family, Friends, Coworkers, Old Classmates','Start with people who are entrepreneurial or money-motivated','Goal: Contact 10 warm market people per day','Track every conversation in your lead tracker']},
-    {title:'📱 Strategy 2: Social Media Attraction',color:'#10b981',items:['Post 1 piece of content daily about financial freedom','Share your journey — people buy into YOU first','Use curiosity hooks: "What if you could..." or "I used to..."','Respond to every comment within 1 hour','Stories + feed posts = maximum reach']},
-    {title:'🔍 Strategy 3: Targeted Prospecting',color:'#8b5cf6',items:['Search Facebook groups: "work from home", "side hustle", "financial freedom"','Connect with people who engage on financial content','Look for people posting about money struggles or goals','Send 20 targeted connection requests per day','Follow up within 24 hours of connecting']},
-    {title:'🤝 Strategy 4: Referral Machine',color:'#f59e0b',items:['Ask EVERY prospect: "Who do you know who might be interested?"','Even "not interested" people can refer','Offer to take great care of their referrals','Follow up specifically on referrals — they close faster','Goal: Get 3 referrals per week from your network']}
+var strategiesDB={
+  leadgen:[
+    {title:'🎯 Strategy 1: Direct Mail Campaigns',color:'#3b82f6',items:['Target age 50-80 for final expense leads','Use "information request" mailers — not sales pitches','Mail to zip codes with median income $30k-$60k','Follow up by phone within 48 hours of response','Cost: $400-600 per 1,000 mailers, expect 1-3% response']},
+    {title:'📱 Strategy 2: Facebook Lead Ads',color:'#8b5cf6',items:['Target age 45-75 for life insurance','Age 60-80 for final expense specifically','Use fear-based headlines: "Don\'t leave your family with $10,000 in funeral bills"','Offer free quote or free information guide','Budget: $20-50/day, expect $10-30 per lead']},
+    {title:'🤝 Strategy 3: Referral Partner System',color:'#10b981',items:['Partner with funeral homes — they see families in need','Partner with senior centers and churches','Partner with financial advisors who don\'t sell insurance','Partner with real estate agents (new homeowners need coverage)','Give partners a thank you gift for every referral']},
+    {title:'📞 Strategy 4: Telemarketing Lists',color:'#f59e0b',items:['Purchase aged leads (30-90 days old) — cheaper, less competition','Buy internet leads and call within 5 minutes','Use dialer software for efficiency','Best times to call: 8-9am, 12-1pm, 5-7pm','Always check Do Not Call registry compliance']}
   ],
-  social:[
-    {title:'📘 Facebook Strategy',color:'#3b82f6',items:['Post 1 time per day at 7am, 12pm or 7pm','Use Facebook Lives once a week — massive reach boost','Join 5 entrepreneurship/financial freedom groups','Engage on 10 posts per day before posting your own','Personal profile + business page = double reach']},
-    {title:'📸 Instagram Strategy',color:'#e11d48',items:['Post feed content 4-5x per week','Post stories EVERY single day — builds familiarity','Use 5-8 relevant hashtags per post','Reels get 3-5x more reach than regular posts','DM everyone who likes or comments your posts']},
-    {title:'🎵 TikTok Strategy',color:'#0ea5e9',items:['Post 1-3 TikToks per day for maximum growth','Hook viewers in the FIRST 3 seconds','Use trending sounds with financial freedom content','Reply to comments with video replies — boosts algorithm','One viral video can bring hundreds of leads overnight']}
+  finalexp:[
+    {title:'💛 Final Expense Target Market',color:'#f59e0b',items:['Age 50-85 is the sweet spot','Income range: $15k-$50k annually','No or minimal life insurance coverage','Homeowners respond better than renters','Rural and suburban markets outperform urban']},
+    {title:'🚪 Door Knocking Strategy',color:'#ef4444',items:['Work leads same day they come in — speed matters','Knock between 10am-7pm (avoid meal times)','Dress professionally but not too formal','Always leave a door hanger if no answer','Follow up door knocks with phone calls']},
+    {title:'💬 Kitchen Table Sales Process',color:'#10b981',items:['Always sit at the kitchen table — not the living room sofa','Have them show you any existing policies first','Use visual aids and benefit summaries','Never use confusing insurance jargon','Always ask to meet with spouse present']},
+    {title:'📋 Final Expense Application Tips',color:'#8b5cf6',items:['Know your carriers\' health questions cold','Have backup carriers for harder-to-place clients','Guaranteed issue is last resort — higher premiums','Always explain the graded benefit period','Collect first premium payment at point of sale']}
   ],
   weak:[
-    {title:'🔴 For Agents With 0 Leads',color:'#ef4444',items:['Problem: Not taking consistent action','Solution: Daily 30-min prospecting sessions','Action: Send 10 DMs before doing anything else','Accountability: Screenshot DMs to leader daily','Mindset: "Every no is one step closer to a yes"','Support: Do a role play call with them this week']},
-    {title:'🟡 For Agents Generating Leads But Not Closing',color:'#f59e0b',items:['Problem: Weak sales skills or limiting beliefs','Solution: Script practice every morning for 15 mins','Action: Record yourself doing a pitch and review it','Accountability: Listen to their calls and give feedback','Mindset: "Closing is helping someone make a decision"','Support: Do a 3-way call with their next prospect']},
-    {title:'🟠 For Agents Who Start Strong Then Quit',color:'#f97316',items:['Problem: No long-term vision or got comfortable','Solution: Set bigger 90-day goals tied to emotions','Action: Create a vision board or dream list','Accountability: Weekly check-in calls — mandatory','Mindset: "Your team is watching how you respond to adversity"','Support: Connect them with a top earner as a mentor']},
-    {title:'💡 Universal Weak Agent Recovery Plan',color:'#8b5cf6',items:['Week 1: Daily check-ins + script practice','Week 2: Shadow a top agent on calls','Week 3: 3-way calls with leader on all prospects','Week 4: Independent with weekly accountability','Goal: Get them their first close within 30 days','Celebrate EVERY small win publicly']}
+    {title:'🔴 Agent Not Making Calls',color:'#ef4444',items:['Root cause: Fear of rejection or unorganized','Solution: Set mandatory call times (9am-12pm daily)','Action: Role play cold call opening every morning','Accountability: Log every call — track dials not just contacts','Support: Do a live call session with them this week','Mindset: "Every no gets you closer to a yes"']},
+    {title:'🟡 Agent Not Closing Sales',color:'#f59e0b',items:['Root cause: Weak closing skills or product knowledge','Solution: Study closes daily — memorize them','Action: Record presentations and review together','Accountability: 3-way appointments for next 5 prospects','Support: Practice objection handling every morning','Goal: 1 issued policy in next 7 days — celebrate it big']},
+    {title:'🟠 Agent High Activity Low Results',color:'#f97316',items:['Root cause: Targeting wrong prospects or weak presentation','Solution: Review lead quality and sourcing','Action: Ride-along — observe their full appointment','Accountability: Track sit rate (appointments that actually happen)','Support: Revamp their presentation script together','Focus: Quality over quantity — fewer better appointments']},
+    {title:'💡 30-Day Recovery Plan',color:'#8b5cf6',items:['Week 1: Daily coaching calls + script mastery','Week 2: Ride-along on all appointments','Week 3: Independent with daily debrief call','Week 4: Full independence + weekly check-in','Goal: 2 issued policies within 30 days','Celebrate EVERY win — builds momentum and confidence']}
   ],
   daily:[
-    {title:'🌅 Morning Routine (7-9am)',color:'#f59e0b',items:['Review your goals and why you started (5 mins)','Post your first piece of social media content','Send 5 morning DMs to warm prospects','Read/listen to 10 mins of personal development','Visualize your goals for the day']},
-    {title:'☀️ Midday Actions (12-2pm)',color:'#10b981',items:['Follow up with all open conversations','Send 10 new DMs to cold prospects','Engage on 15 social media posts (like/comment)','Book any calls for the next 48 hours','Update your lead tracker with all activity']},
-    {title:'🌙 Evening Power Hour (7-9pm)',color:'#3b82f6',items:['Make your scheduled prospect calls','Post evening social media content','Send 5 final follow-up messages','Plan tomorrow\'s top 3 priorities','Celebrate what you accomplished today']}
+    {title:'🌅 Morning Routine (8-10am)',color:'#f59e0b',items:['Review your pipeline — who needs follow up today?','Make 10 calls to new leads before 10am','Confirm all appointments for today and tomorrow','Practice your opening script for 10 minutes','Set your daily goal: X appointments, X applications']},
+    {title:'☀️ Midday Block (10am-2pm)',color:'#10b981',items:['Run your scheduled appointments','Submit any applications from morning appointments','Follow up with prospects who said "call back later"','Order new leads if pipeline is running low','Update your CRM with all morning activity']},
+    {title:'🌙 Afternoon/Evening (4pm-7pm)',color:'#3b82f6',items:['Best time for working appointments (people home from work)','Evening door knocking for final expense','Follow up calls from today\'s appointments','Plan tomorrow\'s schedule and confirm appointments','Update pipeline and celebrate today\'s wins']}
+  ],
+  compliance:[
+    {title:'✅ Do Not Call Compliance',color:'#ef4444',items:['Always scrub lists against National DNC Registry','Register your business phone numbers','Document every call attempt with date and time','Never call numbers on your state DNC list','Violations can result in $43,000+ fines per call']},
+    {title:'📋 Suitability Requirements',color:'#3b82f6',items:['Always document the client\'s need for the product','Never recommend coverage the client cannot afford','Complete suitability forms for annuity products','Keep records for minimum 5 years','When in doubt — don\'t sell it']},
+    {title:'🔒 Privacy & Data Protection',color:'#8b5cf6',items:['Never share client information without consent','Store client data securely — encrypted if digital','Shred physical documents with personal information','Never discuss client details in public places','Follow your state\'s specific data protection laws']}
   ]
 };
 
-var coachingData={
+var coachingTeam={
   gameplan:[
-    {title:'📅 Weekly Team Game Plan',color:'#3b82f6',items:['Monday: Set weekly goals + team motivation message','Tuesday: Training call - scripts & objections','Wednesday: Midweek check-in - who needs support?','Thursday: Role play & skill building session','Friday: Celebrate wins + set weekend challenge','Weekend: Post content + follow up on all leads']},
-    {title:'📊 Monthly Goals Framework',color:'#10b981',items:['Week 1: Focus on ACTIVITY (DMs, posts, content)','Week 2: Focus on CONVERSATIONS (calls booked)','Week 3: Focus on PRESENTATIONS (pitching)','Week 4: Focus on CLOSING (converting to team)','Track: Leads → Calls → Presentations → Closes','Conversion goal: 1 close per 20 serious conversations']}
-  ],
-  motivation:[
-    {title:'🔥 Daily Motivation Message Template',color:'#f59e0b',text:'Good morning TEAM! 🔥\n\nRemember WHY you started. Someone out there is waiting to hear YOUR story. Your financial freedom is one conversation away.\n\nToday\'s challenge: Send 15 DMs before noon. Let\'s go! 💪\n\n#EFGFamily #FinancialFreedom'},
-    {title:'💪 Agent Struggling Message',color:'#8b5cf6',text:'Hey [Name], I see you. I know it feels hard right now.\n\nEvery top earner on our team went through exactly what you\'re feeling. The ones who pushed through? They\'re the ones winning now.\n\nI believe in you. Let\'s jump on a quick call — I want to help you break through this. When are you free today?'},
-    {title:'🏆 Celebrating a Win Message',color:'#10b981',text:'🎉 HUGE shoutout to [Name] for [achievement]!\n\nThis is what happens when you stay consistent and believe in yourself. SO proud of you!\n\nThe rest of the team — this could be YOU next week. Let\'s go! 🚀\n\n#EFGWins #TeamWork'}
-  ],
-  accountability:[
-    {title:'✅ Daily Accountability Check-In',color:'#10b981',items:['Send team a morning check-in message every day','Ask: How many DMs did you send yesterday?','Ask: How many calls do you have booked today?','Ask: What is your #1 focus today?','Require: Screenshot of activity as proof','Celebrate: Anyone who hits daily goals publicly']},
-    {title:'📋 Weekly Performance Review',color:'#3b82f6',items:['Every Friday: Review each agent\'s numbers','Metrics to track: DMs sent, calls booked, closes','Compare to previous week — growing or declining?','Private message agents who are falling behind','Public recognition for agents hitting goals','Adjust strategies based on what\'s working']}
-  ],
-  training:[
-    {title:'📚 Week 1 Training Curriculum',color:'#8b5cf6',items:['Day 1: Company overview + compensation plan','Day 2: Warm market list building (100 names)','Day 3: Script mastery - cold DM & warm market','Day 4: Social media content creation','Day 5: Objection handling role play','Day 6: First calls with leader support','Day 7: Review + set week 2 goals']},
-    {title:'🎓 Ongoing Training Topics',color:'#f59e0b',items:['Weekly: Script practice and role play','Bi-weekly: Social media strategy update','Monthly: Top earner guest training','Monthly: Mindset and personal development','Quarterly: Goal setting and vision board session','Ongoing: 3-way calls for new agents']}
+    {title:'📅 Weekly Agency Game Plan',color:'#3b82f6',items:['Monday: Set weekly production goals + team call','Tuesday: Script practice and product training','Wednesday: Check-in — who needs support this week?','Thursday: Ride-along day with struggling agents','Friday: Celebrate wins + set weekend activity goals','Goal: Every agent submits minimum 2 applications/week']},
+    {title:'📊 Monthly Production Goals',color:'#10b981',items:['Set individual goals based on experience level','New agents: 4-6 issued policies in first 60 days','Experienced agents: 8-12 issued policies/month','Track: Leads → Appointments → Presentations → Submissions → Issues','Conversion benchmark: 1 issue per 4-5 appointments']}
   ]
 };
 
@@ -287,148 +418,114 @@ function showTab(name,btn){
   document.getElementById('tab-'+name).classList.remove('hidden');
   document.querySelectorAll('.tab').forEach(function(el){el.classList.remove('active')});
   btn.classList.add('active');
-  if(name==='scripts')renderScripts('cold');
-  if(name==='emails')renderEmails('precall');
-  if(name==='strategies')renderStrategies('lead');
-  if(name==='coaching')renderCoaching('gameplan');
+  if(name==='scripts'){renderScripts('cold');document.querySelector('#sc-cold').classList.remove('hidden');}
+  if(name==='emails'){renderEmails('precall');document.querySelector('#em-precall').classList.remove('hidden');}
+  if(name==='strategies'){renderStrategies('leadgen');document.querySelector('#st-leadgen').classList.remove('hidden');}
+  if(name==='commission')renderCommission();
 }
 
-function showSubtab(section,name,btn){
-  var prefix=section+'-';
-  document.querySelectorAll('[id^="'+prefix+'"]').forEach(function(el){
-    if(el.id!==prefix+'content')el.classList.add('hidden');
-  });
-  document.getElementById(prefix+name).classList.remove('hidden');
-  var parent=btn.closest('.subtab-row')||btn.parentElement;
-  parent.querySelectorAll('.subtab').forEach(function(el){el.classList.remove('active')});
+function showSub(prefix,name,btn){
+  var allDivs=document.querySelectorAll('[id^="'+prefix+'-"]');
+  allDivs.forEach(function(el){el.classList.add('hidden')});
+  document.getElementById(prefix+'-'+name).classList.remove('hidden');
+  var row=btn.parentElement;
+  row.querySelectorAll('.subtab').forEach(function(el){el.classList.remove('active')});
   btn.classList.add('active');
-  if(section==='scripts')renderScripts(name);
-  if(section==='emails')renderEmails(name);
-  if(section==='strategies')renderStrategies(name);
-  if(section==='coaching')renderCoaching(name);
+  if(prefix==='sc')renderScripts(name);
+  if(prefix==='em')renderEmails(name);
+  if(prefix==='st')renderStrategies(name);
 }
 
-function toggleForm(){
-  document.getElementById('agent-form').classList.toggle('hidden');
-}
+function toggleProspectForm(){document.getElementById('prospect-form').classList.toggle('hidden')}
+function toggleAgentForm(){document.getElementById('agent-form').classList.toggle('hidden')}
+function showUpgrade(){document.getElementById('upgradeModal').classList.remove('hidden')}
+function closeUpgrade(){document.getElementById('upgradeModal').classList.add('hidden')}
 
-function addAgent(){
-  var name=document.getElementById('agentName').value.trim();
+function addProspect(){
+  var name=document.getElementById('pName').value.trim();
   if(!name)return;
-  var leads=parseInt(document.getElementById('agentLeads').value)||0;
-  var calls=parseInt(document.getElementById('agentCalls').value)||0;
-  var closes=parseInt(document.getElementById('agentCloses').value)||0;
-  var posts=parseInt(document.getElementById('agentPosts').value)||0;
-  var dms=parseInt(document.getElementById('agentDMs').value)||0;
-  agents.push({id:Date.now(),name:name,leads:leads,calls:calls,closes:closes,posts:posts,dms:dms});
-  document.getElementById('agentName').value='';
-  document.getElementById('agentLeads').value='';
-  document.getElementById('agentCalls').value='';
-  document.getElementById('agentCloses').value='';
-  document.getElementById('agentPosts').value='';
-  document.getElementById('agentDMs').value='';
-  document.getElementById('agent-form').classList.add('hidden');
-  renderDashboard();
-}
-
-function getScore(a){
-  var s=0;
-  s+=Math.min(a.leads/10,1)*25;
-  s+=Math.min(a.calls/5,1)*25;
-  s+=Math.min(a.closes/2,1)*30;
-  s+=Math.min(a.posts/7,1)*10;
-  s+=Math.min(a.dms/50,1)*10;
-  return Math.round(s);
-}
-
-function getLevel(score){
-  if(score>=70)return{label:'🟢 Strong',cls:'badge-green'};
-  if(score>=40)return{label:'🟡 Average',cls:'badge-yellow'};
-  return{label:'🔴 Needs Help',cls:'badge-red'};
-}
-
-function removeAgent(id){
-  agents=agents.filter(function(a){return a.id!==id});
-  renderDashboard();
-}
-
-function updateAgentMetric(id,field,delta){
-  for(var i=0;i<agents.length;i++){
-    if(agents[i].id===id){
-      agents[i][field]=Math.max(0,agents[i][field]+delta);
-      break;
-    }
-  }
-  renderDashboard();
-}
-
-function renderDashboard(){
-  var strong=0,avg=0,weak=0,totalLeads=0;
-  agents.forEach(function(a){
-    var s=getScore(a);
-    totalLeads+=a.leads;
-    if(s>=70)strong++;
-    else if(s>=40)avg++;
-    else weak++;
+  prospects.push({
+    id:Date.now(),name:name,
+    phone:document.getElementById('pPhone').value,
+    age:document.getElementById('pAge').value,
+    type:document.getElementById('pType').value,
+    stage:document.getElementById('pStage').value,
+    premium:parseFloat(document.getElementById('pPremium').value)||0,
+    source:document.getElementById('pSource').value,
+    notes:document.getElementById('pNotes').value,
+    date:new Date().toLocaleDateString()
   });
-  document.getElementById('totalAgents').textContent=agents.length;
-  document.getElementById('topPerformers').textContent=strong;
-  document.getElementById('avgPerformers').textContent=avg;
-  document.getElementById('weakPerformers').textContent=weak;
-  document.getElementById('totalTeamLeads').textContent=totalLeads;
-
-  var sorted=agents.slice().sort(function(a,b){return getScore(b)-getScore(a)});
-  var rankColors=['#f59e0b','#94a3b8','#cd7c2f','#64748b','#64748b'];
-  var rankEmojis=['🥇','🥈','🥉','4️⃣','5️⃣'];
-  var lbHtml='';
-  if(sorted.length===0){
-    lbHtml='<div style="text-align:center;color:#475569;padding:2rem;font-size:13px">No agents yet!</div>';
-  } else {
-    sorted.forEach(function(a,i){
-      var score=getScore(a);
-      var level=getLevel(score);
-      lbHtml+='<div class="leaderboard-item">';
-      lbHtml+='<div class="rank-badge" style="background:'+(rankColors[i]||'#334155')+'">'+(rankEmojis[i]||i+1)+'</div>';
-      lbHtml+='<div style="flex:1"><div style="font-weight:700;font-size:14px">'+a.name+'</div>';
-      lbHtml+='<div style="font-size:11px;color:#64748b">'+a.leads+' leads · '+a.calls+' calls · '+a.closes+' closes</div></div>';
-      lbHtml+='<div><span class="'+level.cls+'">'+score+'%</span></div></div>';
-    });
-  }
-  document.getElementById('leaderboard').innerHTML=lbHtml;
-
-  var agHtml='';
-  if(agents.length===0){
-    agHtml='<div style="text-align:center;color:#475569;padding:1rem;font-size:13px">No agents yet.</div>';
-  } else {
-    agents.forEach(function(a){
-      var score=getScore(a);
-      var level=getLevel(score);
-      var fillColor=score>=70?'#10b981':score>=40?'#f59e0b':'#ef4444';
-      agHtml+='<div class="agent-card">';
-      agHtml+='<div style="display:flex;justify-content:space-between;align-items:center">';
-      agHtml+='<div><div class="agent-name">'+a.name+'</div><div class="agent-meta">Performance Score: '+score+'%</div></div>';
-      agHtml+='<div style="display:flex;align-items:center;gap:8px"><span class="'+level.cls+'">'+level.label+'</span>';
-      agHtml+='<button onclick="removeAgent('+a.id+')" style="background:none;border:none;color:#475569;cursor:pointer;font-size:14px">✕</button></div></div>';
-      agHtml+='<div class="perf-bar"><div class="perf-fill" style="width:'+score+'%;background:'+fillColor+'"></div></div>';
-      agHtml+='<div class="metric-row">';
-      agHtml+=makeMetric(a,'leads','Leads','#60a5fa');
-      agHtml+=makeMetric(a,'calls','Calls','#34d399');
-      agHtml+=makeMetric(a,'closes','Closes','#a78bfa');
-      agHtml+=makeMetric(a,'posts','Posts','#f59e0b');
-      agHtml+=makeMetric(a,'dms','DMs','#f87171');
-      agHtml+='</div></div>';
-    });
-  }
-  document.getElementById('agentsList').innerHTML=agHtml;
+  ['pName','pPhone','pAge','pPremium','pSource','pNotes'].forEach(function(id){document.getElementById(id).value='';});
+  document.getElementById('prospect-form').classList.add('hidden');
+  renderProspects();updateStats();renderPipelineOverview();renderCommission();
 }
 
-function makeMetric(a,field,label,color){
-  return '<div class="metric"><div class="metric-val" style="color:'+color+'">'+a[field]+'</div>'+
-    '<div class="metric-label">'+label+'</div>'+
-    '<div style="display:flex;gap:4px;justify-content:center;margin-top:4px">'+
-    '<button onclick="updateAgentMetric('+a.id+',\''+field+'\',-1)" style="background:rgba(255,255,255,0.1);border:none;border-radius:5px;width:22px;height:22px;color:white;cursor:pointer;font-size:12px">-</button>'+
-    '<button onclick="updateAgentMetric('+a.id+',\''+field+'\',1)" style="background:#3b82f6;border:none;border-radius:5px;width:22px;height:22px;color:white;cursor:pointer;font-size:12px">+</button>'+
-    '</div></div>';
+function updateProspectStage(id,stage){
+  for(var i=0;i<prospects.length;i++){if(prospects[i].id===id){prospects[i].stage=stage;break;}}
+  renderProspects();updateStats();renderPipelineOverview();renderCommission();
+}
+
+function removeProspect(id){
+  prospects=prospects.filter(function(p){return p.id!==id});
+  renderProspects();updateStats();renderPipelineOverview();renderCommission();
+}
+
+function renderPipelineOverview(){
+  var counts={};
+  var premiums={};
+  stages.forEach(function(s){counts[s]=0;premiums[s]=0;});
+  prospects.forEach(function(p){counts[p.stage]++;premiums[p.stage]+=p.premium;});
+  var html='';
+  stages.forEach(function(s){
+    if(counts[s]===0)return;
+    html+='<div class="pipeline-stage" style="border-left-color:'+stageColors[s]+'">';
+    html+='<div style="display:flex;justify-content:space-between;align-items:center">';
+    html+='<div style="font-weight:700;font-size:13px;color:'+stageColors[s]+'">'+s+'</div>';
+    html+='<div style="display:flex;gap:10px">';
+    html+='<span style="font-size:12px;font-weight:700">'+counts[s]+' prospects</span>';
+    if(premiums[s]>0)html+='<span style="font-size:11px;color:#94a3b8">$'+premiums[s].toFixed(0)+'/mo</span>';
+    html+='</div></div></div>';
+  });
+  if(html==='')html='<div style="text-align:center;color:#475569;font-size:13px;padding:1rem">Add prospects to see pipeline overview</div>';
+  document.getElementById('pipelineOverview').innerHTML=html;
+}
+
+function renderProspects(){
+  var stageFilter=document.getElementById('filterStage').value;
+  var typeFilter=document.getElementById('filterType').value;
+  var filtered=prospects.filter(function(p){
+    return(stageFilter==='all'||p.stage===stageFilter)&&(typeFilter==='all'||p.type===typeFilter);
+  });
+  var html='';
+  if(filtered.length===0){
+    html='<div style="text-align:center;color:#475569;padding:2rem;font-size:13px">No prospects found. Add your first prospect!</div>';
+  } else {
+    filtered.forEach(function(p){
+      var pills=stages.map(function(s){
+        var ac=p.stage===s?' stage-pill active-'+s:'';
+        return '<button class="stage-pill'+ac+'" onclick="updateProspectStage('+p.id+',\''+s+'\')">'+s+'</button>';
+      }).join('');
+      html+='<div class="prospect-card">';
+      html+='<div style="display:flex;justify-content:space-between;align-items:flex-start">';
+      html+='<div><div class="prospect-name">'+p.name+'</div>';
+      html+='<div class="prospect-meta">'+p.type+(p.age?' · Age '+p.age:'')+(p.phone?' · '+p.phone:'')+(p.source?' · '+p.source:'')+'</div>';
+      if(p.premium>0)html+='<div style="font-size:11px;color:#34d399;margin-top:2px">$'+p.premium+'/mo premium</div>';
+      if(p.notes)html+='<div style="font-size:11px;color:#64748b;margin-top:4px;font-style:italic">'+p.notes+'</div>';
+      html+='</div>';
+      html+='<button onclick="removeProspect('+p.id+')" style="background:none;border:none;color:#475569;cursor:pointer;font-size:16px;padding:0 4px">✕</button></div>';
+      html+='<div class="stage-pills">'+pills+'</div></div>';
+    });
+  }
+  document.getElementById('prospectsList').innerHTML=html;
+}
+
+function updateStats(){
+  document.getElementById('statProspects').textContent=prospects.length;
+  document.getElementById('statAppointments').textContent=prospects.filter(function(p){return p.stage==='Appointment'||p.stage==='Presented'}).length;
+  document.getElementById('statIssued').textContent=prospects.filter(function(p){return p.stage==='Issued'}).length;
+  var totalPrem=prospects.filter(function(p){return p.stage==='Issued'}).reduce(function(s,p){return s+p.premium},0);
+  document.getElementById('statPremium').textContent='$'+totalPrem.toFixed(0);
+  document.getElementById('statAgents').textContent=agents.length;
 }
 
 function escT(s){return s.replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/\n/g,'\\n')}
@@ -436,34 +533,45 @@ function escT(s){return s.replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/\n/
 function renderTemplates(containerId,data){
   var html='';
   data.forEach(function(t,i){
-    var id=containerId+i;
+    var id=containerId.replace('-','_')+i;
+    var isLocked=!t.free&&!isPremium;
     html+='<div class="template-card">';
-    html+='<div class="template-header"><div class="template-title">'+t.title+'</div>';
-    var copyText=t.subject?'Subject: '+t.subject+'\n\n'+t.text:t.text;
-    html+='<button class="copy-btn" id="'+id+'" onclick="copyT(\''+escT(copyText)+'\',\''+id+'\')">📋 Copy</button></div>';
-    if(t.subject)html+='<div style="font-size:11px;color:#60a5fa;margin-bottom:6px">📧 '+t.subject+'</div>';
-    var displayText=t.text||t.items&&t.items.join('\n');
-    html+='<div class="template-text">'+(displayText||'').replace(/\n/g,'<br>')+'</div></div>';
-  });
-  document.getElementById(containerId).innerHTML=html;
-}
-
-function renderStrategiesSection(containerId,data){
-  var html='';
-  data.forEach(function(s){
-    html+='<div class="strategy-card" style="border-left-color:'+s.color+'">';
-    html+='<div class="strategy-title">'+s.title+'</div>';
-    if(s.text){html+='<div class="template-text">'+s.text.replace(/\n/g,'<br>')+'</div>';}
-    else if(s.items){s.items.forEach(function(item){html+='<div class="strategy-item"><span>✓</span><span>'+item+'</span></div>';});}
+    html+='<div class="template-header">';
+    html+='<div><div class="template-title">'+t.title+'</div>';
+    if(t.subject)html+='<div style="font-size:10px;color:#38bdf8;margin-top:2px">📧 '+t.subject+'</div>';
+    html+='</div>';
+    html+='<div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px">';
+    html+='<span class="template-tag '+(t.free?'tag-free':'tag-premium')+'">'+(t.free?'FREE':'⭐ PRO')+'</span>';
+    if(!isLocked)html+='<button class="copy-btn" id="'+id+'" onclick="copyT(\''+escT(t.text)+'\',\''+id+'\')">📋 Copy</button>';
+    html+='</div></div>';
+    if(isLocked){
+      html+='<div style="background:rgba(245,158,11,0.05);border-radius:8px;padding:10px;text-align:center">';
+      html+='<div style="font-size:20px;margin-bottom:4px">🔒</div>';
+      html+='<div style="font-size:11px;color:#fbbf24;font-weight:600">Premium Script</div>';
+      html+='<div style="font-size:10px;color:#64748b;margin:4px 0">Upgrade to access all premium scripts</div>';
+      html+='<button class="btn btn-gold btn-sm" onclick="showUpgrade()" style="margin-top:6px">⭐ Unlock</button></div>';
+    } else {
+      html+='<div class="template-text">'+t.text.replace(/\n/g,'<br>')+'</div>';
+    }
     html+='</div>';
   });
   document.getElementById(containerId).innerHTML=html;
 }
 
-function renderScripts(sub){renderTemplates('scripts-'+sub+'-content',scriptsData[sub]||[]);}
-function renderEmails(sub){renderTemplates('emails-'+sub+'-content',emailsData[sub]||[]);}
-function renderStrategies(sub){renderStrategiesSection('strategies-'+sub+'-content',strategiesData[sub]||[]);}
-function renderCoaching(sub){renderStrategiesSection('coaching-'+sub+'-content',coachingData[sub]||[]);}
+function renderStratSection(containerId,data){
+  var html='';
+  data.forEach(function(s){
+    html+='<div class="strategy-card" style="border-left-color:'+s.color+'">';
+    html+='<div class="strategy-title">'+s.title+'</div>';
+    s.items.forEach(function(item){html+='<div class="strategy-item"><span style="color:'+s.color+'">✓</span><span>'+item+'</span></div>';});
+    html+='</div>';
+  });
+  document.getElementById(containerId).innerHTML=html;
+}
+
+function renderScripts(sub){var m={cold:'cold',fe:'fe',objection:'objection',closing:'closing',referral:'referral'};if(scriptsDB[m[sub]])renderTemplates('sc-'+sub,scriptsDB[m[sub]]);}
+function renderEmails(sub){var m={precall:'precall',postcall:'postcall',policy:'policy',referral:'referral',renewal:'renewal'};if(emailsDB[m[sub]])renderTemplates('em-'+sub,emailsDB[m[sub]]);}
+function renderStrategies(sub){var m={leadgen:'leadgen',finalexp:'finalexp',weak:'weak',daily:'daily',compliance:'compliance'};if(strategiesDB[m[sub]])renderStratSection('st-'+sub,strategiesDB[m[sub]]);}
 
 function copyT(text,btnId){
   text=text.replace(/\\n/g,'\n');
@@ -472,7 +580,131 @@ function copyT(text,btnId){
   if(btn){btn.textContent='✅ Copied!';btn.classList.add('copied');setTimeout(function(){btn.textContent='📋 Copy';btn.classList.remove('copied')},2000);}
 }
 
-renderDashboard();
+function addAgent(){
+  var name=document.getElementById('aName').value.trim();
+  if(!name)return;
+  agents.push({
+    id:Date.now(),name:name,
+    leads:parseInt(document.getElementById('aLeads').value)||0,
+    appts:parseInt(document.getElementById('aAppts').value)||0,
+    issued:parseInt(document.getElementById('aIssued').value)||0,
+    premium:parseFloat(document.getElementById('aPremium').value)||0
+  });
+  ['aName','aLeads','aAppts','aIssued','aPremium'].forEach(function(id){document.getElementById(id).value='';});
+  document.getElementById('agent-form').classList.add('hidden');
+  renderTeam();updateStats();
+}
+
+function updateAgentStat(id,field,delta){
+  for(var i=0;i<agents.length;i++){if(agents[i].id===id){agents[i][field]=Math.max(0,agents[i][field]+delta);break;}}
+  renderTeam();updateStats();
+}
+
+function removeAgent(id){
+  agents=agents.filter(function(a){return a.id!==id});
+  renderTeam();updateStats();
+}
+
+function getAgentScore(a){
+  var s=0;
+  s+=Math.min(a.leads/20,1)*20;
+  s+=Math.min(a.appts/8,1)*25;
+  s+=Math.min(a.issued/4,1)*35;
+  s+=Math.min(a.premium/2000,1)*20;
+  return Math.round(s);
+}
+
+function renderTeam(){
+  var sorted=agents.slice().sort(function(a,b){return getAgentScore(b)-getAgentScore(a)});
+  var rankColors=['#f59e0b','#94a3b8','#cd7c2f'];
+  var rankEmojis=['🥇','🥈','🥉'];
+  var lbHtml='';
+  if(sorted.length===0){lbHtml='<div style="text-align:center;color:#475569;font-size:13px;padding:2rem">No agents yet. Add your team!</div>';}
+  else{
+    sorted.forEach(function(a,i){
+      var score=getAgentScore(a);
+      var color=score>=70?'#34d399':score>=40?'#fbbf24':'#f87171';
+      lbHtml+='<div class="leaderboard-row">';
+      lbHtml+='<div class="rank-num" style="background:'+(rankColors[i]||'#334155')+';color:white">'+(rankEmojis[i]||i+1)+'</div>';
+      lbHtml+='<div style="flex:1"><div style="font-weight:700;font-size:13px">'+a.name+'</div>';
+      lbHtml+='<div style="font-size:10px;color:#64748b">'+a.leads+' leads · '+a.appts+' appts · '+a.issued+' issued · $'+a.premium+'/mo</div></div>';
+      lbHtml+='<div style="font-size:14px;font-weight:800;color:'+color+'">'+score+'%</div></div>';
+    });
+  }
+  document.getElementById('agentLeaderboard').innerHTML=lbHtml;
+
+  var detHtml='';
+  if(agents.length===0){detHtml='<div style="text-align:center;color:#475569;font-size:13px;padding:1rem">No agents yet.</div>';}
+  else{
+    agents.forEach(function(a){
+      var score=getAgentScore(a);
+      var fillColor=score>=70?'#34d399':score>=40?'#fbbf24':'#ef4444';
+      var level=score>=70?'🟢 Strong':score>=40?'🟡 Average':'🔴 Needs Help';
+      detHtml+='<div class="agent-card">';
+      detHtml+='<div style="display:flex;justify-content:space-between;align-items:center">';
+      detHtml+='<div style="font-weight:800;font-size:14px">'+a.name+'</div>';
+      detHtml+='<div style="display:flex;align-items:center;gap:8px"><span style="font-size:11px">'+level+'</span>';
+      detHtml+='<button onclick="removeAgent('+a.id+')" style="background:none;border:none;color:#475569;cursor:pointer">✕</button></div></div>';
+      detHtml+='<div class="perf-bar"><div class="perf-fill" style="width:'+score+'%;background:'+fillColor+'"></div></div>';
+      detHtml+='<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px">';
+      ['leads','appts','issued','premium'].forEach(function(f){
+        var labels={leads:'Leads',appts:'Appts',issued:'Issued',premium:'Prem $'};
+        detHtml+='<div class="metric-box"><div class="metric-val" style="font-size:14px">'+a[f]+'</div>';
+        detHtml+='<div class="metric-label">'+labels[f]+'</div>';
+        detHtml+='<div style="display:flex;gap:3px;justify-content:center;margin-top:3px">';
+        detHtml+='<button onclick="updateAgentStat('+a.id+',\''+f+'\',-1)" style="background:rgba(255,255,255,0.1);border:none;border-radius:4px;width:20px;height:20px;color:white;cursor:pointer;font-size:11px">-</button>';
+        detHtml+='<button onclick="updateAgentStat('+a.id+',\''+f+'\',1)" style="background:#0ea5e9;border:none;border-radius:4px;width:20px;height:20px;color:white;cursor:pointer;font-size:11px">+</button>';
+        detHtml+='</div></div>';
+      });
+      detHtml+='</div></div>';
+    });
+  }
+  document.getElementById('agentDetails').innerHTML=detHtml;
+  updateStats();
+}
+
+function renderCommission(){
+  var issued=prospects.filter(function(p){return p.stage==='Issued'});
+  var totalMonthly=issued.reduce(function(s,p){return s+p.premium},0);
+  var totalAnnual=totalMonthly*12;
+  document.getElementById('commTotal').textContent='$'+totalAnnual.toFixed(0);
+  document.getElementById('comm80').textContent='$'+(totalAnnual*0.8).toFixed(0);
+  document.getElementById('comm90').textContent='$'+(totalAnnual*0.9).toFixed(0);
+  document.getElementById('comm100').textContent='$'+totalAnnual.toFixed(0);
+  document.getElementById('commMonth').textContent='$'+(totalMonthly*0.85).toFixed(0);
+
+  var html='';
+  stages.forEach(function(s){
+    var stageProspects=prospects.filter(function(p){return p.stage===s&&p.premium>0});
+    if(stageProspects.length===0)return;
+    var total=stageProspects.reduce(function(sum,p){return sum+p.premium},0);
+    html+='<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.05)">';
+    html+='<div style="display:flex;align-items:center;gap:8px"><div style="width:10px;height:10px;border-radius:50%;background:'+stageColors[s]+'"></div>';
+    html+='<span style="font-size:13px">'+s+'</span></div>';
+    html+='<div style="text-align:right"><div style="font-size:13px;font-weight:700">$'+total.toFixed(0)+'/mo</div>';
+    html+='<div style="font-size:10px;color:#64748b">'+stageProspects.length+' prospect'+(stageProspects.length>1?'s':'')+'</div></div></div>';
+  });
+  if(html==='')html='<div style="text-align:center;color:#475569;font-size:12px;padding:1rem">Add prospects with premium amounts to see pipeline value</div>';
+  document.getElementById('stageValues').innerHTML=html;
+}
+
+function calcCommission(){
+  var prem=parseFloat(document.getElementById('calcPremium').value)||0;
+  var rate=parseFloat(document.getElementById('calcRate').value)||85;
+  var annual=prem*12*(rate/100);
+  document.getElementById('calcAnnual').textContent='$'+annual.toFixed(2);
+  document.getElementById('calcMonthly').textContent='Monthly: $'+(annual/12).toFixed(2)+' | Rate: '+rate+'%';
+  document.getElementById('calcResult').style.display='block';
+}
+
+// INIT
+renderProspects();
+renderPipelineOverview();
+renderScripts('cold');
+renderEmails('precall');
+renderStrategies('leadgen');
+renderTeam();
+renderCommission();
 </script>
 </body>
 </html>
