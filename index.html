@@ -3,45 +3,119 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>InsureFlow CRM</title>
+<title>InsureFlow - Life Insurance</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:sans-serif}
 body{background:#0a0f1e;color:white;min-height:100vh}
-.topbar{background:linear-gradient(to right,#1e3a5f,#0f2744);padding:12px 16px;display:flex;justify-content:space-between;align-items:center}
-.logo{font-size:18px;font-weight:800;color:white}
+
+/* NAV */
+.nav{background:linear-gradient(to right,#1e3a5f,#0f2744);padding:12px 20px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100}
+.logo{font-size:18px;font-weight:800}
 .logo span{color:#38bdf8}
-.premium-badge{background:linear-gradient(to right,#f59e0b,#d97706);border-radius:20px;padding:4px 12px;font-size:11px;font-weight:700;cursor:pointer}
-.free-badge{background:rgba(255,255,255,0.1);border-radius:20px;padding:4px 12px;font-size:11px;color:#94a3b8}
-.header{text-align:center;padding:16px 16px 8px;background:linear-gradient(to bottom,#0f2744,#0a0f1e)}
-h1{font-size:20px;font-weight:800}
-.subtitle{color:#94a3b8;font-size:12px;margin-top:2px}
-.stats{display:flex;justify-content:center;gap:8px;margin-top:12px;flex-wrap:wrap}
-.stat{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:8px 14px;text-align:center}
-.stat-val{font-size:18px;font-weight:800}
-.stat-label{font-size:9px;color:#94a3b8;margin-top:1px}
-.tabs{display:flex;justify-content:center;gap:5px;padding:12px 16px;flex-wrap:wrap;background:#0a0f1e;position:sticky;top:0;z-index:10;border-bottom:1px solid rgba(255,255,255,0.05)}
-.tab{padding:7px 13px;border-radius:20px;border:none;cursor:pointer;font-weight:600;font-size:11px;background:rgba(255,255,255,0.08);color:#94a3b8;transition:all 0.2s}
-.tab.active{background:linear-gradient(to right,#0ea5e9,#0284c7);color:white}
-.content{max-width:640px;margin:0 auto;padding:12px 16px 80px}
+.nav-links{display:flex;gap:8px;flex-wrap:wrap}
+.nav-btn{padding:6px 14px;border-radius:20px;border:none;cursor:pointer;font-weight:600;font-size:11px;background:rgba(255,255,255,0.1);color:white;transition:all 0.2s}
+.nav-btn.active{background:linear-gradient(to right,#0ea5e9,#0284c7)}
+.nav-btn.gold{background:linear-gradient(to right,#f59e0b,#d97706)}
+
+/* PAGES */
+.page{display:none}
+.page.active{display:block}
+
+/* LANDING PAGE */
+.hero{background:linear-gradient(135deg,#0f2744,#1e3a5f,#0f2744);padding:60px 20px;text-align:center}
+.hero-badge{background:rgba(56,189,248,0.2);border:1px solid rgba(56,189,248,0.3);border-radius:20px;padding:6px 16px;font-size:12px;color:#38bdf8;display:inline-block;margin-bottom:16px}
+.hero h1{font-size:32px;font-weight:900;line-height:1.2;margin-bottom:12px}
+.hero h1 span{color:#38bdf8}
+.hero p{font-size:15px;color:#94a3b8;margin-bottom:24px;max-width:500px;margin-left:auto;margin-right:auto}
+.trust-row{display:flex;justify-content:center;gap:20px;flex-wrap:wrap;margin-bottom:30px}
+.trust-item{font-size:12px;color:#94a3b8;display:flex;align-items:center;gap:6px}
+.trust-item span{color:#34d399;font-weight:700}
+
+/* FORM */
+.capture-form{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:20px;padding:24px;max-width:480px;margin:0 auto}
+.form-title{font-size:16px;font-weight:800;margin-bottom:6px;text-align:center}
+.form-subtitle{font-size:12px;color:#94a3b8;text-align:center;margin-bottom:20px}
+.form-group{margin-bottom:14px}
+.form-label{font-size:11px;color:#94a3b8;margin-bottom:5px;display:block;font-weight:600}
+.form-input{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:10px;padding:12px 14px;color:white;font-size:14px;outline:none;width:100%;transition:border 0.2s}
+.form-input:focus{border-color:#38bdf8}
+.form-row{display:flex;gap:10px}
+.form-row .form-group{flex:1}
+select.form-input option{background:#0f2744}
+.submit-btn{width:100%;padding:16px;background:linear-gradient(to right,#10b981,#059669);border:none;border-radius:12px;color:white;font-size:16px;font-weight:800;cursor:pointer;margin-top:8px;transition:all 0.2s}
+.submit-btn:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(16,185,129,0.4)}
+.form-disclaimer{font-size:10px;color:#475569;text-align:center;margin-top:10px;line-height:1.5}
+.urgency{background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);border-radius:10px;padding:10px 14px;text-align:center;margin-bottom:16px}
+.urgency-text{font-size:12px;color:#f87171;font-weight:600}
+
+/* BENEFITS SECTION */
+.benefits{padding:40px 20px;max-width:600px;margin:0 auto}
+.benefits-title{font-size:20px;font-weight:800;text-align:center;margin-bottom:24px}
+.benefit-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:16px;margin-bottom:12px;display:flex;gap:14px;align-items:flex-start}
+.benefit-icon{font-size:24px;flex-shrink:0}
+.benefit-title{font-size:14px;font-weight:700;margin-bottom:4px}
+.benefit-desc{font-size:12px;color:#94a3b8;line-height:1.6}
+
+/* TESTIMONIALS */
+.testimonials{background:rgba(255,255,255,0.02);padding:40px 20px}
+.testimonials-title{font-size:20px;font-weight:800;text-align:center;margin-bottom:24px}
+.testimonial-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:600px;margin:0 auto}
+.testimonial{background:rgba(255,255,255,0.05);border-radius:14px;padding:16px}
+.testimonial-text{font-size:12px;color:#cbd5e1;line-height:1.6;margin-bottom:10px;font-style:italic}
+.testimonial-author{font-size:11px;font-weight:700;color:#38bdf8}
+.testimonial-role{font-size:10px;color:#64748b}
+.stars{color:#fbbf24;font-size:12px;margin-bottom:8px}
+
+/* STATS BAR */
+.stats-bar{background:linear-gradient(to right,#0ea5e9,#0284c7);padding:24px 20px}
+.stats-inner{display:flex;justify-content:center;gap:30px;flex-wrap:wrap;max-width:600px;margin:0 auto}
+.stat-item{text-align:center}
+.stat-num{font-size:24px;font-weight:900}
+.stat-desc{font-size:11px;opacity:0.8}
+
+/* THANK YOU PAGE */
+.thankyou{text-align:center;padding:60px 20px;max-width:500px;margin:0 auto}
+.thankyou-icon{font-size:60px;margin-bottom:16px}
+.thankyou h1{font-size:26px;font-weight:900;margin-bottom:12px;color:#34d399}
+.thankyou p{font-size:14px;color:#94a3b8;line-height:1.7;margin-bottom:20px}
+.next-steps{background:rgba(255,255,255,0.05);border-radius:16px;padding:20px;text-align:left;margin-bottom:24px}
+.next-step{display:flex;gap:12px;margin-bottom:14px;align-items:flex-start}
+.step-num{background:linear-gradient(to right,#0ea5e9,#0284c7);border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;flex-shrink:0}
+.step-text{font-size:13px;color:#cbd5e1;line-height:1.5}
+.step-title{font-weight:700;color:white;margin-bottom:2px}
+.countdown{background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);border-radius:12px;padding:14px;margin-bottom:20px;text-align:center}
+.countdown-title{font-size:12px;color:#f87171;font-weight:600;margin-bottom:4px}
+.countdown-num{font-size:28px;font-weight:900;color:#f87171}
+
+/* CRM */
+.topbar{background:linear-gradient(to right,#1e3a5f,#0f2744);padding:10px 16px;display:flex;justify-content:space-between;align-items:center}
+.free-badge{background:rgba(255,255,255,0.1);border-radius:20px;padding:3px 10px;font-size:11px;color:#94a3b8}
+.crm-header{text-align:center;padding:14px 16px 8px;background:linear-gradient(to bottom,#0f2744,#0a0f1e)}
+.crm-stats{display:flex;justify-content:center;gap:8px;margin-top:10px;flex-wrap:wrap}
+.crm-stat{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:7px 12px;text-align:center}
+.crm-stat-val{font-size:16px;font-weight:800}
+.crm-stat-label{font-size:9px;color:#94a3b8}
+.crm-tabs{display:flex;justify-content:center;gap:5px;padding:10px 16px;flex-wrap:wrap;background:#0a0f1e;border-bottom:1px solid rgba(255,255,255,0.05)}
+.crm-tab{padding:6px 12px;border-radius:20px;border:none;cursor:pointer;font-weight:600;font-size:11px;background:rgba(255,255,255,0.08);color:#94a3b8}
+.crm-tab.active{background:linear-gradient(to right,#0ea5e9,#0284c7);color:white}
+.crm-content{max-width:640px;margin:0 auto;padding:12px 16px 80px}
 .card{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:16px;margin-bottom:12px}
 .card-title{font-size:13px;font-weight:700;margin-bottom:12px;color:#e2e8f0}
 .section-title{font-size:14px;font-weight:800;color:#38bdf8;margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid rgba(56,189,248,0.2)}
-input,select,textarea{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:10px;padding:8px 12px;color:white;font-size:13px;outline:none;width:100%;transition:border 0.2s}
-input:focus,select:focus{border-color:#38bdf8}
-textarea{resize:vertical;min-height:70px}
+input,select,textarea{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:10px;padding:8px 12px;color:white;font-size:13px;outline:none;width:100%}
 select option{background:#0f2744}
-.btn{border:none;border-radius:10px;padding:9px 16px;font-weight:700;font-size:12px;cursor:pointer;color:white;transition:all 0.2s}
+textarea{resize:vertical;min-height:70px}
+.btn{border:none;border-radius:10px;padding:9px 16px;font-weight:700;font-size:12px;cursor:pointer;color:white}
 .btn-blue{background:linear-gradient(to right,#0ea5e9,#0284c7)}
 .btn-green{background:linear-gradient(to right,#10b981,#059669)}
 .btn-gold{background:linear-gradient(to right,#f59e0b,#d97706)}
-.btn-red{background:#ef4444}
-.btn-gray{background:rgba(255,255,255,0.08);color:#cbd5e1}
 .btn-sm{padding:5px 12px;font-size:11px}
 .row{display:flex;gap:8px;flex-wrap:wrap}
 .hidden{display:none}
 .prospect-card{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:14px;margin-bottom:10px}
 .prospect-name{font-weight:800;font-size:14px}
 .prospect-meta{font-size:11px;color:#64748b;margin-top:2px}
+.new-lead-badge{background:rgba(16,185,129,0.2);color:#34d399;border-radius:6px;padding:2px 8px;font-size:10px;font-weight:700;margin-left:8px}
 .stage-pills{display:flex;gap:4px;margin-top:10px;flex-wrap:wrap}
 .stage-pill{padding:4px 10px;border-radius:20px;border:1.5px solid transparent;cursor:pointer;font-size:10px;font-weight:700;background:rgba(255,255,255,0.06);color:#64748b;transition:all 0.2s}
 .stage-pill.active-Lead{background:#1e40af;color:#93c5fd;border-color:#3b82f6;box-shadow:0 0 8px rgba(59,130,246,0.4)}
@@ -51,237 +125,424 @@ select option{background:#0f2744}
 .stage-pill.active-Submitted{background:#0c4a6e;color:#7dd3fc;border-color:#0ea5e9;box-shadow:0 0 8px rgba(14,165,233,0.4)}
 .stage-pill.active-Issued{background:#14532d;color:#86efac;border-color:#22c55e;box-shadow:0 0 8px rgba(34,197,94,0.4)}
 .stage-pill.active-NotTaken{background:#7f1d1d;color:#fca5a5;border-color:#ef4444;box-shadow:0 0 8px rgba(239,68,68,0.4)}
-.metric-box{background:rgba(255,255,255,0.04);border-radius:10px;padding:10px;text-align:center;flex:1;min-width:55px}
-.metric-val{font-size:16px;font-weight:800}
-.metric-label{font-size:9px;color:#94a3b8}
 .template-card{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:14px;margin-bottom:10px}
 .template-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;gap:8px}
 .template-title{font-weight:700;font-size:13px;color:#e2e8f0;flex:1}
-.template-tag{font-size:10px;padding:2px 8px;border-radius:10px;font-weight:700;white-space:nowrap}
+.template-tag{font-size:10px;padding:2px 8px;border-radius:10px;font-weight:700}
 .tag-free{background:rgba(16,185,129,0.2);color:#34d399}
 .tag-premium{background:rgba(245,158,11,0.2);color:#fbbf24}
 .template-text{font-size:12px;color:#94a3b8;line-height:1.7;white-space:pre-line}
-.copy-btn{background:rgba(255,255,255,0.08);border:none;border-radius:8px;padding:5px 10px;color:white;font-size:10px;font-weight:600;cursor:pointer;white-space:nowrap}
+.copy-btn{background:rgba(255,255,255,0.08);border:none;border-radius:8px;padding:5px 10px;color:white;font-size:10px;font-weight:600;cursor:pointer}
 .copy-btn.copied{background:#10b981}
 .subtab-row{display:flex;gap:5px;margin-bottom:14px;flex-wrap:wrap}
 .subtab{padding:6px 11px;border-radius:12px;border:none;cursor:pointer;font-weight:600;font-size:11px;background:rgba(255,255,255,0.06);color:#64748b}
 .subtab.active{background:rgba(14,165,233,0.2);color:#38bdf8;border:1px solid rgba(14,165,233,0.3)}
 .strategy-card{background:rgba(255,255,255,0.05);border-left:3px solid #0ea5e9;border-radius:0 14px 14px 0;padding:14px;margin-bottom:10px}
 .strategy-title{font-weight:700;font-size:13px;color:#38bdf8;margin-bottom:8px}
-.strategy-item{font-size:12px;color:#cbd5e1;margin:4px 0;display:flex;gap:8px;align-items:flex-start}
+.strategy-item{font-size:12px;color:#cbd5e1;margin:4px 0;display:flex;gap:8px}
+.pipeline-stage{background:rgba(255,255,255,0.04);border-radius:12px;padding:12px;margin-bottom:8px;border-left:3px solid}
 .agent-card{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:14px;margin-bottom:10px}
 .perf-bar{background:rgba(255,255,255,0.08);border-radius:5px;height:7px;overflow:hidden;margin:8px 0}
 .perf-fill{height:100%;border-radius:5px;transition:width 0.4s}
-.rank-num{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;flex-shrink:0}
 .leaderboard-row{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.04);border-radius:12px;padding:10px 12px;margin-bottom:6px}
-.pipeline-stage{background:rgba(255,255,255,0.04);border-radius:12px;padding:12px;margin-bottom:8px;border-left:3px solid}
+.rank-num{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;flex-shrink:0}
 .comm-card{background:linear-gradient(135deg,rgba(16,185,129,0.1),rgba(5,150,105,0.1));border:1px solid rgba(16,185,129,0.2);border-radius:14px;padding:16px;margin-bottom:10px}
-.big-num{font-size:36px;font-weight:900}
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px}
-.modal-box{background:#0f2744;border:1px solid rgba(245,158,11,0.3);border-radius:20px;padding:24px;max-width:400px;width:100%;text-align:center;position:relative}
-.maybe-btn{display:block;width:100%;margin-top:12px;padding:14px;background:rgba(255,255,255,0.15);border:2px solid rgba(255,255,255,0.3);border-radius:12px;color:white;font-size:14px;font-weight:700;cursor:pointer;text-align:center}
-.maybe-btn:hover{background:rgba(255,255,255,0.25)}
+.big-num{font-size:32px;font-weight:900}
+.metric-box{background:rgba(255,255,255,0.04);border-radius:10px;padding:10px;text-align:center;flex:1;min-width:55px}
+.metric-val{font-size:16px;font-weight:800}
+.metric-label{font-size:9px;color:#94a3b8}
+.notification{position:fixed;top:70px;right:16px;background:linear-gradient(to right,#10b981,#059669);border-radius:12px;padding:12px 16px;z-index:999;font-size:12px;font-weight:600;max-width:280px;box-shadow:0 8px 24px rgba(16,185,129,0.4);display:none}
+
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:9999;display:none;align-items:center;justify-content:center;padding:20px}
+.modal-box{background:#0f2744;border:1px solid rgba(245,158,11,0.3);border-radius:20px;padding:24px;max-width:380px;width:100%;text-align:center}
 </style>
 </head>
 <body>
 
-<div class="topbar">
-  <div class="logo">Insure<span>Flow</span> CRM</div>
-  <div style="display:flex;align-items:center;gap:8px">
-    <div class="free-badge">FREE Plan</div>
-    <button class="btn btn-gold btn-sm" onclick="showUpgrade()">⭐ Upgrade</button>
+<!-- NOTIFICATION -->
+<div class="notification" id="notification">🔔 New lead captured!</div>
+
+<!-- NAVIGATION -->
+<div class="nav">
+  <div class="logo">Insure<span>Flow</span></div>
+  <div class="nav-links">
+    <button class="nav-btn active" onclick="showPage('landing',this)">🏠 Home</button>
+    <button class="nav-btn" onclick="showPage('crm',this)">📋 CRM</button>
+    <button class="nav-btn" onclick="showPage('scripts',this)">💬 Scripts</button>
+    <button class="nav-btn" onclick="showPage('emails',this)">📧 Emails</button>
+    <button class="nav-btn" onclick="showPage('strategies',this)">🎯 Strategy</button>
+    <button class="nav-btn gold" onclick="showUpgrade()">⭐ Pro</button>
   </div>
 </div>
 
-<div class="header">
-  <h1>🏥 Life Insurance Agent CRM</h1>
-  <p class="subtitle">Life Insurance • Final Expense • Pipeline • Scripts • Coaching</p>
-  <div class="stats">
-    <div class="stat"><div class="stat-val" style="color:#38bdf8" id="statProspects">0</div><div class="stat-label">Prospects</div></div>
-    <div class="stat"><div class="stat-val" style="color:#34d399" id="statAppointments">0</div><div class="stat-label">Appointments</div></div>
-    <div class="stat"><div class="stat-val" style="color:#a78bfa" id="statIssued">0</div><div class="stat-label">Policies Issued</div></div>
-    <div class="stat"><div class="stat-val" style="color:#fbbf24" id="statPremium">$0</div><div class="stat-label">Est. Premium</div></div>
-    <div class="stat"><div class="stat-val" style="color:#f87171" id="statAgents">0</div><div class="stat-label">Agents</div></div>
-  </div>
-</div>
-
-<div class="tabs">
-  <button class="tab active" onclick="showTab('pipeline',this)">📋 Pipeline</button>
-  <button class="tab" onclick="showTab('scripts',this)">💬 Scripts</button>
-  <button class="tab" onclick="showTab('emails',this)">📧 Emails</button>
-  <button class="tab" onclick="showTab('strategies',this)">🎯 Strategy</button>
-  <button class="tab" onclick="showTab('team',this)">👥 Team</button>
-  <button class="tab" onclick="showTab('commission',this)">💰 Commission</button>
-</div>
-
-<div class="content">
-
-<div id="tab-pipeline">
-  <div class="card">
-    <div style="display:flex;justify-content:space-between;align-items:center">
-      <div class="card-title" style="margin-bottom:0">➕ Add Prospect</div>
-      <button class="btn btn-blue btn-sm" onclick="toggleProspectForm()">+ Add</button>
+<!-- ========== LANDING PAGE ========== -->
+<div class="page active" id="page-landing">
+  <div class="hero">
+    <div class="hero-badge">🏆 #1 Life Insurance CRM Platform</div>
+    <h1>Protect Your Family With <span>Affordable</span> Life Insurance</h1>
+    <p>Get your free personalized quote in 60 seconds. No medical exam required for most plans. Rates starting at $15/month.</p>
+    <div class="trust-row">
+      <div class="trust-item"><span>✓</span> No obligation</div>
+      <div class="trust-item"><span>✓</span> Free quote</div>
+      <div class="trust-item"><span>✓</span> Licensed agents</div>
+      <div class="trust-item"><span>✓</span> 5-min response</div>
     </div>
-    <div id="prospect-form" class="hidden" style="margin-top:12px">
-      <div class="row" style="margin-bottom:8px">
-        <input id="pName" placeholder="Full name *" style="flex:2;min-width:120px">
-        <input id="pPhone" placeholder="Phone" style="flex:1;min-width:100px">
+    <div class="capture-form">
+      <div class="urgency">
+        <div class="urgency-text">⚡ Limited spots available this week — agents standing by!</div>
       </div>
-      <div class="row" style="margin-bottom:8px">
-        <input id="pAge" type="number" placeholder="Age" style="flex:1;min-width:60px">
-        <select id="pType" style="flex:2">
-          <option>Life Insurance</option>
-          <option>Final Expense</option>
-          <option>Both</option>
+      <div class="form-title">Get Your Free Quote Now</div>
+      <div class="form-subtitle">Fill out the form below — takes less than 60 seconds</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">First Name *</label>
+          <input class="form-input" id="leadFirstName" placeholder="John">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Last Name *</label>
+          <input class="form-input" id="leadLastName" placeholder="Smith">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Phone Number *</label>
+          <input class="form-input" id="leadPhone" placeholder="(555) 000-0000" type="tel">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Age *</label>
+          <input class="form-input" id="leadAge" placeholder="45" type="number">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email Address *</label>
+        <input class="form-input" id="leadEmail" placeholder="john@email.com" type="email">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Coverage Type</label>
+          <select class="form-input" id="leadType">
+            <option>Life Insurance</option>
+            <option>Final Expense</option>
+            <option>Both</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Coverage Amount</label>
+          <select class="form-input" id="leadAmount">
+            <option>$10,000 - $25,000</option>
+            <option>$25,000 - $50,000</option>
+            <option>$50,000 - $100,000</option>
+            <option>$100,000 - $250,000</option>
+            <option>$250,000+</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Best Time to Call</label>
+        <select class="form-input" id="leadCallTime">
+          <option>Morning (8am - 12pm)</option>
+          <option>Afternoon (12pm - 5pm)</option>
+          <option>Evening (5pm - 8pm)</option>
+          <option>Anytime</option>
         </select>
-        <select id="pStage" style="flex:2">
+      </div>
+      <button class="submit-btn" onclick="submitLead()">
+        🚀 Get My Free Quote Now →
+      </button>
+      <div class="form-disclaimer">
+        By submitting this form you agree to be contacted by a licensed insurance agent. Your information is 100% secure and will never be shared or sold.
+      </div>
+    </div>
+  </div>
+
+  <div class="stats-bar">
+    <div class="stats-inner">
+      <div class="stat-item"><div class="stat-num">50,000+</div><div class="stat-desc">Families Protected</div></div>
+      <div class="stat-item"><div class="stat-num">$15/mo</div><div class="stat-desc">Starting Premium</div></div>
+      <div class="stat-item"><div class="stat-num">5 Min</div><div class="stat-desc">Agent Response</div></div>
+      <div class="stat-item"><div class="stat-num">A+</div><div class="stat-desc">Rated Carriers</div></div>
+    </div>
+  </div>
+
+  <div class="benefits">
+    <div class="benefits-title">Why Families Choose Us</div>
+    <div class="benefit-card">
+      <div class="benefit-icon">💰</div>
+      <div><div class="benefit-title">Affordable Rates Starting at $15/Month</div><div class="benefit-desc">We shop multiple A-rated carriers to find you the best rate. Most families save 20-40% compared to going direct.</div></div>
+    </div>
+    <div class="benefit-card">
+      <div class="benefit-icon">⚡</div>
+      <div><div class="benefit-title">Fast Approval — No Medical Exam Required</div><div class="benefit-desc">Many of our plans offer same-day approval with no medical exam. Just answer a few health questions and you're covered.</div></div>
+    </div>
+    <div class="benefit-card">
+      <div class="benefit-icon">🔒</div>
+      <div><div class="benefit-title">Guaranteed Coverage — Can Never Be Cancelled</div><div class="benefit-desc">Once approved, your policy is guaranteed for life as long as you pay your premium. Your rates will never increase.</div></div>
+    </div>
+    <div class="benefit-card">
+      <div class="benefit-icon">🏆</div>
+      <div><div class="benefit-title">Licensed & Experienced Agents</div><div class="benefit-desc">Our agents are fully licensed, experienced, and dedicated to finding the right coverage for YOUR specific needs and budget.</div></div>
+    </div>
+  </div>
+
+  <div class="testimonials">
+    <div class="testimonials-title">What Our Clients Say</div>
+    <div class="testimonial-grid">
+      <div class="testimonial">
+        <div class="stars">⭐⭐⭐⭐⭐</div>
+        <div class="testimonial-text">"I was paying too much for coverage I didn't need. They found me a better plan for half the price!"</div>
+        <div class="testimonial-author">Maria S.</div>
+        <div class="testimonial-role">Mother of 3, Texas</div>
+      </div>
+      <div class="testimonial">
+        <div class="stars">⭐⭐⭐⭐⭐</div>
+        <div class="testimonial-text">"The agent called me within 5 minutes and had me covered the same day. Amazing service!"</div>
+        <div class="testimonial-author">James T.</div>
+        <div class="testimonial-role">Small Business Owner</div>
+      </div>
+      <div class="testimonial">
+        <div class="stars">⭐⭐⭐⭐⭐</div>
+        <div class="testimonial-text">"Finally have peace of mind knowing my family is protected. The process was so easy!"</div>
+        <div class="testimonial-author">Dorothy M.</div>
+        <div class="testimonial-role">Retired Teacher</div>
+      </div>
+      <div class="testimonial">
+        <div class="stars">⭐⭐⭐⭐⭐</div>
+        <div class="testimonial-text">"I was skeptical at first but the agent was so patient and professional. Highly recommend!"</div>
+        <div class="testimonial-author">Robert K.</div>
+        <div class="testimonial-role">Father of 2, Florida</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== THANK YOU PAGE ========== -->
+<div class="page" id="page-thankyou">
+  <div class="thankyou">
+    <div class="thankyou-icon">🎉</div>
+    <h1>You're All Set!</h1>
+    <p>Thank you for requesting your free life insurance quote! A licensed agent will be contacting you very shortly.</p>
+    <div class="countdown">
+      <div class="countdown-title">⏱️ Expected call time</div>
+      <div class="countdown-num" id="countdownTimer">5:00</div>
+      <div style="font-size:11px;color:#94a3b8;margin-top:4px">An agent is being assigned to your request</div>
+    </div>
+    <div class="next-steps">
+      <div style="font-size:13px;font-weight:700;margin-bottom:14px;color:#38bdf8">What Happens Next:</div>
+      <div class="next-step">
+        <div class="step-num">1</div>
+        <div class="step-text"><div class="step-title">Agent Reviews Your Info</div>A licensed agent is reviewing your quote request right now</div>
+      </div>
+      <div class="next-step">
+        <div class="step-num">2</div>
+        <div class="step-text"><div class="step-title">You Get a Call</div>Expect a call within 5 minutes from your assigned agent</div>
+      </div>
+      <div class="next-step">
+        <div class="step-num">3</div>
+        <div class="step-text"><div class="step-title">Get Your Quote</div>Your agent will present personalized options that fit your budget</div>
+      </div>
+      <div class="next-step">
+        <div class="step-num">4</div>
+        <div class="step-text"><div class="step-title">Get Covered Today</div>Many plans can be approved and active the same day!</div>
+      </div>
+    </div>
+    <button class="submit-btn" onclick="showPage('landing',null)" style="margin-bottom:12px">← Get Another Quote</button>
+    <button onclick="showPage('crm',null)" style="width:100%;padding:14px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);border-radius:12px;color:white;font-size:14px;font-weight:700;cursor:pointer">📋 View Agent CRM Dashboard</button>
+  </div>
+</div>
+
+<!-- ========== CRM PAGE ========== -->
+<div class="page" id="page-crm">
+  <div class="crm-header">
+    <div style="font-size:18px;font-weight:800">🏥 InsureFlow CRM</div>
+    <div style="font-size:12px;color:#94a3b8;margin-top:2px">Life Insurance Agent Dashboard</div>
+    <div class="crm-stats">
+      <div class="crm-stat"><div class="crm-stat-val" style="color:#38bdf8" id="statProspects">0</div><div class="crm-stat-label">Prospects</div></div>
+      <div class="crm-stat"><div class="crm-stat-val" style="color:#34d399" id="statAppointments">0</div><div class="crm-stat-label">Appointments</div></div>
+      <div class="crm-stat"><div class="crm-stat-val" style="color:#a78bfa" id="statIssued">0</div><div class="crm-stat-label">Issued</div></div>
+      <div class="crm-stat"><div class="crm-stat-val" style="color:#fbbf24" id="statPremium">$0</div><div class="crm-stat-label">Premium</div></div>
+      <div class="crm-stat"><div class="crm-stat-val" style="color:#f87171" id="statNew">0</div><div class="crm-stat-label">🔔 New</div></div>
+    </div>
+  </div>
+  <div class="crm-tabs">
+    <button class="crm-tab active" onclick="showCrmTab('pipeline',this)">📋 Pipeline</button>
+    <button class="crm-tab" onclick="showCrmTab('commission',this)">💰 Commission</button>
+    <button class="crm-tab" onclick="showCrmTab('team',this)">👥 Team</button>
+  </div>
+  <div class="crm-content">
+
+    <div id="crm-pipeline">
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div class="card-title" style="margin-bottom:0">➕ Add Prospect Manually</div>
+          <button class="btn btn-blue btn-sm" onclick="toggleForm('manual-form')">+ Add</button>
+        </div>
+        <div id="manual-form" class="hidden" style="margin-top:12px">
+          <div class="row" style="margin-bottom:8px">
+            <input id="mName" placeholder="Full name *" style="flex:2">
+            <input id="mPhone" placeholder="Phone" style="flex:1;min-width:80px">
+          </div>
+          <div class="row" style="margin-bottom:8px">
+            <input id="mAge" type="number" placeholder="Age" style="flex:1;min-width:50px">
+            <select id="mType" style="flex:2"><option>Life Insurance</option><option>Final Expense</option><option>Both</option></select>
+            <select id="mStage" style="flex:2"><option>Lead</option><option>Contacted</option><option>Appointment</option><option>Presented</option><option>Submitted</option><option>Issued</option><option>NotTaken</option></select>
+          </div>
+          <div class="row" style="margin-bottom:8px">
+            <input id="mPremium" type="number" placeholder="Est. Premium $" style="flex:1">
+            <input id="mEmail" placeholder="Email" style="flex:1">
+          </div>
+          <textarea id="mNotes" placeholder="Notes..."></textarea>
+          <button class="btn btn-green" style="width:100%;margin-top:8px" onclick="addManualProspect()">Save Prospect</button>
+        </div>
+      </div>
+
+      <div class="section-title">📊 Pipeline Overview</div>
+      <div id="pipelineOverview"></div>
+
+      <div class="section-title" style="margin-top:16px">👤 All Prospects</div>
+      <div style="display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap">
+        <select id="filterStage" onchange="renderProspects()" style="flex:1;min-width:100px;font-size:11px;padding:6px">
+          <option value="all">All Stages</option>
           <option>Lead</option><option>Contacted</option><option>Appointment</option>
           <option>Presented</option><option>Submitted</option><option>Issued</option><option>NotTaken</option>
         </select>
+        <select id="filterType" onchange="renderProspects()" style="flex:1;min-width:100px;font-size:11px;padding:6px">
+          <option value="all">All Types</option>
+          <option>Life Insurance</option><option>Final Expense</option><option>Both</option>
+        </select>
       </div>
-      <div class="row" style="margin-bottom:8px">
-        <input id="pPremium" type="number" placeholder="Est. Monthly Premium $" style="flex:1">
-        <input id="pSource" placeholder="Lead source" style="flex:1">
+      <div id="prospectsList"></div>
+    </div>
+
+    <div id="crm-commission" class="hidden">
+      <div class="comm-card">
+        <div style="text-align:center">
+          <div style="font-size:12px;color:#94a3b8;margin-bottom:4px">Total Annual Premium (Issued Policies)</div>
+          <div class="big-num" style="color:#34d399" id="commTotal">$0</div>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap">
+          <div class="metric-box"><div class="metric-val" style="color:#fbbf24" id="comm80">$0</div><div class="metric-label">80% Comm</div></div>
+          <div class="metric-box"><div class="metric-val" style="color:#a78bfa" id="comm90">$0</div><div class="metric-label">90% Comm</div></div>
+          <div class="metric-box"><div class="metric-val" style="color:#34d399" id="comm100">$0</div><div class="metric-label">100% Comm</div></div>
+          <div class="metric-box"><div class="metric-val" style="color:#f87171" id="commMonth">$0</div><div class="metric-label">Monthly Est</div></div>
+        </div>
       </div>
-      <textarea id="pNotes" placeholder="Notes..."></textarea>
-      <button class="btn btn-green" style="width:100%;margin-top:8px" onclick="addProspect()">Save Prospect</button>
-    </div>
-  </div>
-  <div class="section-title">📊 Pipeline Overview</div>
-  <div id="pipelineOverview"></div>
-  <div class="section-title" style="margin-top:16px">👤 All Prospects</div>
-  <div style="display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap">
-    <select id="filterStage" onchange="renderProspects()" style="flex:1;min-width:120px;font-size:11px;padding:6px 10px">
-      <option value="all">All Stages</option>
-      <option>Lead</option><option>Contacted</option><option>Appointment</option>
-      <option>Presented</option><option>Submitted</option><option>Issued</option><option>NotTaken</option>
-    </select>
-    <select id="filterType" onchange="renderProspects()" style="flex:1;min-width:120px;font-size:11px;padding:6px 10px">
-      <option value="all">All Types</option>
-      <option>Life Insurance</option><option>Final Expense</option><option>Both</option>
-    </select>
-  </div>
-  <div id="prospectsList"></div>
-</div>
-
-<div id="tab-scripts" class="hidden">
-  <div class="subtab-row">
-    <button class="subtab active" onclick="showSub('sc','cold',this)">❄️ Cold Call</button>
-    <button class="subtab" onclick="showSub('sc','fe',this)">💛 Final Exp</button>
-    <button class="subtab" onclick="showSub('sc','objection',this)">🛡️ Objections</button>
-    <button class="subtab" onclick="showSub('sc','closing',this)">✅ Closing</button>
-    <button class="subtab" onclick="showSub('sc','referral',this)">🤝 Referral</button>
-  </div>
-  <div id="sc-cold"></div>
-  <div id="sc-fe" class="hidden"></div>
-  <div id="sc-objection" class="hidden"></div>
-  <div id="sc-closing" class="hidden"></div>
-  <div id="sc-referral" class="hidden"></div>
-</div>
-
-<div id="tab-emails" class="hidden">
-  <div class="subtab-row">
-    <button class="subtab active" onclick="showSub('em','precall',this)">📨 Pre-Appt</button>
-    <button class="subtab" onclick="showSub('em','postcall',this)">📩 Post-Appt</button>
-    <button class="subtab" onclick="showSub('em','policy',this)">📜 Policy</button>
-    <button class="subtab" onclick="showSub('em','referral',this)">🤝 Referral</button>
-    <button class="subtab" onclick="showSub('em','renewal',this)">🔄 Renewal</button>
-  </div>
-  <div id="em-precall"></div>
-  <div id="em-postcall" class="hidden"></div>
-  <div id="em-policy" class="hidden"></div>
-  <div id="em-referral" class="hidden"></div>
-  <div id="em-renewal" class="hidden"></div>
-</div>
-
-<div id="tab-strategies" class="hidden">
-  <div class="subtab-row">
-    <button class="subtab active" onclick="showSub('st','leadgen',this)">🎯 Lead Gen</button>
-    <button class="subtab" onclick="showSub('st','finalexp',this)">💛 Final Exp</button>
-    <button class="subtab" onclick="showSub('st','weak',this)">💪 Weak Agents</button>
-    <button class="subtab" onclick="showSub('st','daily',this)">📅 Daily Plan</button>
-    <button class="subtab" onclick="showSub('st','compliance',this)">✅ Compliance</button>
-  </div>
-  <div id="st-leadgen"></div>
-  <div id="st-finalexp" class="hidden"></div>
-  <div id="st-weak" class="hidden"></div>
-  <div id="st-daily" class="hidden"></div>
-  <div id="st-compliance" class="hidden"></div>
-</div>
-
-<div id="tab-team" class="hidden">
-  <div class="card">
-    <div style="display:flex;justify-content:space-between;align-items:center">
-      <div class="card-title" style="margin-bottom:0">➕ Add Agent</div>
-      <button class="btn btn-blue btn-sm" onclick="toggleAgentForm()">+ Add</button>
-    </div>
-    <div id="agent-form" class="hidden" style="margin-top:12px">
-      <div class="row" style="margin-bottom:8px">
-        <input id="aName" placeholder="Agent name *" style="flex:2">
-        <input id="aLeads" type="number" placeholder="Leads" style="flex:1;min-width:60px">
+      <div class="card">
+        <div class="card-title">💰 Commission Calculator</div>
+        <div class="row" style="margin-bottom:8px">
+          <input id="calcPremium" type="number" placeholder="Monthly Premium $" style="flex:1">
+          <input id="calcRate" type="number" placeholder="Commission %" value="85" style="flex:1">
+        </div>
+        <button class="btn btn-green" style="width:100%" onclick="calcCommission()">Calculate</button>
+        <div id="calcResult" style="display:none;margin-top:12px;text-align:center">
+          <div style="font-size:11px;color:#94a3b8">First Year Commission</div>
+          <div class="big-num" style="color:#34d399" id="calcAnnual">$0</div>
+          <div style="font-size:11px;color:#64748b" id="calcMonthly"></div>
+        </div>
       </div>
-      <div class="row" style="margin-bottom:8px">
-        <input id="aAppts" type="number" placeholder="Appointments" style="flex:1">
-        <input id="aIssued" type="number" placeholder="Policies Issued" style="flex:1">
-        <input id="aPremium" type="number" placeholder="Premium $" style="flex:1">
+      <div class="card"><div class="card-title">📊 Pipeline Value</div><div id="stageValues"></div></div>
+    </div>
+
+    <div id="crm-team" class="hidden">
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div class="card-title" style="margin-bottom:0">➕ Add Agent</div>
+          <button class="btn btn-blue btn-sm" onclick="toggleForm('agent-form')">+ Add</button>
+        </div>
+        <div id="agent-form" class="hidden" style="margin-top:12px">
+          <div class="row" style="margin-bottom:8px">
+            <input id="aName" placeholder="Agent name *" style="flex:2">
+            <input id="aLeads" type="number" placeholder="Leads" style="flex:1;min-width:50px">
+          </div>
+          <div class="row" style="margin-bottom:8px">
+            <input id="aAppts" type="number" placeholder="Appointments" style="flex:1">
+            <input id="aIssued" type="number" placeholder="Issued" style="flex:1">
+            <input id="aPremium" type="number" placeholder="Premium $" style="flex:1">
+          </div>
+          <button class="btn btn-green" style="width:100%;margin-top:4px" onclick="addAgent()">Save Agent</button>
+        </div>
       </div>
-      <button class="btn btn-green" style="width:100%;margin-top:4px" onclick="addAgent()">Save Agent</button>
+      <div class="section-title">🏆 Leaderboard</div>
+      <div id="agentLeaderboard"></div>
+      <div class="section-title" style="margin-top:14px">👥 Agent Details</div>
+      <div id="agentDetails"></div>
     </div>
-  </div>
-  <div class="section-title">🏆 Agent Leaderboard</div>
-  <div id="agentLeaderboard"></div>
-  <div class="section-title" style="margin-top:16px">👥 Agent Details</div>
-  <div id="agentDetails"></div>
-</div>
 
-<div id="tab-commission" class="hidden">
-  <div class="comm-card">
-    <div style="text-align:center">
-      <div style="font-size:12px;color:#94a3b8;margin-bottom:4px">Total Estimated Annual Premium</div>
-      <div class="big-num" style="color:#34d399" id="commTotal">$0</div>
-    </div>
-    <div style="display:flex;gap:10px;margin-top:16px;flex-wrap:wrap">
-      <div class="metric-box"><div class="metric-val" style="color:#fbbf24" id="comm80">$0</div><div class="metric-label">80% Commission</div></div>
-      <div class="metric-box"><div class="metric-val" style="color:#a78bfa" id="comm90">$0</div><div class="metric-label">90% Commission</div></div>
-      <div class="metric-box"><div class="metric-val" style="color:#34d399" id="comm100">$0</div><div class="metric-label">100% Commission</div></div>
-      <div class="metric-box"><div class="metric-val" style="color:#f87171" id="commMonth">$0</div><div class="metric-label">Est. Monthly</div></div>
-    </div>
-  </div>
-  <div class="card">
-    <div class="card-title">💰 Commission Calculator</div>
-    <div class="row" style="margin-bottom:8px">
-      <input id="calcPremium" type="number" placeholder="Monthly Premium $" style="flex:1">
-      <input id="calcRate" type="number" placeholder="Commission %" value="85" style="flex:1">
-    </div>
-    <button class="btn btn-green" style="width:100%" onclick="calcCommission()">Calculate</button>
-    <div id="calcResult" style="margin-top:12px;text-align:center;display:none">
-      <div style="font-size:11px;color:#94a3b8">First Year Commission</div>
-      <div class="big-num" style="color:#34d399" id="calcAnnual">$0</div>
-      <div style="font-size:11px;color:#64748b" id="calcMonthly"></div>
-    </div>
-  </div>
-  <div class="card">
-    <div class="card-title">📊 Pipeline Value by Stage</div>
-    <div id="stageValues"></div>
   </div>
 </div>
 
+<!-- ========== SCRIPTS PAGE ========== -->
+<div class="page" id="page-scripts">
+  <div style="max-width:640px;margin:0 auto;padding:16px">
+    <div style="font-size:18px;font-weight:800;margin-bottom:4px">💬 Scripts Library</div>
+    <div style="font-size:12px;color:#94a3b8;margin-bottom:16px">Copy-paste scripts for every situation</div>
+    <div class="subtab-row">
+      <button class="subtab active" onclick="showSub('sc','cold',this)">❄️ Cold Call</button>
+      <button class="subtab" onclick="showSub('sc','fe',this)">💛 Final Exp</button>
+      <button class="subtab" onclick="showSub('sc','objection',this)">🛡️ Objections</button>
+      <button class="subtab" onclick="showSub('sc','closing',this)">✅ Closing</button>
+      <button class="subtab" onclick="showSub('sc','referral',this)">🤝 Referral</button>
+    </div>
+    <div id="sc-cold"></div>
+    <div id="sc-fe" class="hidden"></div>
+    <div id="sc-objection" class="hidden"></div>
+    <div id="sc-closing" class="hidden"></div>
+    <div id="sc-referral" class="hidden"></div>
+  </div>
 </div>
 
-<!-- UPGRADE MODAL - FIXED -->
-<div id="upgradeModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:9999;align-items:center;justify-content:center;padding:20px">
-  <div style="background:#0f2744;border:1px solid rgba(245,158,11,0.3);border-radius:20px;padding:24px;max-width:380px;width:100%;text-align:center">
+<!-- ========== EMAILS PAGE ========== -->
+<div class="page" id="page-emails">
+  <div style="max-width:640px;margin:0 auto;padding:16px">
+    <div style="font-size:18px;font-weight:800;margin-bottom:4px">📧 Email Templates</div>
+    <div style="font-size:12px;color:#94a3b8;margin-bottom:16px">Professional emails for every stage</div>
+    <div class="subtab-row">
+      <button class="subtab active" onclick="showSub('em','precall',this)">📨 Pre-Appt</button>
+      <button class="subtab" onclick="showSub('em','postcall',this)">📩 Post-Appt</button>
+      <button class="subtab" onclick="showSub('em','policy',this)">📜 Policy</button>
+      <button class="subtab" onclick="showSub('em','referral',this)">🤝 Referral</button>
+      <button class="subtab" onclick="showSub('em','renewal',this)">🔄 Renewal</button>
+    </div>
+    <div id="em-precall"></div>
+    <div id="em-postcall" class="hidden"></div>
+    <div id="em-policy" class="hidden"></div>
+    <div id="em-referral" class="hidden"></div>
+    <div id="em-renewal" class="hidden"></div>
+  </div>
+</div>
+
+<!-- ========== STRATEGIES PAGE ========== -->
+<div class="page" id="page-strategies">
+  <div style="max-width:640px;margin:0 auto;padding:16px">
+    <div style="font-size:18px;font-weight:800;margin-bottom:4px">🎯 Strategies</div>
+    <div style="font-size:12px;color:#94a3b8;margin-bottom:16px">Proven strategies to grow your business</div>
+    <div class="subtab-row">
+      <button class="subtab active" onclick="showSub('st','leadgen',this)">🎯 Lead Gen</button>
+      <button class="subtab" onclick="showSub('st','finalexp',this)">💛 Final Exp</button>
+      <button class="subtab" onclick="showSub('st','weak',this)">💪 Weak Agents</button>
+      <button class="subtab" onclick="showSub('st','daily',this)">📅 Daily Plan</button>
+      <button class="subtab" onclick="showSub('st','compliance',this)">✅ Compliance</button>
+    </div>
+    <div id="st-leadgen"></div>
+    <div id="st-finalexp" class="hidden"></div>
+    <div id="st-weak" class="hidden"></div>
+    <div id="st-daily" class="hidden"></div>
+    <div id="st-compliance" class="hidden"></div>
+  </div>
+</div>
+
+<!-- UPGRADE MODAL -->
+<div class="modal-overlay" id="upgradeModal">
+  <div class="modal-box">
     <div style="font-size:32px;margin-bottom:8px">⭐</div>
     <h2 style="font-size:18px;font-weight:800;color:#fbbf24;margin-bottom:8px">Upgrade to Premium</h2>
-    <p style="font-size:12px;color:#94a3b8;margin-bottom:16px">Unlock the full power of InsureFlow CRM</p>
+    <p style="font-size:12px;color:#94a3b8;margin-bottom:16px">Unlock everything in InsureFlow</p>
     <div style="text-align:left;margin-bottom:16px">
-      <div style="font-size:12px;color:#cbd5e1;margin:5px 0">✅ Unlimited prospects & pipeline</div>
-      <div style="font-size:12px;color:#cbd5e1;margin:5px 0">✅ 20+ scripts for Life & Final Expense</div>
-      <div style="font-size:12px;color:#cbd5e1;margin:5px 0">✅ Complete email sequence library</div>
+      <div style="font-size:12px;color:#cbd5e1;margin:5px 0">✅ Unlimited prospects</div>
+      <div style="font-size:12px;color:#cbd5e1;margin:5px 0">✅ All 20+ scripts unlocked</div>
+      <div style="font-size:12px;color:#cbd5e1;margin:5px 0">✅ Complete email library</div>
       <div style="font-size:12px;color:#cbd5e1;margin:5px 0">✅ Advanced commission tracking</div>
       <div style="font-size:12px;color:#cbd5e1;margin:5px 0">✅ Team leader dashboard</div>
-      <div style="font-size:12px;color:#cbd5e1;margin:5px 0">✅ Weak agent coaching tools</div>
-      <div style="font-size:12px;color:#cbd5e1;margin:5px 0">✅ Compliance checklist</div>
       <div style="font-size:12px;color:#cbd5e1;margin:5px 0">✅ Priority support</div>
     </div>
     <div style="font-size:24px;font-weight:900;color:#fbbf24;margin-bottom:4px">$47<span style="font-size:14px;color:#94a3b8">/month</span></div>
@@ -298,137 +559,106 @@ var isPremium=false;
 var stageColors={Lead:'#3b82f6',Contacted:'#f59e0b',Appointment:'#10b981',Presented:'#8b5cf6',Submitted:'#0ea5e9',Issued:'#22c55e',NotTaken:'#ef4444'};
 var stages=['Lead','Contacted','Appointment','Presented','Submitted','Issued','NotTaken'];
 
-function showUpgrade(){
-  var m=document.getElementById('upgradeModal');
-  m.style.display='flex';
-}
-function closeUpgrade(){
-  var m=document.getElementById('upgradeModal');
-  m.style.display='none';
-}
-
-var scriptsDB={
-  cold:[
-    {title:'Life Insurance Cold Call Opener',free:true,text:'Hi, is this [Name]? Great! My name is [Your Name] and I\'m a licensed life insurance agent in your area. I\'m not calling to sell you anything today — I just wanted to see if you\'ve had a chance to review your family\'s life insurance coverage recently?\n\n[Wait for response]\n\nThe reason I ask is that most families I speak with are either underinsured or paying too much for what they have. I\'d love to set up a quick 15-20 minute appointment — no obligation — just to make sure your family is protected. Would [DAY] or [DAY] work better for you?'},
-    {title:'Life Insurance Warm Market Script',free:true,text:'Hey [Name], it\'s [Your Name]! How are you doing?\n\n[Chat briefly]\n\nHey, the reason I\'m calling — I recently got my life insurance license and I\'m helping families in the area make sure they\'re properly protected. I thought of you and wanted to offer you a complimentary policy review.\n\nIt takes about 20 minutes and there\'s absolutely no obligation. Does that sound okay?'},
-    {title:'Final Expense Door Knock Script',free:false,text:'Good [morning/afternoon]! My name is [Name] and I\'m following up on the information card you filled out recently about final expense coverage.\n\nI just have a few quick questions to see what options might be available for you. May I come in for just a moment?\n\n[Inside]\nThank you so much for your time. I just want to make sure that if something were to happen to you, your family wouldn\'t be left with the burden of funeral costs. Does that make sense?'},
-    {title:'Medicare Supplement Introduction',free:false,text:'Hi [Name], this is [Your Name] calling. You recently turned 65 or are approaching Medicare eligibility, and I wanted to reach out about your Medicare supplement options.\n\nMany people don\'t realize that Original Medicare only covers about 80% of costs. I help seniors find affordable plans that cover that gap.\n\nWould you have 15 minutes this week for me to show you your options?'}
-  ],
-  fe:[
-    {title:'Final Expense Kitchen Table Script',free:true,text:'Mr/Mrs [Name], I appreciate you having me in your home today.\n\nI want to be straightforward — the reason I\'m here is to talk about something most people prefer not to think about, but that\'s really important for your family.\n\nWhen the time comes, a funeral today costs between $8,000 and $15,000. My job is to make sure that cost doesn\'t fall on your loved ones.\n\nI have plans starting as low as $20-$30 a month. Can I show you a couple of options?'},
-    {title:'Final Expense Objection - Already Have Coverage',free:true,text:'That\'s great that you have some coverage!\n\nMost people I work with have either group coverage through work that ends when they retire, or a small policy that hasn\'t kept up with the rising cost of funerals.\n\nWould you mind if I just took a look at what you have? That way I can confirm you\'re fully covered. If everything\'s good, I\'ll tell you and be on my way. Fair enough?'},
-    {title:'Final Expense Presentation Script',free:false,text:'Let me show you exactly what I have for you today.\n\nBased on your age and health, I\'ve found [X] plans that would work:\n\nOption 1: [Plan A] - $[X]/month for $[X] coverage\nOption 2: [Plan B] - $[X]/month for $[X] coverage\nOption 3: [Plan C] - $[X]/month for $[X] coverage\n\nAll of these are guaranteed — once approved, they can never cancel your policy.\n\nWhich of these feels most comfortable for you?'}
-  ],
-  objection:[
-    {title:'I Need to Think About It',free:true,text:'I completely understand — this is an important decision!\n\nCan I ask — is it the coverage amount, the monthly premium, or something else you\'d like to think over?\n\n[Address specific concern]\n\nHere\'s what I\'d suggest: let\'s go ahead and get the application started today. You have a free look period of 30 days — if you change your mind for any reason, you get a full refund. Does that sound fair?'},
-    {title:'I Can\'t Afford It',free:true,text:'I hear you — and I want to find something that works within your budget.\n\nLet me ask: if something happened to you tomorrow, who would be responsible for your final expenses?\n\n[Listen]\n\nSo the question isn\'t whether you can afford this — it\'s whether your family can afford NOT having it.\n\nI have plans starting as low as $15-$20 a month. Can we look at what fits your budget?'},
-    {title:'I Have Insurance Through Work',free:false,text:'That\'s great! Many people do.\n\nHere\'s something important — most employer group coverage is term insurance that ends when you leave the company or retire.\n\nAlso, group coverage is usually only 1-2x your salary, which often isn\'t enough.\n\nWould it make sense to have a personal policy you own — one that\'s yours regardless of where you work?'},
-    {title:'I Want to Talk to My Spouse',free:false,text:'That\'s a great idea — family decisions should be made together!\n\nIs your spouse home right now? I\'d love to share the information with both of you at the same time.\n\n[If no]\n\nHow about this — when would be a good time when you\'re both available? I can come back or we can do a quick call together.'}
-  ],
-  closing:[
-    {title:'Assumptive Close',free:true,text:'Based on everything we\'ve discussed today, it looks like [Plan Name] at $[X]/month gives you and your family the best protection.\n\nLet\'s go ahead and get you started. I just need a few pieces of information to complete the application. What\'s your date of birth?'},
-    {title:'Choice Close',free:true,text:'Based on what you\'ve told me today, I have two options that would work perfectly:\n\nOption 1: $[X]/month for $[X,000] in coverage\nOption 2: $[X]/month for $[X,000] in coverage\n\nBoth are excellent options. Which one feels most comfortable for your budget?'},
-    {title:'Urgency Close',free:false,text:'Mr/Mrs [Name], I want to be transparent with you.\n\nThe rates I\'ve quoted today are based on your current health. Insurance is one of those things where the best time to get it is when you don\'t need it — because once your health changes, so do your options.\n\nShall we go ahead and lock in these rates today?'},
-    {title:'Summary Close',free:false,text:'Let me summarize what we\'ve covered:\n\n✅ You want to make sure your family isn\'t burdened with final expenses\n✅ You\'re looking for something affordable at $[X]/month or less\n✅ You want guaranteed coverage that can\'t be cancelled\n\nThe [Plan Name] at $[X]/month gives you everything.\n\nIs there any reason we shouldn\'t get this protection in place today?'}
-  ],
-  referral:[
-    {title:'Referral Request After Sale',free:true,text:'Mr/Mrs [Name], congratulations on getting this important protection in place!\n\nI have a quick favor to ask. My business grows primarily through referrals from happy clients.\n\nCould you think of 2-3 people — friends, family, coworkers — who might also benefit from a quick conversation about their coverage?\n\nI promise to take great care of anyone you refer.'},
-    {title:'Referral Request - Not Interested',free:true,text:'I completely respect your decision and appreciate your time.\n\nBefore I go — even though the timing isn\'t right for you, do you know anyone who might benefit from what I do?\n\nI\'d love a warm introduction and I\'ll always take great care of your referrals.'},
-    {title:'Referral Follow Up Script',free:false,text:'Hi [Name], my name is [Your Name] — I\'m a colleague of [Referrer\'s Name] who gave me your information.\n\nThey thought you might benefit from a conversation about life insurance protection for your family.\n\nI promise this will be no-pressure — I just want to make sure you have the right information. Would [DAY] or [DAY] work for a quick 20-minute chat?'}
-  ]
-};
-
-var emailsDB={
-  precall:[
-    {title:'Appointment Confirmation',free:true,subject:'Your Life Insurance Review - Confirmed ✅',text:'Hi [Name],\n\nI\'m looking forward to our appointment on [DATE] at [TIME]!\n\nTo make the most of our time, please have the following ready if possible:\n\n📋 Any current life insurance policies\n📋 Recent health information\n📋 A list of your beneficiaries\n\nOur meeting will take approximately 20-30 minutes.\n\nSee you soon!\n[Your Name]\nLicensed Life Insurance Agent'},
-    {title:'Pre-Appointment Info',free:true,subject:'What to Expect at Our Meeting 📋',text:'Hi [Name],\n\nI wanted to send some info before we meet on [DATE] at [TIME].\n\nHere\'s what we\'ll cover:\n1️⃣ Review your current coverage\n2️⃣ Discuss your family\'s protection needs\n3️⃣ Present affordable options tailored to you\n4️⃣ Answer all your questions\n\nThere is absolutely NO obligation.\n\n[Your Name]'},
-    {title:'Final Expense Pre-Appointment',free:false,subject:'Our Meeting Tomorrow - Important Info',text:'Hi [Name],\n\nJust a reminder about our appointment tomorrow at [TIME].\n\nI\'ll be sharing options for final expense coverage — plans designed to make sure your family isn\'t left with funeral costs.\n\nThe average funeral today costs between $8,000 - $15,000. Plans I\'ll show you start as low as $20-$30/month.\n\nPlease have your spouse present if possible.\n\nSee you tomorrow!\n[Your Name]'}
-  ],
-  postcall:[
-    {title:'Post-Appointment - Application Submitted',free:true,subject:'Great Meeting You! Next Steps 🎯',text:'Hi [Name],\n\nThank you for your time today!\n\nNext steps:\n📋 Application submitted to [Carrier]\n⏱️ Underwriting takes [X] business days\n📞 I\'ll call as soon as I hear back\n\nCongratulations on taking this important step!\n[Your Name]'},
-    {title:'Post-Appointment - Needs Time',free:true,subject:'No Rush - Summary of What We Discussed',text:'Hi [Name],\n\nThank you for meeting with me today!\n\nQuick summary:\n📋 Coverage amount: $[X]\n💰 Monthly premium: $[X]/month\n🏢 Carrier: [Carrier]\n\nI\'ll follow up on [DATE]. Feel free to call me anytime at [PHONE].\n\n[Your Name]'},
-    {title:'Post-Appointment - No Show',free:false,subject:'Sorry We Missed Each Other!',text:'Hi [Name],\n\nI stopped by/called at our scheduled time but wasn\'t able to reach you. I completely understand — life gets busy!\n\nI\'d love to reschedule. I have availability:\n📅 [Date/Time Option 1]\n📅 [Date/Time Option 2]\n\nFeel free to call or text me at [PHONE].\n\n[Your Name]'}
-  ],
-  policy:[
-    {title:'Policy Delivery Email',free:true,subject:'Your Policy is Ready! 🎉',text:'Hi [Name],\n\nCongratulations! Your life insurance policy has been issued!\n\n📜 Policy Number: [POLICY #]\n🏢 Carrier: [CARRIER]\n💰 Monthly Premium: $[X]\n📅 Policy Date: [DATE]\n👤 Beneficiary: [NAME]\n\nNext steps:\n1️⃣ Review your policy documents\n2️⃣ Store them in a safe place\n3️⃣ Make sure your beneficiary knows\n4️⃣ Set up automatic payments\n\nThank you for trusting me!\n[Your Name]'},
-    {title:'Annual Policy Review',free:false,subject:'Time for Your Annual Policy Review 📋',text:'Hi [Name],\n\nIt\'s been a year since we put your coverage in place!\n\nI wanted to reach out for your annual review. Life changes — let\'s make sure your coverage still matches your needs:\n\n✅ Has your family situation changed?\n✅ Have your financial responsibilities changed?\n✅ Are your beneficiaries still current?\n\nCan we schedule a quick 15-minute call?\n\n[Your Name]'}
-  ],
-  referral:[
-    {title:'Referral Thank You',free:true,subject:'Thank You for the Referral! 🙏',text:'Hi [Name],\n\nI wanted to say thank you for referring [REFERRAL NAME] to me!\n\nI truly appreciate your trust and confidence. I will take excellent care of them.\n\nIf you ever need anything, please don\'t hesitate to reach out.\n\nThank you!\n[Your Name]'},
-    {title:'Referral Request Email',free:false,subject:'A Quick Favor to Ask 🙏',text:'Hi [Name],\n\nI hope you and your family are doing well!\n\nMy business grows primarily through referrals from wonderful clients like yourself.\n\nIf you know anyone who might benefit from a life insurance review, I would be so grateful for an introduction.\n\nThank you for your continued trust!\n[Your Name]'}
-  ],
-  renewal:[
-    {title:'Premium Renewal Reminder',free:true,subject:'Important: Your Policy Premium is Due Soon',text:'Hi [Name],\n\nA friendly reminder that your life insurance premium renewal is coming up.\n\n📋 Policy: [POLICY NUMBER]\n💰 Amount Due: $[X]\n📅 Due Date: [DATE]\n\nPlease make sure your payment is processed by the due date to avoid any lapse.\n\nThank you!\n[Your Name]'},
-    {title:'Lapsed Policy Re-Engagement',free:false,subject:'Your Coverage Has Lapsed - Let\'s Fix This',text:'Hi [Name],\n\nI noticed your life insurance policy recently lapsed due to a missed payment.\n\nThe good news: in many cases, we can reinstate your policy without a new medical exam if we act quickly.\n\nPlease call me as soon as possible at [PHONE].\n\nDon\'t let your family go unprotected!\n[Your Name]'}
-  ]
-};
-
-var strategiesDB={
-  leadgen:[
-    {title:'🎯 Strategy 1: Direct Mail Campaigns',color:'#3b82f6',items:['Target age 50-80 for final expense leads','Use "information request" mailers — not sales pitches','Mail to zip codes with median income $30k-$60k','Follow up by phone within 48 hours of response','Cost: $400-600 per 1,000 mailers, expect 1-3% response']},
-    {title:'📱 Strategy 2: Facebook Lead Ads',color:'#8b5cf6',items:['Target age 45-75 for life insurance','Age 60-80 for final expense specifically','Use fear-based headlines: "Don\'t leave your family with $10,000 in funeral bills"','Offer free quote or free information guide','Budget: $20-50/day, expect $10-30 per lead']},
-    {title:'🤝 Strategy 3: Referral Partner System',color:'#10b981',items:['Partner with funeral homes — they see families in need','Partner with senior centers and churches','Partner with financial advisors who don\'t sell insurance','Give partners a thank you gift for every referral','Monthly lunch meetings to strengthen relationships']},
-    {title:'📞 Strategy 4: Telemarketing Lists',color:'#f59e0b',items:['Purchase aged leads (30-90 days old) — cheaper','Buy internet leads and call within 5 minutes','Use dialer software for efficiency','Best times to call: 8-9am, 12-1pm, 5-7pm','Always check Do Not Call registry compliance']}
-  ],
-  finalexp:[
-    {title:'💛 Final Expense Target Market',color:'#f59e0b',items:['Age 50-85 is the sweet spot','Income range: $15k-$50k annually','No or minimal life insurance coverage','Homeowners respond better than renters','Rural and suburban markets outperform urban']},
-    {title:'🚪 Door Knocking Strategy',color:'#ef4444',items:['Work leads same day — speed matters','Knock between 10am-7pm (avoid meal times)','Dress professionally but not too formal','Always leave a door hanger if no answer','Follow up door knocks with phone calls']},
-    {title:'💬 Kitchen Table Sales Process',color:'#10b981',items:['Always sit at the kitchen table — not the living room sofa','Have them show you any existing policies first','Use visual aids and benefit summaries','Never use confusing insurance jargon','Always ask to meet with spouse present']},
-    {title:'📋 Final Expense Application Tips',color:'#8b5cf6',items:['Know your carriers\' health questions cold','Have backup carriers for harder-to-place clients','Guaranteed issue is last resort — higher premiums','Always explain the graded benefit period','Collect first premium payment at point of sale']}
-  ],
-  weak:[
-    {title:'🔴 Agent Not Making Calls',color:'#ef4444',items:['Root cause: Fear of rejection or unorganized','Solution: Set mandatory call times (9am-12pm daily)','Action: Role play cold call opening every morning','Accountability: Log every call — track dials not contacts','Support: Do a live call session with them this week']},
-    {title:'🟡 Agent Not Closing Sales',color:'#f59e0b',items:['Root cause: Weak sales skills or product knowledge','Solution: Script practice every morning for 15 mins','Action: Record presentations and review together','Accountability: 3-way appointments for next 5 prospects','Goal: 1 issued policy in next 7 days']},
-    {title:'🟠 Agent High Activity Low Results',color:'#f97316',items:['Root cause: Targeting wrong prospects or weak presentation','Solution: Review lead quality and sourcing','Action: Ride-along — observe their full appointment','Focus: Quality over quantity — fewer better appointments','Support: Revamp their presentation script together']},
-    {title:'💡 30-Day Recovery Plan',color:'#8b5cf6',items:['Week 1: Daily coaching calls + script mastery','Week 2: Ride-along on all appointments','Week 3: Independent with daily debrief call','Week 4: Full independence + weekly check-in','Goal: 2 issued policies within 30 days']}
-  ],
-  daily:[
-    {title:'🌅 Morning Routine (8-10am)',color:'#f59e0b',items:['Review your pipeline — who needs follow up?','Make 10 calls to new leads before 10am','Confirm all appointments for today','Practice your opening script for 10 minutes','Set your daily goal: X appointments, X applications']},
-    {title:'☀️ Midday Block (10am-2pm)',color:'#10b981',items:['Run your scheduled appointments','Submit any applications from morning appointments','Follow up with prospects who said "call back later"','Order new leads if pipeline is running low','Update your CRM with all morning activity']},
-    {title:'🌙 Afternoon/Evening (4-7pm)',color:'#3b82f6',items:['Best time for working appointments','Evening door knocking for final expense','Follow up calls from today\'s appointments','Plan tomorrow\'s schedule','Update pipeline and celebrate today\'s wins']}
-  ],
-  compliance:[
-    {title:'✅ Do Not Call Compliance',color:'#ef4444',items:['Always scrub lists against National DNC Registry','Register your business phone numbers','Document every call attempt with date and time','Never call numbers on your state DNC list','Violations can result in $43,000+ fines per call']},
-    {title:'📋 Suitability Requirements',color:'#3b82f6',items:['Always document the client\'s need for the product','Never recommend coverage the client cannot afford','Complete suitability forms for annuity products','Keep records for minimum 5 years','When in doubt — don\'t sell it']},
-    {title:'🔒 Privacy & Data Protection',color:'#8b5cf6',items:['Never share client information without consent','Store client data securely','Shred physical documents with personal information','Never discuss client details in public places','Follow your state\'s specific data protection laws']}
-  ]
-};
-
-function showTab(name,btn){
-  document.querySelectorAll('[id^="tab-"]').forEach(function(el){el.classList.add('hidden')});
-  document.getElementById('tab-'+name).classList.remove('hidden');
-  document.querySelectorAll('.tab').forEach(function(el){el.classList.remove('active')});
-  btn.classList.add('active');
+// PAGE NAVIGATION
+function showPage(name,btn){
+  document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active')});
+  document.getElementById('page-'+name).classList.add('active');
+  if(btn){
+    document.querySelectorAll('.nav-btn').forEach(function(b){b.classList.remove('active')});
+    btn.classList.add('active');
+  }
   if(name==='scripts'){renderScripts('cold');}
   if(name==='emails'){renderEmails('precall');}
   if(name==='strategies'){renderStrategies('leadgen');}
-  if(name==='commission')renderCommission();
 }
 
-function showSub(prefix,name,btn){
-  document.querySelectorAll('[id^="'+prefix+'-"]').forEach(function(el){el.classList.add('hidden')});
-  document.getElementById(prefix+'-'+name).classList.remove('hidden');
-  btn.parentElement.querySelectorAll('.subtab').forEach(function(el){el.classList.remove('active')});
+// LEAD CAPTURE - CONNECTED TO CRM
+function submitLead(){
+  var first=document.getElementById('leadFirstName').value.trim();
+  var last=document.getElementById('leadLastName').value.trim();
+  var phone=document.getElementById('leadPhone').value.trim();
+  var age=document.getElementById('leadAge').value;
+  var email=document.getElementById('leadEmail').value.trim();
+  var type=document.getElementById('leadType').value;
+  var amount=document.getElementById('leadAmount').value;
+  var callTime=document.getElementById('leadCallTime').value;
+  if(!first||!last||!phone){alert('Please fill in your name and phone number!');return;}
+
+  // ADD TO CRM AUTOMATICALLY
+  var lead={
+    id:Date.now(),
+    name:first+' '+last,
+    phone:phone,
+    age:age,
+    email:email,
+    type:type,
+    stage:'Lead',
+    premium:0,
+    source:'Landing Page',
+    notes:'Coverage: '+amount+' | Best time: '+callTime,
+    date:new Date().toLocaleDateString(),
+    isNew:true
+  };
+  prospects.unshift(lead);
+  updateStats();
+  renderProspects();
+  renderPipelineOverview();
+
+  // SHOW NOTIFICATION
+  showNotification('🔔 New lead from '+first+' '+last+' just captured!');
+
+  // CLEAR FORM
+  ['leadFirstName','leadLastName','leadPhone','leadAge','leadEmail'].forEach(function(id){document.getElementById(id).value='';});
+
+  // START COUNTDOWN
+  startCountdown();
+
+  // GO TO THANK YOU PAGE
+  showPage('thankyou',null);
+}
+
+function startCountdown(){
+  var secs=300;
+  var el=document.getElementById('countdownTimer');
+  var interval=setInterval(function(){
+    secs--;
+    if(secs<=0){clearInterval(interval);if(el)el.textContent='Agent calling now!';return;}
+    var m=Math.floor(secs/60);
+    var s=secs%60;
+    if(el)el.textContent=m+':'+(s<10?'0':'')+s;
+  },1000);
+}
+
+function showNotification(msg){
+  var n=document.getElementById('notification');
+  n.textContent=msg;
+  n.style.display='block';
+  setTimeout(function(){n.style.display='none';},4000);
+}
+
+// CRM FUNCTIONS
+function showCrmTab(name,btn){
+  document.querySelectorAll('[id^="crm-"]').forEach(function(el){el.classList.add('hidden')});
+  document.getElementById('crm-'+name).classList.remove('hidden');
+  document.querySelectorAll('.crm-tab').forEach(function(el){el.classList.remove('active')});
   btn.classList.add('active');
-  if(prefix==='sc')renderScripts(name);
-  if(prefix==='em')renderEmails(name);
-  if(prefix==='st')renderStrategies(name);
+  if(name==='commission')renderCommission();
+  if(name==='team')renderTeam();
 }
 
-function toggleProspectForm(){document.getElementById('prospect-form').classList.toggle('hidden')}
-function toggleAgentForm(){document.getElementById('agent-form').classList.toggle('hidden')}
+function toggleForm(id){document.getElementById(id).classList.toggle('hidden')}
 
-function addProspect(){
-  var name=document.getElementById('pName').value.trim();
+function addManualProspect(){
+  var name=document.getElementById('mName').value.trim();
   if(!name)return;
-  prospects.push({id:Date.now(),name:name,phone:document.getElementById('pPhone').value,age:document.getElementById('pAge').value,type:document.getElementById('pType').value,stage:document.getElementById('pStage').value,premium:parseFloat(document.getElementById('pPremium').value)||0,source:document.getElementById('pSource').value,notes:document.getElementById('pNotes').value,date:new Date().toLocaleDateString()});
-  ['pName','pPhone','pAge','pPremium','pSource','pNotes'].forEach(function(id){document.getElementById(id).value='';});
-  document.getElementById('prospect-form').classList.add('hidden');
+  prospects.push({id:Date.now(),name:name,phone:document.getElementById('mPhone').value,age:document.getElementById('mAge').value,email:document.getElementById('mEmail').value,type:document.getElementById('mType').value,stage:document.getElementById('mStage').value,premium:parseFloat(document.getElementById('mPremium').value)||0,source:'Manual Entry',notes:document.getElementById('mNotes').value,date:new Date().toLocaleDateString(),isNew:false});
+  ['mName','mPhone','mAge','mEmail','mPremium','mNotes'].forEach(function(id){document.getElementById(id).value='';});
+  document.getElementById('manual-form').classList.add('hidden');
   renderProspects();updateStats();renderPipelineOverview();renderCommission();
 }
 
 function updateProspectStage(id,stage){
-  for(var i=0;i<prospects.length;i++){if(prospects[i].id===id){prospects[i].stage=stage;break;}}
+  for(var i=0;i<prospects.length;i++){if(prospects[i].id===id){prospects[i].stage=stage;prospects[i].isNew=false;break;}}
   renderProspects();updateStats();renderPipelineOverview();renderCommission();
 }
 
@@ -445,13 +675,12 @@ function renderPipelineOverview(){
   stages.forEach(function(s){
     if(counts[s]===0)return;
     html+='<div class="pipeline-stage" style="border-left-color:'+stageColors[s]+'">';
-    html+='<div style="display:flex;justify-content:space-between;align-items:center">';
-    html+='<div style="font-weight:700;font-size:13px;color:'+stageColors[s]+'">'+s+'</div>';
-    html+='<div style="display:flex;gap:10px"><span style="font-size:12px;font-weight:700">'+counts[s]+' prospects</span>';
+    html+='<div style="display:flex;justify-content:space-between"><div style="font-weight:700;font-size:13px;color:'+stageColors[s]+'">'+s+'</div>';
+    html+='<div style="display:flex;gap:10px"><span style="font-size:12px;font-weight:700">'+counts[s]+'</span>';
     if(premiums[s]>0)html+='<span style="font-size:11px;color:#94a3b8">$'+premiums[s].toFixed(0)+'/mo</span>';
     html+='</div></div></div>';
   });
-  if(html==='')html='<div style="text-align:center;color:#475569;font-size:13px;padding:1rem">Add prospects to see pipeline overview</div>';
+  if(html==='')html='<div style="text-align:center;color:#475569;font-size:12px;padding:1rem">No prospects yet</div>';
   document.getElementById('pipelineOverview').innerHTML=html;
 }
 
@@ -460,15 +689,16 @@ function renderProspects(){
   var tf=document.getElementById('filterType').value;
   var filtered=prospects.filter(function(p){return(sf==='all'||p.stage===sf)&&(tf==='all'||p.type===tf);});
   var html='';
-  if(filtered.length===0){html='<div style="text-align:center;color:#475569;padding:2rem;font-size:13px">No prospects found. Add your first prospect!</div>';}
+  if(filtered.length===0){html='<div style="text-align:center;color:#475569;padding:2rem;font-size:13px">No prospects found!</div>';}
   else{
     filtered.forEach(function(p){
       var pills=stages.map(function(s){var ac=p.stage===s?' stage-pill active-'+s:'';return'<button class="stage-pill'+ac+'" onclick="updateProspectStage('+p.id+',\''+s+'\')">'+s+'</button>';}).join('');
       html+='<div class="prospect-card"><div style="display:flex;justify-content:space-between;align-items:flex-start"><div>';
-      html+='<div class="prospect-name">'+p.name+'</div>';
-      html+='<div class="prospect-meta">'+p.type+(p.age?' · Age '+p.age:'')+(p.phone?' · '+p.phone:'')+(p.source?' · '+p.source:'')+'</div>';
-      if(p.premium>0)html+='<div style="font-size:11px;color:#34d399;margin-top:2px">$'+p.premium+'/mo premium</div>';
-      if(p.notes)html+='<div style="font-size:11px;color:#64748b;margin-top:4px;font-style:italic">'+p.notes+'</div>';
+      html+='<div style="display:flex;align-items:center"><div class="prospect-name">'+p.name+'</div>'+(p.isNew?'<span class="new-lead-badge">🔔 NEW</span>':'')+'</div>';
+      html+='<div class="prospect-meta">'+p.type+(p.age?' · Age '+p.age:'')+(p.phone?' · '+p.phone:'')+(p.email?' · '+p.email:'')+'</div>';
+      html+='<div class="prospect-meta">Source: '+p.source+' · '+p.date+'</div>';
+      if(p.premium>0)html+='<div style="font-size:11px;color:#34d399;margin-top:2px">$'+p.premium+'/mo</div>';
+      if(p.notes)html+='<div style="font-size:11px;color:#64748b;margin-top:3px;font-style:italic">'+p.notes+'</div>';
       html+='</div><button onclick="removeProspect('+p.id+')" style="background:none;border:none;color:#475569;cursor:pointer;font-size:16px">✕</button></div>';
       html+='<div class="stage-pills">'+pills+'</div></div>';
     });
@@ -477,12 +707,156 @@ function renderProspects(){
 }
 
 function updateStats(){
+  var newCount=prospects.filter(function(p){return p.isNew}).length;
   document.getElementById('statProspects').textContent=prospects.length;
   document.getElementById('statAppointments').textContent=prospects.filter(function(p){return p.stage==='Appointment'||p.stage==='Presented'}).length;
   document.getElementById('statIssued').textContent=prospects.filter(function(p){return p.stage==='Issued'}).length;
   var tp=prospects.filter(function(p){return p.stage==='Issued'}).reduce(function(s,p){return s+p.premium},0);
   document.getElementById('statPremium').textContent='$'+tp.toFixed(0);
-  document.getElementById('statAgents').textContent=agents.length;
+  document.getElementById('statNew').textContent=newCount;
+}
+
+function renderCommission(){
+  var issued=prospects.filter(function(p){return p.stage==='Issued'});
+  var tm=issued.reduce(function(s,p){return s+p.premium},0);
+  var ta=tm*12;
+  document.getElementById('commTotal').textContent='$'+ta.toFixed(0);
+  document.getElementById('comm80').textContent='$'+(ta*0.8).toFixed(0);
+  document.getElementById('comm90').textContent='$'+(ta*0.9).toFixed(0);
+  document.getElementById('comm100').textContent='$'+ta.toFixed(0);
+  document.getElementById('commMonth').textContent='$'+(tm*0.85).toFixed(0);
+  var html='';
+  stages.forEach(function(s){
+    var sp=prospects.filter(function(p){return p.stage===s&&p.premium>0});
+    if(sp.length===0)return;
+    var total=sp.reduce(function(sum,p){return sum+p.premium},0);
+    html+='<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.05)"><div style="display:flex;align-items:center;gap:8px"><div style="width:8px;height:8px;border-radius:50%;background:'+stageColors[s]+'"></div><span style="font-size:13px">'+s+'</span></div><div style="font-size:13px;font-weight:700">$'+total.toFixed(0)+'/mo</div></div>';
+  });
+  if(html==='')html='<div style="text-align:center;color:#475569;font-size:12px;padding:1rem">Add prospects with premium amounts</div>';
+  document.getElementById('stageValues').innerHTML=html;
+}
+
+function calcCommission(){
+  var prem=parseFloat(document.getElementById('calcPremium').value)||0;
+  var rate=parseFloat(document.getElementById('calcRate').value)||85;
+  var annual=prem*12*(rate/100);
+  document.getElementById('calcAnnual').textContent='$'+annual.toFixed(2);
+  document.getElementById('calcMonthly').textContent='Monthly: $'+(annual/12).toFixed(2)+' | Rate: '+rate+'%';
+  document.getElementById('calcResult').style.display='block';
+}
+
+function addAgent(){
+  var name=document.getElementById('aName').value.trim();
+  if(!name)return;
+  agents.push({id:Date.now(),name:name,leads:parseInt(document.getElementById('aLeads').value)||0,appts:parseInt(document.getElementById('aAppts').value)||0,issued:parseInt(document.getElementById('aIssued').value)||0,premium:parseFloat(document.getElementById('aPremium').value)||0});
+  ['aName','aLeads','aAppts','aIssued','aPremium'].forEach(function(id){document.getElementById(id).value='';});
+  document.getElementById('agent-form').classList.add('hidden');
+  renderTeam();
+}
+
+function updateAgentStat(id,field,delta){
+  for(var i=0;i<agents.length;i++){if(agents[i].id===id){agents[i][field]=Math.max(0,agents[i][field]+delta);break;}}
+  renderTeam();
+}
+
+function removeAgent(id){agents=agents.filter(function(a){return a.id!==id});renderTeam();}
+
+function getAgentScore(a){return Math.round(Math.min(a.leads/20,1)*20+Math.min(a.appts/8,1)*25+Math.min(a.issued/4,1)*35+Math.min(a.premium/2000,1)*20);}
+
+function renderTeam(){
+  var sorted=agents.slice().sort(function(a,b){return getAgentScore(b)-getAgentScore(a)});
+  var rankColors=['#f59e0b','#94a3b8','#cd7c2f'];var rankEmojis=['🥇','🥈','🥉'];
+  var lbHtml=sorted.length===0?'<div style="text-align:center;color:#475569;font-size:13px;padding:2rem">No agents yet</div>':'';
+  sorted.forEach(function(a,i){var score=getAgentScore(a);var color=score>=70?'#34d399':score>=40?'#fbbf24':'#f87171';lbHtml+='<div class="leaderboard-row"><div class="rank-num" style="background:'+(rankColors[i]||'#334155')+';color:white">'+(rankEmojis[i]||i+1)+'</div><div style="flex:1"><div style="font-weight:700;font-size:13px">'+a.name+'</div><div style="font-size:10px;color:#64748b">'+a.leads+' leads · '+a.appts+' appts · '+a.issued+' issued</div></div><div style="font-size:14px;font-weight:800;color:'+color+'">'+score+'%</div></div>';});
+  document.getElementById('agentLeaderboard').innerHTML=lbHtml;
+  var detHtml=agents.length===0?'<div style="text-align:center;color:#475569;font-size:13px;padding:1rem">No agents yet</div>':'';
+  agents.forEach(function(a){var score=getAgentScore(a);var fc=score>=70?'#34d399':score>=40?'#fbbf24':'#ef4444';var level=score>=70?'🟢 Strong':score>=40?'🟡 Average':'🔴 Needs Help';detHtml+='<div class="agent-card"><div style="display:flex;justify-content:space-between;align-items:center"><div style="font-weight:800;font-size:14px">'+a.name+'</div><div style="display:flex;align-items:center;gap:8px"><span style="font-size:11px">'+level+'</span><button onclick="removeAgent('+a.id+')" style="background:none;border:none;color:#475569;cursor:pointer">✕</button></div></div><div class="perf-bar"><div class="perf-fill" style="width:'+score+'%;background:'+fc+'"></div></div><div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px">';['leads','appts','issued','premium'].forEach(function(f){var labels={leads:'Leads',appts:'Appts',issued:'Issued',premium:'Prem $'};detHtml+='<div class="metric-box"><div class="metric-val" style="font-size:13px">'+a[f]+'</div><div class="metric-label">'+labels[f]+'</div><div style="display:flex;gap:3px;justify-content:center;margin-top:3px"><button onclick="updateAgentStat('+a.id+',\''+f+'\',-1)" style="background:rgba(255,255,255,0.1);border:none;border-radius:4px;width:20px;height:20px;color:white;cursor:pointer;font-size:11px">-</button><button onclick="updateAgentStat('+a.id+',\''+f+'\',1)" style="background:#0ea5e9;border:none;border-radius:4px;width:20px;height:20px;color:white;cursor:pointer;font-size:11px">+</button></div></div>';});detHtml+='</div></div>';});
+  document.getElementById('agentDetails').innerHTML=detHtml;
+}
+
+// SCRIPTS DATA
+var scriptsDB={
+  cold:[
+    {title:'Life Insurance Cold Call Opener',free:true,text:'Hi, is this [Name]? Great! My name is [Your Name] and I\'m a licensed life insurance agent in your area. I\'m not calling to sell you anything today — I just wanted to see if you\'ve had a chance to review your family\'s life insurance coverage recently?\n\nThe reason I ask is that most families are either underinsured or paying too much. I\'d love to set up a quick 15-20 minute appointment — no obligation. Would [DAY] or [DAY] work better for you?'},
+    {title:'Warm Market Script',free:true,text:'Hey [Name], it\'s [Your Name]! How are you doing?\n\nHey, I recently got my life insurance license and I\'m helping families make sure they\'re properly protected. I thought of you and wanted to offer a complimentary policy review.\n\nIt takes about 20 minutes and there\'s absolutely no obligation. Does that sound okay?'},
+    {title:'Final Expense Door Knock Script',free:false,text:'Good [morning/afternoon]! My name is [Name] and I\'m following up on the information card you filled out about final expense coverage.\n\nI just have a few quick questions. May I come in for just a moment?\n\nThank you! I just want to make sure that if something were to happen, your family wouldn\'t be left with the burden of funeral costs.'},
+    {title:'Landing Page Lead Follow Up',free:true,text:'Hi [Name]! This is [Your Name] calling from InsureFlow. You recently requested a free life insurance quote on our website!\n\nI\'m calling to get you that quote. This will only take about 10 minutes. Is now a good time?\n\n[If yes] Great! I just have a few quick questions to find you the best rate...'}
+  ],
+  fe:[
+    {title:'Final Expense Kitchen Table',free:true,text:'Mr/Mrs [Name], I appreciate you having me in your home today.\n\nI want to be straightforward — the reason I\'m here is to talk about something important for your family.\n\nWhen the time comes, a funeral today costs between $8,000 and $15,000. My job is to make sure that cost doesn\'t fall on your loved ones.\n\nI have plans starting as low as $20-$30 a month. Can I show you a couple of options?'},
+    {title:'Already Have Coverage Objection',free:true,text:'That\'s great that you have some coverage!\n\nMost people have either group coverage through work that ends when they retire, or a small policy that hasn\'t kept up with rising funeral costs.\n\nWould you mind if I just took a look? If everything\'s good, I\'ll tell you and be on my way. Fair enough?'}
+  ],
+  objection:[
+    {title:'I Need to Think About It',free:true,text:'I completely understand!\n\nCan I ask — is it the coverage amount, the monthly premium, or something else?\n\nHere\'s what I\'d suggest: let\'s get the application started today. You have a 30-day free look period — if you change your mind for any reason, you get a full refund. Does that sound fair?'},
+    {title:'I Can\'t Afford It',free:true,text:'I hear you — and I want to find something within your budget.\n\nLet me ask: if something happened to you tomorrow, who would be responsible for your final expenses?\n\nThe question isn\'t whether you can afford this — it\'s whether your family can afford NOT having it.\n\nI have plans starting as low as $15-$20 a month. Can we look at what fits your budget?'},
+    {title:'Not Interested',free:false,text:'I totally respect that!\n\nQuick question before I go — do you know anyone who might be looking for extra coverage? A friend or family member with a young family?\n\nI\'d love a warm introduction and will always take great care of your referrals.'}
+  ],
+  closing:[
+    {title:'Assumptive Close',free:true,text:'Based on everything we\'ve discussed, [Plan Name] at $[X]/month gives your family the best protection.\n\nLet\'s go ahead and get you started. I just need a few pieces of information. What\'s your date of birth?'},
+    {title:'Choice Close',free:true,text:'Based on what you\'ve told me, I have two options:\n\nOption 1: $[X]/month for $[X,000] coverage\nOption 2: $[X]/month for $[X,000] coverage\n\nWhich one feels most comfortable for your budget?'},
+    {title:'Urgency Close',free:false,text:'The rates I\'ve quoted today are based on your current health. Insurance is one of those things where the best time to get it is when you don\'t need it.\n\nShall we go ahead and lock in these rates today?'}
+  ],
+  referral:[
+    {title:'Referral Request After Sale',free:true,text:'Congratulations on getting this protection in place!\n\nMy business grows primarily through referrals. Could you think of 2-3 people who might also benefit from a quick conversation?\n\nI promise to take great care of anyone you refer.'},
+    {title:'Referral - Not Interested',free:true,text:'I completely respect your decision!\n\nBefore I go — do you know anyone who might benefit from what I do? A friend or family member?\n\nI\'d love a warm introduction and will always take great care of them.'}
+  ]
+};
+
+var emailsDB={
+  precall:[
+    {title:'Appointment Confirmation',free:true,subject:'Your Life Insurance Review - Confirmed ✅',text:'Hi [Name],\n\nI\'m looking forward to our appointment on [DATE] at [TIME]!\n\nPlease have ready if possible:\n📋 Any current life insurance policies\n📋 Recent health information\n📋 List of beneficiaries\n\nOur meeting will take 20-30 minutes. No obligation!\n\n[Your Name]\nLicensed Life Insurance Agent'},
+    {title:'Landing Page Lead - Immediate Follow Up',free:true,subject:'Your Free Quote Request - We\'re On It! 🚀',text:'Hi [Name],\n\nThank you for requesting your free life insurance quote!\n\nI\'m your assigned agent and I\'ll be calling you at [PHONE] within the next few minutes.\n\nPlease make sure to answer — I have some great options to share with you!\n\nIf you miss my call, please call me back at [YOUR PHONE].\n\nTalk soon!\n[Your Name]'}
+  ],
+  postcall:[
+    {title:'Post-Appointment - Submitted',free:true,subject:'Great Meeting You! Next Steps 🎯',text:'Hi [Name],\n\nThank you for your time today!\n\nNext steps:\n📋 Application submitted to [Carrier]\n⏱️ Underwriting takes [X] business days\n📞 I\'ll call as soon as I hear back\n\nCongratulations on taking this important step!\n[Your Name]'},
+    {title:'Post-Appointment - Needs Time',free:true,subject:'No Rush - Here\'s a Summary',text:'Hi [Name],\n\nThank you for meeting with me today!\n\nSummary:\n📋 Coverage: $[X]\n💰 Premium: $[X]/month\n🏢 Carrier: [Carrier]\n\nI\'ll follow up on [DATE].\n\n[Your Name]'}
+  ],
+  policy:[
+    {title:'Policy Delivery',free:true,subject:'Your Policy is Ready! 🎉',text:'Hi [Name],\n\nCongratulations! Your life insurance policy has been issued!\n\n📜 Policy #: [POLICY #]\n🏢 Carrier: [CARRIER]\n💰 Premium: $[X]/month\n👤 Beneficiary: [NAME]\n\nNext steps:\n1️⃣ Review your policy documents\n2️⃣ Store them safely\n3️⃣ Tell your beneficiary\n4️⃣ Set up automatic payments\n\nThank you!\n[Your Name]'}
+  ],
+  referral:[
+    {title:'Referral Thank You',free:true,subject:'Thank You for the Referral! 🙏',text:'Hi [Name],\n\nThank you for referring [NAME] to me!\n\nI truly appreciate your trust. I will take excellent care of them.\n\nThank you!\n[Your Name]'}
+  ],
+  renewal:[
+    {title:'Premium Renewal Reminder',free:true,subject:'Important: Policy Premium Due Soon',text:'Hi [Name],\n\nYour life insurance premium renewal is coming up.\n\n📋 Policy: [POLICY NUMBER]\n💰 Amount Due: $[X]\n📅 Due Date: [DATE]\n\nPlease make sure your payment is processed to avoid any lapse.\n\nThank you!\n[Your Name]'}
+  ]
+};
+
+var strategiesDB={
+  leadgen:[
+    {title:'🌐 Strategy 1: Your Landing Page',color:'#38bdf8',items:['Share your InsureFlow landing page link everywhere','Post it on Facebook, Instagram, TikTok daily','Put it in your bio on all social media','Send it to your warm market via text','Run Facebook ads pointing to your link — $10/day to start']},
+    {title:'📱 Strategy 2: Social Media Posts',color:'#10b981',items:['Post daily content about life insurance protection','Share stories about why coverage matters','Use curiosity hooks: "Most families are underinsured..."','Always include your landing page link','Respond to every comment within 1 hour']},
+    {title:'🤝 Strategy 3: Referral Partners',color:'#8b5cf6',items:['Partner with funeral homes','Partner with senior centers and churches','Partner with financial advisors','Give partners referral link to share','Monthly meetings to strengthen relationships']},
+    {title:'📞 Strategy 4: Lead Follow Up Speed',color:'#f59e0b',items:['Call new leads within 5 minutes — speed is everything','Research shows 80% of sales go to first agent who calls','Set up phone notifications for new leads','Have your script ready before you call','Never let a lead sit more than 1 hour without contact']}
+  ],
+  finalexp:[
+    {title:'💛 Final Expense Target Market',color:'#f59e0b',items:['Age 50-85 is the sweet spot','Income range: $15k-$50k annually','Homeowners respond better than renters','Rural and suburban markets outperform urban','Direct mail and door knocking work best']},
+    {title:'🚪 Door Knocking Strategy',color:'#ef4444',items:['Work leads same day — speed matters','Knock between 10am-7pm','Always leave a door hanger if no answer','Follow up door knocks with phone calls','Goal: 20 doors per day minimum']}
+  ],
+  weak:[
+    {title:'🔴 Agent Not Making Calls',color:'#ef4444',items:['Set mandatory call times every morning','Role play cold call opening daily','Track every dial — not just contacts','Do a live call session together this week','Mindset: Every no gets you closer to a yes']},
+    {title:'🟡 Agent Not Closing',color:'#f59e0b',items:['Practice closes every morning for 15 mins','Record presentations and review together','Do 3-way calls on next 5 prospects','Goal: 1 issued policy in next 7 days','Celebrate every small win publicly']}
+  ],
+  daily:[
+    {title:'🌅 Morning Routine (8-10am)',color:'#f59e0b',items:['Check CRM for new landing page leads','Call ALL new leads immediately','Confirm appointments for today','Practice script for 10 minutes','Set daily goals']},
+    {title:'☀️ Midday (10am-2pm)',color:'#10b981',items:['Run scheduled appointments','Submit applications','Follow up with open conversations','Post social media content with your link','Update CRM']},
+    {title:'🌙 Evening (5-8pm)',color:'#3b82f6',items:['Best time for working appointments','Final follow up calls','Check for new landing page leads','Plan tomorrow','Celebrate wins']}
+  ],
+  compliance:[
+    {title:'✅ Do Not Call Compliance',color:'#ef4444',items:['Always scrub lists against DNC Registry','Document every call attempt','Never call numbers on your state DNC list','Violations can result in $43,000+ fines per call','When in doubt — don\'t call']},
+    {title:'📋 Suitability',color:'#3b82f6',items:['Always document client\'s need','Never recommend coverage they cannot afford','Keep records for minimum 5 years','Complete all required forms','When in doubt — don\'t sell it']}
+  ]
+};
+
+// SUBTAB NAVIGATION
+function showSub(prefix,name,btn){
+  document.querySelectorAll('[id^="'+prefix+'-"]').forEach(function(el){el.classList.add('hidden')});
+  document.getElementById(prefix+'-'+name).classList.remove('hidden');
+  btn.parentElement.querySelectorAll('.subtab').forEach(function(el){el.classList.remove('active')});
+  btn.classList.add('active');
+  if(prefix==='sc')renderScripts(name);
+  if(prefix==='em')renderEmails(name);
+  if(prefix==='st')renderStrategies(name);
 }
 
 function escT(s){return s.replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/\n/g,'\\n')}
@@ -490,7 +864,7 @@ function escT(s){return s.replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/\n/
 function renderTemplates(cid,data){
   var html='';
   data.forEach(function(t,i){
-    var id=cid.replace('-','_')+i;
+    var id=cid.replace(/-/g,'_')+i;
     var locked=!t.free&&!isPremium;
     html+='<div class="template-card"><div class="template-header"><div><div class="template-title">'+t.title+'</div>';
     if(t.subject)html+='<div style="font-size:10px;color:#38bdf8;margin-top:2px">📧 '+t.subject+'</div>';
@@ -498,7 +872,7 @@ function renderTemplates(cid,data){
     html+='<span class="template-tag '+(t.free?'tag-free':'tag-premium')+'">'+(t.free?'FREE':'⭐ PRO')+'</span>';
     if(!locked)html+='<button class="copy-btn" id="'+id+'" onclick="copyT(\''+escT(t.text)+'\',\''+id+'\')">📋 Copy</button>';
     html+='</div></div>';
-    if(locked){html+='<div style="background:rgba(245,158,11,0.05);border-radius:8px;padding:10px;text-align:center"><div style="font-size:20px;margin-bottom:4px">🔒</div><div style="font-size:11px;color:#fbbf24;font-weight:600">Premium Content</div><div style="font-size:10px;color:#64748b;margin:4px 0">Upgrade to access all premium content</div><button class="btn btn-gold btn-sm" onclick="showUpgrade()" style="margin-top:6px">⭐ Unlock</button></div>';}
+    if(locked){html+='<div style="background:rgba(245,158,11,0.05);border-radius:8px;padding:10px;text-align:center"><div style="font-size:20px;margin-bottom:4px">🔒</div><div style="font-size:11px;color:#fbbf24;font-weight:600">Premium</div><button class="btn btn-gold btn-sm" onclick="showUpgrade()" style="margin-top:6px">⭐ Unlock</button></div>';}
     else{html+='<div class="template-text">'+t.text.replace(/\n/g,'<br>')+'</div>';}
     html+='</div>';
   });
@@ -526,78 +900,10 @@ function copyT(text,btnId){
   if(btn){btn.textContent='✅ Copied!';btn.classList.add('copied');setTimeout(function(){btn.textContent='📋 Copy';btn.classList.remove('copied')},2000);}
 }
 
-function addAgent(){
-  var name=document.getElementById('aName').value.trim();
-  if(!name)return;
-  agents.push({id:Date.now(),name:name,leads:parseInt(document.getElementById('aLeads').value)||0,appts:parseInt(document.getElementById('aAppts').value)||0,issued:parseInt(document.getElementById('aIssued').value)||0,premium:parseFloat(document.getElementById('aPremium').value)||0});
-  ['aName','aLeads','aAppts','aIssued','aPremium'].forEach(function(id){document.getElementById(id).value='';});
-  document.getElementById('agent-form').classList.add('hidden');
-  renderTeam();updateStats();
-}
+function showUpgrade(){document.getElementById('upgradeModal').style.display='flex';}
+function closeUpgrade(){document.getElementById('upgradeModal').style.display='none';}
 
-function updateAgentStat(id,field,delta){
-  for(var i=0;i<agents.length;i++){if(agents[i].id===id){agents[i][field]=Math.max(0,agents[i][field]+delta);break;}}
-  renderTeam();
-}
-
-function removeAgent(id){
-  agents=agents.filter(function(a){return a.id!==id});
-  renderTeam();updateStats();
-}
-
-function getAgentScore(a){
-  var s=0;
-  s+=Math.min(a.leads/20,1)*20;
-  s+=Math.min(a.appts/8,1)*25;
-  s+=Math.min(a.issued/4,1)*35;
-  s+=Math.min(a.premium/2000,1)*20;
-  return Math.round(s);
-}
-
-function renderTeam(){
-  var sorted=agents.slice().sort(function(a,b){return getAgentScore(b)-getAgentScore(a)});
-  var rankColors=['#f59e0b','#94a3b8','#cd7c2f'];
-  var rankEmojis=['🥇','🥈','🥉'];
-  var lbHtml='';
-  if(sorted.length===0){lbHtml='<div style="text-align:center;color:#475569;font-size:13px;padding:2rem">No agents yet. Add your team!</div>';}
-  else{sorted.forEach(function(a,i){var score=getAgentScore(a);var color=score>=70?'#34d399':score>=40?'#fbbf24':'#f87171';lbHtml+='<div class="leaderboard-row"><div class="rank-num" style="background:'+(rankColors[i]||'#334155')+';color:white">'+(rankEmojis[i]||i+1)+'</div><div style="flex:1"><div style="font-weight:700;font-size:13px">'+a.name+'</div><div style="font-size:10px;color:#64748b">'+a.leads+' leads · '+a.appts+' appts · '+a.issued+' issued · $'+a.premium+'/mo</div></div><div style="font-size:14px;font-weight:800;color:'+color+'">'+score+'%</div></div>';});}
-  document.getElementById('agentLeaderboard').innerHTML=lbHtml;
-  var detHtml='';
-  if(agents.length===0){detHtml='<div style="text-align:center;color:#475569;font-size:13px;padding:1rem">No agents yet.</div>';}
-  else{agents.forEach(function(a){var score=getAgentScore(a);var fc=score>=70?'#34d399':score>=40?'#fbbf24':'#ef4444';var level=score>=70?'🟢 Strong':score>=40?'🟡 Average':'🔴 Needs Help';detHtml+='<div class="agent-card"><div style="display:flex;justify-content:space-between;align-items:center"><div style="font-weight:800;font-size:14px">'+a.name+'</div><div style="display:flex;align-items:center;gap:8px"><span style="font-size:11px">'+level+'</span><button onclick="removeAgent('+a.id+')" style="background:none;border:none;color:#475569;cursor:pointer">✕</button></div></div><div class="perf-bar"><div class="perf-fill" style="width:'+score+'%;background:'+fc+'"></div></div><div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px">';['leads','appts','issued','premium'].forEach(function(f){var labels={leads:'Leads',appts:'Appts',issued:'Issued',premium:'Prem $'};detHtml+='<div class="metric-box"><div class="metric-val" style="font-size:14px">'+a[f]+'</div><div class="metric-label">'+labels[f]+'</div><div style="display:flex;gap:3px;justify-content:center;margin-top:3px"><button onclick="updateAgentStat('+a.id+',\''+f+'\',-1)" style="background:rgba(255,255,255,0.1);border:none;border-radius:4px;width:20px;height:20px;color:white;cursor:pointer;font-size:11px">-</button><button onclick="updateAgentStat('+a.id+',\''+f+'\',1)" style="background:#0ea5e9;border:none;border-radius:4px;width:20px;height:20px;color:white;cursor:pointer;font-size:11px">+</button></div></div>';});detHtml+='</div></div>';});}
-  document.getElementById('agentDetails').innerHTML=detHtml;
-  updateStats();
-}
-
-function renderCommission(){
-  var issued=prospects.filter(function(p){return p.stage==='Issued'});
-  var tm=issued.reduce(function(s,p){return s+p.premium},0);
-  var ta=tm*12;
-  document.getElementById('commTotal').textContent='$'+ta.toFixed(0);
-  document.getElementById('comm80').textContent='$'+(ta*0.8).toFixed(0);
-  document.getElementById('comm90').textContent='$'+(ta*0.9).toFixed(0);
-  document.getElementById('comm100').textContent='$'+ta.toFixed(0);
-  document.getElementById('commMonth').textContent='$'+(tm*0.85).toFixed(0);
-  var html='';
-  stages.forEach(function(s){
-    var sp=prospects.filter(function(p){return p.stage===s&&p.premium>0});
-    if(sp.length===0)return;
-    var total=sp.reduce(function(sum,p){return sum+p.premium},0);
-    html+='<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.05)"><div style="display:flex;align-items:center;gap:8px"><div style="width:10px;height:10px;border-radius:50%;background:'+stageColors[s]+'"></div><span style="font-size:13px">'+s+'</span></div><div style="text-align:right"><div style="font-size:13px;font-weight:700">$'+total.toFixed(0)+'/mo</div><div style="font-size:10px;color:#64748b">'+sp.length+' prospect'+(sp.length>1?'s':'')+'</div></div></div>';
-  });
-  if(html==='')html='<div style="text-align:center;color:#475569;font-size:12px;padding:1rem">Add prospects with premium amounts to see pipeline value</div>';
-  document.getElementById('stageValues').innerHTML=html;
-}
-
-function calcCommission(){
-  var prem=parseFloat(document.getElementById('calcPremium').value)||0;
-  var rate=parseFloat(document.getElementById('calcRate').value)||85;
-  var annual=prem*12*(rate/100);
-  document.getElementById('calcAnnual').textContent='$'+annual.toFixed(2);
-  document.getElementById('calcMonthly').textContent='Monthly: $'+(annual/12).toFixed(2)+' | Rate: '+rate+'%';
-  document.getElementById('calcResult').style.display='block';
-}
-
+// INIT
 renderProspects();
 renderPipelineOverview();
 renderScripts('cold');
